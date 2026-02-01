@@ -1,0 +1,8 @@
+<button mat-raised-button color="primary" (click)="fileInput?.click()">Upload expenses</button>
+<input
+  #fileInput
+  type="file"
+  hidden
+  (change)="onFileSelected($event.target)"
+  accept=".csv,.xlsx,.txt.csv,.tsv,.xls,.ods"
+/>

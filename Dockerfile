@@ -7,6 +7,6 @@ RUN npm ci
 COPY . .
 RUN echo "export const VERSION = '${VERSION}';" > src/app/version.ts
 RUN npm run build -c production
-FROM nginx:alpine
+FROM nginx:1
 COPY --from=build /usr/src/app/dist/penny/browser /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
