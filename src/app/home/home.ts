@@ -5,7 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import dayjs from 'dayjs';
+import dayjs from 'dayjs/esm';
 
 @Component({
   selector: 'penny-home',

@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import dayjs from 'dayjs';
+import dayjs from 'dayjs/esm';
 
 @Component({
   selector: 'penny-expenses',
