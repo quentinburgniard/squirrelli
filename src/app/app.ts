@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, DestroyRef, signal } from '@angular/core';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { VERSION } from './version';
 import { Header } from './header/header';
 import { Footer } from './footer/footer';
@@ -13,4 +14,15 @@ import { Footer } from './footer/footer';
 export class App {
   protected readonly title = signal('Squirrelli');
   protected readonly version = VERSION;
+  protected readonly menuOpen = signal(false);
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    destroyRef: DestroyRef,
+  ) {
+    this.route.fragment.pipe(takeUntilDestroyed(destroyRef)).subscribe((fragment) => {
+      this.menuOpen.set(fragment === 'menu');
+    });
+  }
 }
