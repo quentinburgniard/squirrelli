@@ -7,7 +7,7 @@ import { Header } from './header/header';
 import { Footer } from './footer/footer';
 
 @Component({
-  selector: 'penny-root',
+  selector: 'squirrelli-root',
   imports: [RouterOutlet, MatToolbarModule, Header, Footer],
   templateUrl: './app.html',
 })

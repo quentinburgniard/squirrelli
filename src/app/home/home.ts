@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 import dayjs from 'dayjs/esm';
 
 @Component({
-  selector: 'penny-home',
+  selector: 'squirrelli-home',
   imports: [MatCardModule, MatTableModule, AsyncPipe, CurrencyPipe],
   templateUrl: './home.html',
   host: { class: 'block' },

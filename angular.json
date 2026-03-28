@@ -7,12 +7,12 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "penny": {
+    "squirrelli": {
       "projectType": "application",
       "schematics": {},
       "root": "",
       "sourceRoot": "src",
-      "prefix": "penny",
+      "prefix": "squirrelli",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
@@ -61,10 +61,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "penny:build:production"
+              "buildTarget": "squirrelli:build:production"
             },
             "development": {
-              "buildTarget": "penny:build:development",
+              "buildTarget": "squirrelli:build:development",
               "proxyConfig": "proxy.conf.json"
             }
           },

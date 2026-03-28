@@ -4,7 +4,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import * as XLSX from 'xlsx';
 
 @Component({
-  selector: 'penny-expenses-select-import-file',
+  selector: 'squirrelli-expenses-select-import-file',
   imports: [MatButtonModule, MatSnackBarModule],
   templateUrl: './expenses-select-import-file.html',
 })

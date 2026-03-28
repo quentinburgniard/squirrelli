@@ -2,7 +2,7 @@
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Select file</ng-template>
-      <penny-expenses-select-import-file (parsed)="onFileParsed($event)" />
+      <squirrelli-expenses-select-import-file (parsed)="onFileParsed($event)" />
     </form>
   </mat-step>
   <mat-step [stepControl]="secondFormGroup" label="Map columns">

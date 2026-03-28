@@ -1,5 +1,5 @@
 {
-  "name": "penny",
+  "name": "squirrelli",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -34,14 +34,15 @@
     "dayjs": "^1.11.12",
     "lodash-es": "^4.17.22",
     "rxjs": "^7.8.0",
-    "xlsx": "^0.18.5",
     "tslib": "^2.3.0",
+    "xlsx": "^0.18.5",
     "zone.js": "^0.15.1"
   },
   "devDependencies": {
     "@angular/build": "^20.0.0",
     "@angular/cli": "^20.0.0",
     "@angular/compiler-cli": "^20.0.0",
+    "@quentinburgniard/api-models": "^5.1.82",
     "@tailwindcss/postcss": "^4.1.12",
     "@types/lodash-es": "^4.17.12",
     "@typescript-eslint/eslint-plugin": "^8.45.0",

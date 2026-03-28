@@ -9,7 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import dayjs from 'dayjs/esm';
 
 @Component({
-  selector: 'penny-expenses',
+  selector: 'squirrelli-expenses',
   imports: [MatTableModule, NgxChartsModule, MatIconModule, MatCardModule],
   templateUrl: './expenses.html',
   host: { class: 'flex flex-col gap-4' },

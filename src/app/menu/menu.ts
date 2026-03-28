@@ -3,7 +3,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'penny-menu',
+  selector: 'squirrelli-menu',
   imports: [RouterLink],
   templateUrl: './menu.html',
   animations: [

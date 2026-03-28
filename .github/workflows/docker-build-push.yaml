@@ -6,7 +6,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: quentinburgniard/penny
+  IMAGE_NAME: quentinburgniard/squirrelli
 
 jobs:
   docker-build-push:

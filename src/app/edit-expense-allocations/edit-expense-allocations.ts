@@ -11,7 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
-  selector: 'penny-edit-expense-allocations',
+  selector: 'squirrelli-edit-expense-allocations',
   imports: [MatSliderModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule],
   providers: [
     {

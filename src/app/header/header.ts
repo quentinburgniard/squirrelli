@@ -7,7 +7,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Menu } from '../menu/menu';
 
 @Component({
-  selector: 'penny-header',
+  selector: 'squirrelli-header',
   imports: [MatButtonModule, MatIconModule, MatToolbarModule, RouterLink, Menu],
   templateUrl: './header.html',
 })

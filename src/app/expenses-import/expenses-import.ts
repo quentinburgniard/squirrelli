@@ -7,7 +7,7 @@ import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { ExpensesSelectImportFile } from '../expenses-select-import-file/expenses-select-import-file';
 
 @Component({
-  selector: 'penny-expenses-import',
+  selector: 'squirrelli-expenses-import',
   imports: [
     JsonPipe,
     MatStepperModule,

@@ -33,7 +33,7 @@ const EURO_DATE_FORMATS = {
 };
 
 @Component({
-  selector: 'penny-edit-expense',
+  selector: 'squirrelli-edit-expense',
   imports: [
     CommonModule,
     ReactiveFormsModule,
