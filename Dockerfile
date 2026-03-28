@@ -1,9 +1,9 @@
 FROM node:22-alpine AS build
-ENV NODE_ENV=production
 WORKDIR /usr/src/app
 EXPOSE 80
 ARG VERSION=0.0.0
-COPY package.json package-lock.json ./
+ARG GITHUB_TOKEN
+COPY package.json package-lock.json .npmrc ./
 RUN npm ci
 COPY . .
 RUN echo "export const VERSION = '${VERSION}';" > src/app/version.ts

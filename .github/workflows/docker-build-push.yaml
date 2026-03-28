@@ -39,5 +39,6 @@ jobs:
           labels: ${{ steps.metadata.outputs.labels }}
           build-args: |
             VERSION=${{ github.ref_name }}
+            GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
