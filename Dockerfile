@@ -1,4 +1,5 @@
 FROM node:22-alpine AS build
+ENV NODE_ENV=production
 WORKDIR /usr/src/app
 EXPOSE 80
 ARG VERSION=0.0.0
