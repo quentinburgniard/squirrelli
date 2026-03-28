@@ -1,3 +1,3 @@
 export const environment = {
-  apiBaseUrl: 'https://api.preview.digitalleman.com/v5',
+  apiBaseUrl: 'https://api.digitalleman.com/v5',
 };
