@@ -14,7 +14,7 @@ export class SettingsService {
 
   fetchSettings(): Observable<Configuration> {
     return this.http
-      .get<{ data: Configuration }>(`${environment.apiBaseUrl}/configurations/squirelli`, {
+      .get<{ data: Configuration }>(`${environment.apiBaseUrl}/configurations/squirrelli`, {
         withCredentials: true,
       })
       .pipe(
