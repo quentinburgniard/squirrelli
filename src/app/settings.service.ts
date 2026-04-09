@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import type { Modules } from '@strapi/types';
-import { Observable, map, tap } from 'rxjs';
+import { Observable, defaultIfEmpty, map, tap } from 'rxjs';
 import { environment } from '../environments/environment';
 
 export type Configuration = Modules.EntityService.Result<'api::configuration.configuration'>;
@@ -9,17 +9,21 @@ export type Configuration = Modules.EntityService.Result<'api::configuration.con
 @Injectable({ providedIn: 'root' })
 export class SettingsService {
   readonly settings = signal<Configuration | null>(null);
+  readonly apiVersion = signal<string | null>(null);
 
   constructor(private readonly http: HttpClient) {}
 
-  fetchSettings(): Observable<Configuration> {
+  fetchSettings(): Observable<Configuration | null> {
     return this.http
       .get<{ data: Configuration }>(`${environment.apiBaseUrl}/configurations/squirrelli`, {
+        observe: 'response',
         withCredentials: true,
       })
       .pipe(
-        map(({ data }) => data),
+        tap((response) => this.apiVersion.set(response.headers.get('X-Version'))),
+        map((response) => response.body!.data),
         tap((settings) => this.settings.set(settings)),
+        defaultIfEmpty(null),
       );
   }
 }

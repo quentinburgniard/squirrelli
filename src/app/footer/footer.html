@@ -1,1 +1,6 @@
-<div class="text-right text-xs text-[--mat-sys-on-surface-variant]">v{{ version }}</div>
+<div class="text-right text-xs text-[--mat-sys-on-surface-variant]">
+  v{{ version }}
+  @if (apiVersion(); as apiVersion) {
+    <span>({{ apiVersion }})</span>
+  }
+</div>

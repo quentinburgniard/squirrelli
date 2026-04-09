@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { SettingsService } from '../settings.service';
+import { VERSION } from '../version';
 
 @Component({
   selector: 'squirrelli-footer',
@@ -7,5 +9,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   templateUrl: './footer.html',
 })
 export class Footer {
-  @Input() version = '';
+  protected readonly version = VERSION;
+
+  protected readonly apiVersion: SettingsService['apiVersion'];
+
+  constructor(settingsService: SettingsService) {
+    this.apiVersion = settingsService.apiVersion;
+  }
 }

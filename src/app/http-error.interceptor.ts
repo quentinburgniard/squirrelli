@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
-import { catchError, throwError } from 'rxjs';
+import { catchError, EMPTY, throwError } from 'rxjs';
 
 const LOGIN_URL = new URL('https://id.digitalleman.com');
 LOGIN_URL.searchParams.set('r', 'true');
@@ -11,7 +11,6 @@ export const httpErrorInterceptor: HttpInterceptorFn = (request, next) =>
       if (error instanceof HttpErrorResponse && HANDLED_HTTP_ERRORS.includes(error.status)) {
         window.location.assign(LOGIN_URL);
       }
-
-      return throwError(() => error);
+      return EMPTY;
     }),
   );
