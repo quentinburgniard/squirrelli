@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import type { Modules } from '@strapi/types';
+import type { Modules, Schema } from '@strapi/types';
 import dayjs, { Dayjs } from 'dayjs/esm';
 import {
   BehaviorSubject,
@@ -13,7 +13,6 @@ import {
 } from 'rxjs';
 import { environment } from '../environments/environment';
 import { API_DATE_FORMAT } from './utils/date.utils';
-import { DateValue } from '@strapi/types/dist/schema/attribute';
 
 type RawExpense = Modules.EntityService.Result<
   'api::expense.expense',
@@ -102,7 +101,7 @@ export class ExpensesService {
     return value.format(API_DATE_FORMAT);
   }
 
-  private getDateFromRawDate(value: DateValue | null | undefined): Dayjs | undefined {
+  private getDateFromRawDate(value: Schema.Attribute.DateValue | null | undefined): Dayjs | undefined {
     if (!value) {
       return undefined;
     }

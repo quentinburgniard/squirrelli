@@ -1,6 +1,6 @@
 import { JsonPipe } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
@@ -23,19 +23,14 @@ export class ExpensesImport {
   @ViewChild(MatStepper) private readonly stepper?: MatStepper;
 
   protected readonly isLinear = true;
-  protected readonly firstFormGroup: FormGroup;
-  protected readonly secondFormGroup: FormGroup;
+  protected readonly firstFormGroup = new FormGroup({
+    firstCtrl: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+  });
+  protected readonly secondFormGroup = new FormGroup({
+    secondCtrl: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+  });
   protected columnNames: string[] = [];
   protected fileName = '';
-
-  constructor(private readonly formBuilder: FormBuilder) {
-    this.firstFormGroup = this.formBuilder.group({
-      firstCtrl: ['', Validators.required],
-    });
-    this.secondFormGroup = this.formBuilder.group({
-      secondCtrl: ['', Validators.required],
-    });
-  }
 
   protected onFileParsed(payload: { fileName: string; columnNames: string[] }): void {
     this.fileName = payload.fileName;

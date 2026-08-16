@@ -12,14 +12,52 @@
         <p class="text-xs uppercase tracking-[0.2em] text-[--mat-sys-on-surface-variant]">
           Preferences
         </p>
-        <p class="mt-1 text-base font-semibold">Configuration loaded</p>
+        <p class="mt-1 text-base font-semibold">Configuration</p>
       </div>
       <p class="text-sm text-[--mat-sys-on-surface-variant]">
-        The page now resolves configuration data before rendering.
+        Adjust the application configuration with the form below.
       </p>
+
+      <form [formGroup]="form" class="grid gap-4 md:grid-cols-2">
+        <div formGroupName="configuration" class="grid gap-4 md:col-span-2 md:grid-cols-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Language</mat-label>
+            <mat-select formControlName="language">
+              @for (language of languages; track language) {
+                <mat-option [value]="language">{{ language }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Base currency</mat-label>
+            <mat-select formControlName="baseCurrency">
+              @for (currency of currencies; track currency) {
+                <mat-option [value]="currency">{{ currency }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Monthly reset day</mat-label>
+            <mat-select formControlName="monthlyResetDay">
+              <mat-option [value]="null">No monthly reset</mat-option>
+              @for (day of resetDays; track day) {
+                <mat-option [value]="day">{{ day }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Emergency fund</mat-label>
+            <input matInput formControlName="emergencyFund" type="number" />
+          </mat-form-field>
+        </div>
+      </form>
+
       <pre
         class="overflow-x-auto rounded-2xl bg-slate-950 p-4 text-xs leading-6 text-slate-100"
-      >{{ settings() | json }}</pre>
+      >{{ form.getRawValue() | json }}</pre>
     </mat-card-content>
   </mat-card>
 </div>
