@@ -4,12 +4,13 @@ import { Observable } from 'rxjs';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { RouterLink } from '@angular/router';
 import { type Expense, ExpensesService } from '../expenses.service';
 import { formatDate } from '../utils/date.utils';
 
 @Component({
   selector: 'squirrelli-expenses',
-  imports: [MatTableModule, NgxChartsModule, MatIconModule, MatCardModule],
+  imports: [MatTableModule, NgxChartsModule, MatIconModule, MatCardModule, RouterLink],
   templateUrl: './expenses.html',
   host: { class: 'flex flex-col gap-4' },
 })

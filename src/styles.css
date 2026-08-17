@@ -1,4 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
-
 @config "../tailwind.config.js";
 @import 'tailwindcss';
+
+@layer base {
+  h1 {
+    @apply font-catamaran text-2xl font-black;
+  }
+}
