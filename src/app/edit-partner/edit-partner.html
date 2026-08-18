@@ -1,0 +1,20 @@
+<div>
+  <h1>{{ partnerId ? 'Edit partner' : 'Add partner' }}</h1>
+</div>
+
+<form [formGroup]="form" class="flex flex-col gap-4" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email" type="email" />
+  </mat-form-field>
+
+  <div class="flex gap-2">
+    <button matButton="filled" type="submit" [disabled]="form.invalid || loading">Save</button>
+    <a matButton routerLink="/partners">Cancel</a>
+  </div>
+</form>

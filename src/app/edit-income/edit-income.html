@@ -1,0 +1,29 @@
+<h1>{{ incomeId ? 'Edit income' : 'Add income' }}</h1>
+
+<form [formGroup]="form" class="flex flex-col gap-4" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <mat-label>Date</mat-label>
+    <input matInput formControlName="date" [matDatepicker]="picker" />
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Amount</mat-label>
+    <input matInput formControlName="amount" type="number" min="0" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Currency</mat-label>
+    <mat-select formControlName="currency">
+      @for (currency of currencies; track currency) {
+        <mat-option [value]="currency">{{ currency.toUpperCase() }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <div class="flex gap-2">
+    <button matButton="filled" type="submit" [disabled]="form.invalid || loading">Save</button>
+    <a matButton routerLink="/incomes">Cancel</a>
+  </div>
+</form>

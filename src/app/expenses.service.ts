@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import type { Modules, Schema } from '@strapi/types';
+import type { Schema } from '@strapi/types';
 import dayjs, { Dayjs } from 'dayjs/esm';
 import {
   BehaviorSubject,
@@ -12,15 +12,8 @@ import {
   switchMap,
 } from 'rxjs';
 import { environment } from '../environments/environment';
+import type { Expense, RawExpense } from './expense.types';
 import { API_DATE_FORMAT } from './utils/date.utils';
-
-type RawExpense = Modules.EntityService.Result<
-  'api::expense.expense',
-  { populate: ['merchant', 'category'] }
->;
-export type Expense = Omit<RawExpense, 'date'> & {
-  date?: Dayjs;
-};
 
 @Injectable({ providedIn: 'root' })
 export class ExpensesService {
@@ -54,6 +47,14 @@ export class ExpensesService {
   );
 
   constructor(private readonly http: HttpClient) {}
+
+  getExpense(id: string): Observable<Expense> {
+    return this.http
+      .get<{ data: RawExpense }>(`${environment.apiBaseUrl}/expenses/${id}`, {
+        withCredentials: true,
+      })
+      .pipe(map(({ data }) => this.getExpenseFromRawExpense(data)));
+  }
 
   set fromDate(fromDate: Dayjs | null) {
     this.fromDateSubject.next(fromDate);
@@ -101,7 +102,9 @@ export class ExpensesService {
     return value.format(API_DATE_FORMAT);
   }
 
-  private getDateFromRawDate(value: Schema.Attribute.DateValue | null | undefined): Dayjs | undefined {
+  private getDateFromRawDate(
+    value: Schema.Attribute.DateValue | null | undefined,
+  ): Dayjs | undefined {
     if (!value) {
       return undefined;
     }

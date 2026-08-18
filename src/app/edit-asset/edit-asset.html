@@ -1,0 +1,32 @@
+<h1>{{ assetId ? 'Edit asset' : 'Add asset' }}</h1>
+
+<form [formGroup]="form" class="flex flex-col gap-4" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Category</mat-label>
+    <mat-select formControlName="category">
+      <mat-option [value]="null">No category</mat-option>
+      @for (category of categories$ | async; track category.documentId) {
+        <mat-option [value]="category.documentId">{{ category.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Liquidity</mat-label>
+    <mat-select formControlName="liquidity">
+      @for (liquidity of liquidities; track liquidity) {
+        <mat-option [value]="liquidity">{{ liquidity }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <div class="flex gap-2">
+    <button matButton="filled" type="submit" [disabled]="form.invalid || loading">Save</button>
+    <a matButton routerLink="/assets">Cancel</a>
+  </div>
+</form>

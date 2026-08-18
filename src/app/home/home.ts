@@ -2,10 +2,10 @@ import { AsyncPipe, CurrencyPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
-import type { Modules } from '@strapi/types';
 import { map, Observable } from 'rxjs';
 import dayjs from 'dayjs/esm';
-import { type Expense, ExpensesService } from '../expenses.service';
+import type { Expense } from '../expense.types';
+import { ExpensesService } from '../expenses.service';
 import { formatDate } from '../utils/date.utils';
 
 @Component({

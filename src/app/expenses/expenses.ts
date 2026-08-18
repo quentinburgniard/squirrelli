@@ -5,7 +5,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
-import { type Expense, ExpensesService } from '../expenses.service';
+import type { Expense } from '../expense.types';
+import { ExpensesService } from '../expenses.service';
 import { formatDate } from '../utils/date.utils';
 
 @Component({
