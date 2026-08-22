@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { SettingsService } from '../settings.service';
+import { Partners } from '../partners/partners';
 
 type ConfigurationFormValue = {
   language: 'English' | 'Francais';
@@ -23,6 +24,7 @@ type ConfigurationFormValue = {
     MatInputModule,
     MatSelectModule,
     ReactiveFormsModule,
+    Partners,
   ],
   templateUrl: './settings.html',
   host: { class: 'block' },

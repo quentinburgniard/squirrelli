@@ -1,23 +1,132 @@
-<div [formGroup]="form">
+<section [formGroup]="form" class="flex flex-col gap-4">
   <div>
-    Gift
-    <mat-slider min="0" max="12" step="1" discrete [displayWith]="getAllocationPercentage">
-      <input matSliderThumb formControlName="gift" />
-    </mat-slider>
-    <mat-form-field>
-      <mat-label>{{ giftAmount }}</mat-label>
-      <input matInput />
-    </mat-form-field>
+    <h2>Split this expense</h2>
+    <p class="text-sm text-slate-600">
+      Add the part of this expense that belongs to someone else or another category.
+    </p>
   </div>
 
-  <div>
-    Reimbursement
-    <mat-slider min="0" max="12" step="1" discrete [displayWith]="getAllocationPercentage">
-      <input matSliderThumb formControlName="reimbursement" />
-    </mat-slider>
-    <mat-form-field>
-      <mat-label>{{ reimbursementAmount }}</mat-label>
-      <input matInput />
-    </mat-form-field>
+  <div formArrayName="allocations" class="flex flex-col gap-4">
+    @for (allocation of form.controls.allocations.controls; track allocation; let index = $index) {
+      <div [formGroupName]="index" class="rounded-xl border border-slate-200 p-4">
+        <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
+          <div class="flex gap-2">
+            <button matButton type="button" (click)="allocation.controls.mode.setValue('quick')">
+              Quick allocation
+            </button>
+            <button matButton type="button" (click)="allocation.controls.mode.setValue('advanced')">
+              Advanced
+            </button>
+          </div>
+          <button matButton type="button" (click)="removeAllocation(index)">Remove</button>
+        </div>
+
+        @if (allocation.controls.mode.value === 'quick') {
+          <div class="flex flex-wrap gap-3">
+            <mat-form-field class="min-w-52 flex-1">
+              <mat-label>Person</mat-label>
+              <mat-select formControlName="partner">
+                @for (partner of partners$ | async; track partner.documentId) {
+                  <mat-option [value]="partner.documentId">{{ partner.name }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="min-w-64 flex-1">
+              <mat-label>Arrangement</mat-label>
+              <mat-select formControlName="countsAsPaid">
+                <mat-option [value]="true">Advance — repayment expected</mat-option>
+                <mat-option [value]="false">Gift — no repayment expected</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        } @else {
+          <div class="flex flex-wrap items-start gap-3">
+            <mat-form-field class="min-w-64 flex-1">
+              <mat-label>Allocation type</mat-label>
+              <mat-select formControlName="type">
+                @for (type of allocationTypes$ | async; track type.documentId) {
+                  <mat-option [value]="type.documentId">{{ type.name }}</mat-option>
+                }
+              </mat-select>
+              <mat-hint>A saved category and/or partner rule</mat-hint>
+            </mat-form-field>
+            <button matButton type="button" (click)="startCreateType(index)">Create type</button>
+          </div>
+
+          @if (creatingTypeFor === index) {
+            <div [formGroup]="newTypeForm" class="mb-4 rounded-lg bg-slate-50 p-4">
+              <h3>Create allocation type</h3>
+              <div class="flex flex-wrap gap-3">
+                <mat-form-field class="min-w-52 flex-1">
+                  <mat-label>Name</mat-label>
+                  <input matInput formControlName="name" />
+                </mat-form-field>
+                <mat-form-field class="min-w-52 flex-1">
+                  <mat-label>Category (optional)</mat-label>
+                  <mat-select formControlName="category">
+                    <mat-option [value]="null">None</mat-option>
+                    @for (category of categories$ | async; track category.documentId) {
+                      <mat-option [value]="category.documentId">{{ category.name }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="min-w-52 flex-1">
+                  <mat-label>Partner (optional)</mat-label>
+                  <mat-select formControlName="partner">
+                    <mat-option [value]="null">None</mat-option>
+                    @for (partner of partners$ | async; track partner.documentId) {
+                      <mat-option [value]="partner.documentId">{{ partner.name }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="min-w-64 flex-1">
+                  <mat-label>Arrangement</mat-label>
+                  <mat-select formControlName="countsAsPaid">
+                    <mat-option [value]="true">Advance — repayment expected</mat-option>
+                    <mat-option [value]="false">Gift — no repayment expected</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="flex gap-2">
+                <button
+                  matButton="filled"
+                  type="button"
+                  [disabled]="newTypeForm.invalid || savingType"
+                  (click)="createType()"
+                >
+                  Save type
+                </button>
+                <button matButton type="button" (click)="cancelCreateType()">Cancel</button>
+              </div>
+            </div>
+          }
+        }
+
+        <div class="mb-3 flex gap-2">
+          <button matButton type="button" (click)="setValueMode(allocation, 'rate')">
+            Percentage
+          </button>
+          <button matButton type="button" (click)="setValueMode(allocation, 'amount')">
+            Exact amount
+          </button>
+        </div>
+
+        @if (allocation.controls.valueMode.value === 'rate') {
+          <div class="flex flex-wrap items-center gap-4">
+            <mat-slider min="0" max="12" step="1" discrete [displayWith]="getAllocationPercentage">
+              <input matSliderThumb formControlName="rate" />
+            </mat-slider>
+            <strong>{{ getAllocatedAmount(allocation) }}</strong>
+          </div>
+        } @else {
+          <mat-form-field>
+            <mat-label>Amount</mat-label>
+            <input matInput formControlName="amount" type="number" min="0" [max]="amount ?? null" />
+          </mat-form-field>
+        }
+      </div>
+    }
   </div>
-</div>
+
+  <button matButton type="button" (click)="addAllocation()">Add allocation</button>
+</section>

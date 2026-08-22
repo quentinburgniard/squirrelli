@@ -51,6 +51,12 @@ export class ExpensesService {
   getExpense(id: string): Observable<Expense> {
     return this.http
       .get<{ data: RawExpense }>(`${environment.apiBaseUrl}/expenses/${id}`, {
+        params: {
+          'populate[allocations][populate]': '*',
+          'populate[merchant]': 'true',
+          'populate[category]': 'true',
+          'populate[project]': 'true',
+        },
         withCredentials: true,
       })
       .pipe(map(({ data }) => this.getExpenseFromRawExpense(data)));

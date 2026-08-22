@@ -6,3 +6,41 @@
     @apply font-catamaran text-2xl font-black;
   }
 }
+
+main {
+  view-transition-name: page;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+::view-transition-old(page) {
+  animation: page-out 140ms ease-in both;
+}
+
+::view-transition-new(page) {
+  animation: page-in 180ms ease-out both;
+}
+
+@keyframes page-out {
+  to {
+    transform: translateX(-1.5rem);
+    opacity: 0;
+  }
+}
+
+@keyframes page-in {
+  from {
+    transform: translateX(1.5rem);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(page),
+  ::view-transition-new(page) {
+    animation: none;
+  }
+}

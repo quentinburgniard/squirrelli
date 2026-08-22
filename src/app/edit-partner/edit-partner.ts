@@ -54,6 +54,6 @@ export class EditPartner implements OnInit {
 
     request
       .pipe(finalize(() => (this.loading = false)))
-      .subscribe(() => this.router.navigate(['/partners']));
+      .subscribe(() => this.router.navigate(['/settings']));
   }
 }

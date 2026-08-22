@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, finalize, forkJoin, iif, map, shareReplay } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable, finalize, forkJoin, iif, map, of, shareReplay, switchMap } from 'rxjs';
 import { isString } from 'lodash-es';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,6 +19,7 @@ import {
 import { environment } from '../../environments/environment';
 import { MatButtonModule } from '@angular/material/button';
 import { EditExpenseAllocations } from '../edit-expense-allocations/edit-expense-allocations';
+import type { ExpenseAllocationValue, RawExpense } from '../expense.types';
 
 const EURO_DATE_FORMATS = {
   parse: {
@@ -58,17 +59,15 @@ export class EditExpense implements OnInit {
   filteredMerchants$: Observable<any>;
   projects$: Observable<any>;
   loading = false;
-  expenseId: number | null = null;
+  expenseId: string | null = null;
+  private originalAllocationIds = new Set<string>();
 
   protected readonly _form = new FormGroup({
     merchant: new FormControl<any | null>(null),
     amount: new FormControl<number | null>(null),
     date: new FormControl<Date | null>(null),
     currency: new FormControl<'eur' | 'chf' | null>('eur'),
-    allocations: new FormControl({
-      gift: null,
-      reimbursement: null,
-    }),
+    allocations: new FormControl<ExpenseAllocationValue[]>([], { nonNullable: true }),
     project: new FormControl<any | null>(null),
   });
 
@@ -83,8 +82,6 @@ export class EditExpense implements OnInit {
       amount: this._form.value.amount,
       currency: this._form.value.currency,
       project: this._form.value.project?.id ?? null,
-      giftRate: this._form.value.allocations?.gift ?? null,
-      reimbursementRate: this._form.value.allocations?.reimbursement ?? null,
     };
   }
 
@@ -135,7 +132,7 @@ export class EditExpense implements OnInit {
         return;
       }
 
-      this.expenseId = expense.id ?? null;
+      this.expenseId = expense.documentId ?? null;
       const merchant =
         expense.merchant?.id != null
           ? { target: 'merchant' as const, ...expense.merchant }
@@ -148,12 +145,21 @@ export class EditExpense implements OnInit {
         amount: expense.amount ?? null,
         date: expense.date ? new Date(expense.date) : null,
         currency: expense.currency ?? this._form.controls.currency.value,
-        allocations: {
-          gift: expense.giftRate ?? null,
-          reimbursement: expense.reimbursementRate ?? null,
-        },
+        allocations: (expense.allocations ?? []).map((allocation: any) => ({
+          documentId: allocation.documentId,
+          type: allocation.type?.documentId ?? null,
+          partner: allocation.partner?.documentId ?? null,
+          countsAsPaid: allocation.countsAsPaid ?? null,
+          amount: allocation.amount == null ? null : Number(allocation.amount),
+          rate: allocation.rate == null ? null : Number(allocation.rate),
+        })),
         project: expense.project ?? null,
       });
+      this.originalAllocationIds = new Set(
+        (expense.allocations ?? [])
+          .map((allocation: any) => allocation.documentId)
+          .filter((id: unknown): id is string => typeof id === 'string'),
+      );
     });
 
     this._form.controls.merchant.valueChanges.subscribe((value) => {
@@ -179,6 +185,7 @@ export class EditExpense implements OnInit {
 
   private resetForm() {
     this.expenseId = null;
+    this.originalAllocationIds.clear();
     this.filteredMerchants$ = this.merchants$;
     this._form.reset({
       date: this._form.controls.date.value,
@@ -187,34 +194,87 @@ export class EditExpense implements OnInit {
   }
 
   onSubmit() {
+    if (this._form.invalid || this.loading) {
+      this._form.markAllAsTouched();
+      return;
+    }
     this.save$(this.expenseId ?? undefined).subscribe(() => {
       this.loading = false;
       this._router.navigate(['/expenses/edit'], { onSameUrlNavigation: 'reload' });
     });
   }
 
-  save$(id?: number): Observable<any> {
+  save$(id?: string): Observable<any> {
     this.loading = true;
-    return iif(
+    const saveExpense$ = iif(
       () => id !== undefined,
-      this.http.put(
+      this.http.put<{ data: RawExpense }>(
         `${environment.apiBaseUrl}/expenses/${id}`,
         { data: this.value },
         {
           withCredentials: true,
         },
       ),
-      this.http.post(
+      this.http.post<{ data: RawExpense }>(
         `${environment.apiBaseUrl}/expenses`,
         { data: this.value },
         {
           withCredentials: true,
         },
       ),
-    ).pipe(
+    ).pipe(map(({ data }) => data));
+
+    return saveExpense$.pipe(
+      switchMap((expense) =>
+        this.saveAllocations$(expense.documentId, this._form.controls.allocations.value),
+      ),
       finalize(() => {
         this.loading = false;
       }),
     );
+  }
+
+  private saveAllocations$(
+    expenseId: string,
+    allocations: ExpenseAllocationValue[],
+  ): Observable<unknown> {
+    const currentIds = new Set(
+      allocations
+        .map(({ documentId }) => documentId)
+        .filter((id): id is string => id !== undefined),
+    );
+    const requests: Observable<unknown>[] = allocations.map((allocation) => {
+      const data = {
+        expense: expenseId,
+        type: allocation.type,
+        partner: allocation.partner,
+        countsAsPaid: allocation.countsAsPaid,
+        amount: allocation.amount,
+        rate: allocation.rate,
+      };
+      return allocation.documentId
+        ? this.http.put(
+            `${environment.apiBaseUrl}/expense-allocations/${allocation.documentId}`,
+            { data },
+            { withCredentials: true },
+          )
+        : this.http.post(
+            `${environment.apiBaseUrl}/expense-allocations`,
+            { data },
+            { withCredentials: true },
+          );
+    });
+
+    for (const allocationId of this.originalAllocationIds) {
+      if (!currentIds.has(allocationId)) {
+        requests.push(
+          this.http.delete(`${environment.apiBaseUrl}/expense-allocations/${allocationId}`, {
+            withCredentials: true,
+          }),
+        );
+      }
+    }
+
+    return requests.length ? forkJoin(requests) : of([]);
   }
 }

@@ -1,23 +1,29 @@
-import { Component, Input } from '@angular/core';
-import { animate, style, transition, trigger } from '@angular/animations';
+import { Component, Input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'squirrelli-menu',
   imports: [RouterLink],
   templateUrl: './menu.html',
-  animations: [
-    trigger('menuPanel', [
-      transition(':enter', [
-        style({ transform: 'translateX(100%)', opacity: 0 }),
-        animate('260ms ease-out', style({ transform: 'translateX(0)', opacity: 1 })),
-      ]),
-      transition(':leave', [
-        animate('220ms ease-in', style({ transform: 'translateX(100%)', opacity: 0 })),
-      ]),
-    ]),
-  ],
+  styles: `
+    .menu-panel {
+      animation: menu-in 180ms ease-out;
+    }
+
+    .menu-panel.menu-leave {
+      animation: menu-out 150ms ease-in;
+    }
+
+    @keyframes menu-in {
+      from { transform: translateX(2rem); opacity: 0; }
+    }
+
+    @keyframes menu-out {
+      to { transform: translateX(2rem); opacity: 0; }
+    }
+  `,
 })
 export class Menu {
   @Input() open = false;
+  readonly closed = output<void>();
 }

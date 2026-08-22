@@ -1,5 +1,5 @@
 <mat-toolbar class="gap-4">
-  <a class="flex items-center gap-4" routerLink="/">
+  <a class="flex items-center gap-4" routerLink="/" (click)="_menuOpen.set(false)">
     <img
       class="size-8"
       src="https://files.digitalleman.com/cej08q7029s7el22akbmbdwf.png"
@@ -14,10 +14,9 @@
     type="button"
     matIconButton
     aria-label="Toggle menu"
-    [routerLink]="[]"
-    [fragment]="_menuOpen() ? undefined : 'menu'"
+    (click)="_menuOpen.update((open) => !open)"
   >
     <mat-icon>{{ _menuOpen() ? 'menu_open' : 'menu' }}</mat-icon>
   </button>
 </mat-toolbar>
-<squirrelli-menu [open]="_menuOpen()" />
+<squirrelli-menu [open]="_menuOpen()" (closed)="_menuOpen.set(false)" />

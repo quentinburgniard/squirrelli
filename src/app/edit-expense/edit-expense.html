@@ -75,5 +75,5 @@
     [amount]="_form.controls.amount.value"
   ></squirrelli-edit-expense-allocations>
 
-  <button matButton="filled" type="submit" [disabled]="loading">Add</button>
+  <button matButton="filled" type="submit" [disabled]="_form.invalid || loading">Add</button>
 </form>

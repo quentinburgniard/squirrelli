@@ -1,18 +1,22 @@
 @if (open) {
-  <div class="absolute left-0 right-0 h-screen z-50 backdrop-blur-sm" @menuPanel>
+  <div
+    class="menu-panel absolute left-0 right-0 h-screen z-50 backdrop-blur-sm"
+    animate.leave="menu-leave"
+    (click)="closed.emit()"
+  >
     <div
       class="relative mx-auto mt-20 w-[min(90vw,24rem)] rounded-3xl bg-white p-6 shadow-[0_30px_90px_-40px_rgba(15,23,42,0.9)]"
+      (click)="$event.stopPropagation()"
     >
       <div class="flex items-center justify-between gap-4">
         <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Menu</p>
       </div>
       <div class="mt-6 grid gap-3 text-base font-semibold text-slate-900">
-        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/">Dashboard</a>
-        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/expenses">Expenses</a>
-        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/incomes">Incomes</a>
-        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/assets">Assets</a>
-        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/partners">Partners</a>
-        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/settings">Settings</a>
+        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/" (click)="closed.emit()">Dashboard</a>
+        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/expenses" (click)="closed.emit()">Expenses</a>
+        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/incomes" (click)="closed.emit()">Incomes</a>
+        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/assets" (click)="closed.emit()">Assets</a>
+        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/settings" (click)="closed.emit()">Settings</a>
       </div>
     </div>
   </div>
