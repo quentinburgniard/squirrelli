@@ -147,8 +147,8 @@ export class EditExpense implements OnInit {
         currency: expense.currency ?? this._form.controls.currency.value,
         allocations: (expense.allocations ?? []).map((allocation: any) => ({
           documentId: allocation.documentId,
-          type: allocation.type?.documentId ?? null,
-          partner: allocation.partner?.documentId ?? null,
+          type: this.getRelationDocumentId(allocation.type),
+          partner: this.getRelationDocumentId(allocation.partner),
           countsAsPaid: allocation.countsAsPaid ?? null,
           amount: allocation.amount == null ? null : Number(allocation.amount),
           rate: allocation.rate == null ? null : Number(allocation.rate),
@@ -181,6 +181,13 @@ export class EditExpense implements OnInit {
 
   getName(value: any): string {
     return value ? value.name : '';
+  }
+
+  private getRelationDocumentId(
+    relation: string | { documentId?: string; data?: { documentId?: string } | null } | null,
+  ): string | null {
+    if (typeof relation === 'string') return relation;
+    return relation?.documentId ?? relation?.data?.documentId ?? null;
   }
 
   private resetForm() {

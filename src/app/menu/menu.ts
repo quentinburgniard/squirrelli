@@ -15,11 +15,17 @@ import { RouterLink } from '@angular/router';
     }
 
     @keyframes menu-in {
-      from { transform: translateX(2rem); opacity: 0; }
+      from {
+        transform: translateX(32px);
+        opacity: 0;
+      }
     }
 
     @keyframes menu-out {
-      to { transform: translateX(2rem); opacity: 0; }
+      to {
+        transform: translateX(32px);
+        opacity: 0;
+      }
     }
   `,
 })

@@ -7,12 +7,13 @@ import {
   Observable,
   combineLatest,
   filter,
+  forkJoin,
   map,
   shareReplay,
   switchMap,
 } from 'rxjs';
 import { environment } from '../environments/environment';
-import type { Expense, RawExpense } from './expense.types';
+import type { Expense, RawExpense, RawExpenseAllocation } from './expense.types';
 import { API_DATE_FORMAT } from './utils/date.utils';
 
 @Injectable({ providedIn: 'root' })
@@ -49,17 +50,32 @@ export class ExpensesService {
   constructor(private readonly http: HttpClient) {}
 
   getExpense(id: string): Observable<Expense> {
-    return this.http
-      .get<{ data: RawExpense }>(`${environment.apiBaseUrl}/expenses/${id}`, {
+    return forkJoin({
+      expense: this.http.get<{ data: RawExpense }>(`${environment.apiBaseUrl}/expenses/${id}`, {
         params: {
-          'populate[allocations][populate]': '*',
           'populate[merchant]': 'true',
           'populate[category]': 'true',
           'populate[project]': 'true',
         },
         withCredentials: true,
-      })
-      .pipe(map(({ data }) => this.getExpenseFromRawExpense(data)));
+      }),
+      allocations: this.http.get<{ data: RawExpenseAllocation[] }>(
+        `${environment.apiBaseUrl}/expense-allocations`,
+        {
+          params: {
+            'filters[expense][documentId][$eq]': id,
+            'populate[type]': 'true',
+            'populate[partner]': 'true',
+            'pagination[pageSize]': 500,
+          },
+          withCredentials: true,
+        },
+      ),
+    }).pipe(
+      map(({ expense, allocations }) =>
+        this.getExpenseFromRawExpense({ ...expense.data, allocations: allocations.data }),
+      ),
+    );
   }
 
   set fromDate(fromDate: Dayjs | null) {

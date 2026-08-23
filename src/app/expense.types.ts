@@ -15,15 +15,14 @@ export type Expense = Omit<RawExpense, 'date'> & {
 
 export type ExpensePartner = Modules.EntityService.Result<'api::expense-partner.expense-partner'>;
 
-export type ExpenseAllocationType = Modules.EntityService.Result<
-  'api::expense-allocation-type.expense-allocation-type'
->;
+export type ExpenseAllocationType =
+  Modules.EntityService.Result<'api::expense-allocation-type.expense-allocation-type'>;
 
-export type RawExpenseAllocation = Modules.EntityService.Result<
-  'api::expense-allocation.expense-allocation'
-> & {
-  type?: ExpenseAllocationType | null;
-};
+export type RawExpenseAllocation =
+  Modules.EntityService.Result<'api::expense-allocation.expense-allocation'> & {
+    type?: ExpenseAllocationType | null;
+    partner?: ExpensePartner | null;
+  };
 
 type ExpenseAllocationTarget =
   | {

@@ -5,18 +5,28 @@
     (click)="closed.emit()"
   >
     <div
-      class="relative mx-auto mt-20 w-[min(90vw,24rem)] rounded-3xl bg-white p-6 shadow-[0_30px_90px_-40px_rgba(15,23,42,0.9)]"
+      class="relative mx-auto mt-20 w-[min(calc(100%_-_32px),384px)] rounded-3xl bg-white p-6 shadow-[0_30px_90px_-40px_rgba(15,23,42,0.9)]"
       (click)="$event.stopPropagation()"
     >
       <div class="flex items-center justify-between gap-4">
-        <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Menu</p>
+        <p class="text-xs uppercase tracking-[3.6px] text-slate-500">Menu</p>
       </div>
       <div class="mt-6 grid gap-3 text-base font-semibold text-slate-900">
-        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/" (click)="closed.emit()">Dashboard</a>
-        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/expenses" (click)="closed.emit()">Expenses</a>
-        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/incomes" (click)="closed.emit()">Incomes</a>
-        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/assets" (click)="closed.emit()">Assets</a>
-        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/settings" (click)="closed.emit()">Settings</a>
+        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/" (click)="closed.emit()"
+          >Dashboard</a
+        >
+        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/expenses" (click)="closed.emit()"
+          >Expenses</a
+        >
+        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/incomes" (click)="closed.emit()"
+          >Incomes</a
+        >
+        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/assets" (click)="closed.emit()"
+          >Assets</a
+        >
+        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/settings" (click)="closed.emit()"
+          >Settings</a
+        >
       </div>
     </div>
   </div>

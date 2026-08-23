@@ -1,6 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, forwardRef } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, forwardRef } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -22,7 +22,11 @@ import { MatSliderModule } from '@angular/material/slider';
 import { BehaviorSubject, Observable, map, shareReplay, switchMap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import type { MerchantCategory } from '../merchant-category.types';
-import type { ExpenseAllocationType, ExpenseAllocationValue, ExpensePartner } from '../expense.types';
+import type {
+  ExpenseAllocationType,
+  ExpenseAllocationValue,
+  ExpensePartner,
+} from '../expense.types';
 
 type AllocationRow = FormGroup<{
   documentId: FormControl<string | null>;
@@ -81,7 +85,10 @@ export class EditExpenseAllocations implements ControlValueAccessor, Validator {
   private onTouched: () => void = () => {};
   private onValidatorChange: () => void = () => {};
 
-  constructor(private readonly http: HttpClient) {
+  constructor(
+    private readonly http: HttpClient,
+    private readonly changeDetectorRef: ChangeDetectorRef,
+  ) {
     this.partners$ = this.getCollection<ExpensePartner>('expense-partners');
     this.categories$ = this.getCollection<MerchantCategory>('merchant-categories');
     this.allocationTypes$ = this.reloadTypes.pipe(
@@ -90,9 +97,7 @@ export class EditExpenseAllocations implements ControlValueAccessor, Validator {
     );
 
     this.form.valueChanges.subscribe(({ allocations }) => {
-      this.onChange(
-        (allocations ?? []).map((allocation) => this.toAllocationValue(allocation)),
-      );
+      this.onChange((allocations ?? []).map((allocation) => this.toAllocationValue(allocation)));
       this.onTouched();
       this.onValidatorChange();
     });
@@ -103,6 +108,9 @@ export class EditExpenseAllocations implements ControlValueAccessor, Validator {
     for (const allocation of value ?? []) {
       this.form.controls.allocations.push(this.createRow(allocation), { emitEvent: false });
     }
+    // writeValue can run after this component has already been checked (for example when
+    // route data arrives). Make sure Angular renders the newly-created FormArray controls.
+    this.changeDetectorRef.markForCheck();
   }
 
   registerOnChange(fn: (value: ExpenseAllocationValue[]) => void): void {
@@ -174,9 +182,9 @@ export class EditExpenseAllocations implements ControlValueAccessor, Validator {
       )
       .subscribe({
         next: ({ data }) => {
-          this.form.controls.allocations.at(this.creatingTypeFor!).controls.type.setValue(
-            data.documentId,
-          );
+          this.form.controls.allocations
+            .at(this.creatingTypeFor!)
+            .controls.type.setValue(data.documentId);
           this.savingType = false;
           this.creatingTypeFor = null;
           this.reloadTypes.next();
@@ -220,16 +228,18 @@ export class EditExpenseAllocations implements ControlValueAccessor, Validator {
     });
   }
 
-  private toAllocationValue(allocation: Partial<{
-    documentId: string | null;
-    mode: 'quick' | 'advanced';
-    valueMode: 'amount' | 'rate';
-    type: string | null;
-    partner: string | null;
-    countsAsPaid: boolean | null;
-    amount: number | null;
-    rate: number;
-  }>): ExpenseAllocationValue {
+  private toAllocationValue(
+    allocation: Partial<{
+      documentId: string | null;
+      mode: 'quick' | 'advanced';
+      valueMode: 'amount' | 'rate';
+      type: string | null;
+      partner: string | null;
+      countsAsPaid: boolean | null;
+      amount: number | null;
+      rate: number;
+    }>,
+  ): ExpenseAllocationValue {
     const target =
       allocation.mode === 'advanced'
         ? { type: allocation.type!, partner: null, countsAsPaid: null }

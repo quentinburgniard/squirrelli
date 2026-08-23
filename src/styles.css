@@ -26,14 +26,14 @@ main {
 
 @keyframes page-out {
   to {
-    transform: translateX(-1.5rem);
+    transform: translateX(-24px);
     opacity: 0;
   }
 }
 
 @keyframes page-in {
   from {
-    transform: translateX(1.5rem);
+    transform: translateX(24px);
     opacity: 0;
   }
 }
