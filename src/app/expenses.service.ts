@@ -6,7 +6,6 @@ import {
   BehaviorSubject,
   Observable,
   combineLatest,
-  filter,
   forkJoin,
   map,
   shareReplay,
@@ -27,18 +26,15 @@ export class ExpensesService {
     fromDate: this.fromDate$,
     untilDate: this.untilDate$,
   }).pipe(
-    filter(
-      (value): value is { fromDate: Dayjs; untilDate: Dayjs } =>
-        value.fromDate !== null && value.untilDate !== null,
-    ),
     switchMap(({ fromDate, untilDate }) =>
       this.http
         .get<{ data: RawExpense[] }>(`${environment.apiBaseUrl}/expenses`, {
           params: {
             sort: 'date',
             populate: ['merchant', 'category'],
-            'filters[date][$gte]': this.getApiDateString(fromDate),
-            'filters[date][$lte]': this.getApiDateString(untilDate),
+            'pagination[pageSize]': 500,
+            ...(fromDate ? { 'filters[date][$gte]': this.getApiDateString(fromDate) } : {}),
+            ...(untilDate ? { 'filters[date][$lte]': this.getApiDateString(untilDate) } : {}),
           },
           withCredentials: true,
         })
