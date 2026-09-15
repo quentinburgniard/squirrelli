@@ -2,8 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Observable, finalize, forkJoin, iif, map, of, shareReplay, switchMap } from 'rxjs';
-import { isString } from 'lodash-es';
+import {
+  Observable,
+  combineLatest,
+  finalize,
+  forkJoin,
+  iif,
+  map,
+  of,
+  shareReplay,
+  startWith,
+  switchMap,
+} from 'rxjs';
+import { createNameSearch } from '../utils/name-search';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -123,7 +134,13 @@ export class EditExpense implements OnInit {
     this.projects$ = this.http
       .get<{ data: any }>(`${environment.apiBaseUrl}/expense-projects`, { withCredentials: true })
       .pipe(map(({ data }) => data));
-    this.filteredMerchants$ = this.merchants$;
+    this.filteredMerchants$ = combineLatest([
+      this.merchants$.pipe(map((merchants) => createNameSearch(merchants, (merchant) => merchant.name))),
+      this._form.controls.merchant.valueChanges.pipe(startWith(this._form.controls.merchant.value)),
+    ]).pipe(
+      map(([searchMerchants, value]) => searchMerchants(typeof value === 'string' ? value : '')),
+      shareReplay({ bufferSize: 1, refCount: true }),
+    );
   }
 
   ngOnInit() {
@@ -162,16 +179,6 @@ export class EditExpense implements OnInit {
       );
     });
 
-    this._form.controls.merchant.valueChanges.subscribe((value) => {
-      this.filteredMerchants$ = this.merchants$.pipe(
-        map((merchants) =>
-          merchants.filter((merchant) =>
-            isString(value) ? merchant.name.toLowerCase().includes(value.toLowerCase()) : true,
-          ),
-        ),
-      );
-    });
-
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         this.resetForm();
@@ -193,7 +200,6 @@ export class EditExpense implements OnInit {
   private resetForm() {
     this.expenseId = null;
     this.originalAllocationIds.clear();
-    this.filteredMerchants$ = this.merchants$;
     this._form.reset({
       date: this._form.controls.date.value,
       currency: this._form.controls.currency.value,

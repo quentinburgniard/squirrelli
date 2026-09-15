@@ -14,6 +14,7 @@ import { RouterLink } from '@angular/router';
 import type { Expense } from '../expense.types';
 import { ExpensesService } from '../expenses.service';
 import { Expense as ExpenseComponent } from '../expense/expense';
+import { createNameSearch } from '../utils/name-search';
 
 @Component({
   selector: 'squirrelli-expenses',
@@ -47,24 +48,24 @@ export class Expenses {
     this.expensesService.fromDate = null;
     this.expensesService.untilDate = null;
     this.filteredExpenses$ = combineLatest([
-      this.expensesService.expenses$,
+      this.expensesService.expenses$.pipe(
+        map((expenses) =>
+          createNameSearch(
+            expenses,
+            (expense) => expense.merchant?.name?.trim() || expense.category?.name || '',
+          ),
+        ),
+      ),
       this.filterForm.valueChanges.pipe(startWith(this.filterForm.getRawValue())),
     ]).pipe(
-      map(([expenses, filters]) => {
-        const merchant = filters.merchant?.trim().toLocaleLowerCase() ?? '';
+      map(([searchExpenses, filters]) => {
         const fromDate = filters.fromDate ? dayjs(filters.fromDate).startOf('day') : null;
         const untilDate = filters.untilDate ? dayjs(filters.untilDate).endOf('day') : null;
 
-        return expenses.filter((expense) => {
-          const expenseMerchant = (
-            expense.merchant?.name ??
-            expense.category?.name ??
-            ''
-          ).toLocaleLowerCase();
+        return searchExpenses(filters.merchant ?? '').filter((expense) => {
           const amount = Number(expense.amount);
 
           return (
-            (!merchant || expenseMerchant.includes(merchant)) &&
             (!fromDate || (!!expense.date && !expense.date.isBefore(fromDate))) &&
             (!untilDate || (!!expense.date && !expense.date.isAfter(untilDate))) &&
             (filters.minimumAmount == null || amount >= filters.minimumAmount) &&
