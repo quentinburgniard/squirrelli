@@ -7,10 +7,20 @@ import { RouterLink } from '@angular/router';
   templateUrl: './menu.html',
   styles: `
     .menu-panel {
+      top: var(--mat-toolbar-standard-height, 64px);
+    }
+
+    @media (max-width: 599px) {
+      .menu-panel {
+        top: var(--mat-toolbar-mobile-height, 56px);
+      }
+    }
+
+    .menu-panel nav {
       animation: menu-in 180ms ease-out;
     }
 
-    .menu-panel.menu-leave {
+    .menu-panel.menu-leave nav {
       animation: menu-out 150ms ease-in;
     }
 

@@ -1,33 +1,49 @@
 @if (open) {
   <div
-    class="menu-panel absolute left-0 right-0 h-screen z-50 backdrop-blur-sm"
+    class="menu-panel fixed inset-0 z-50 overflow-x-hidden overflow-y-auto backdrop-blur-sm"
     animate.leave="menu-leave"
     (click)="closed.emit()"
   >
-    <div
-      class="relative mx-auto mt-20 w-[min(calc(100%_-_32px),384px)] rounded-3xl bg-white p-6 shadow-[0_30px_90px_-40px_rgba(15,23,42,0.9)]"
+    <nav
+      aria-label="Main navigation"
+      class="relative mx-auto my-20 grid w-[calc(100%_-_32px)] max-w-3xl gap-3 text-base font-semibold text-[var(--mat-sys-on-surface)] md:w-full"
       (click)="$event.stopPropagation()"
     >
-      <div class="flex items-center justify-between gap-4">
-        <p class="text-xs uppercase tracking-[3.6px] text-slate-500">Menu</p>
-      </div>
-      <div class="mt-6 grid gap-3 text-base font-semibold text-slate-900">
-        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/" (click)="closed.emit()"
-          >Dashboard</a
-        >
-        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/expenses" (click)="closed.emit()"
-          >Expenses</a
-        >
-        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/incomes" (click)="closed.emit()"
-          >Incomes</a
-        >
-        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/assets" (click)="closed.emit()"
-          >Assets</a
-        >
-        <a class="rounded-xl bg-slate-100 px-4 py-3" routerLink="/settings" (click)="closed.emit()"
-          >Settings</a
-        >
-      </div>
-    </div>
+      <a
+        class="rounded-xl bg-[var(--mat-sys-surface-container-high)] px-4 py-3 shadow-sm md:py-5"
+        routerLink="/"
+        (click)="closed.emit()"
+      >
+        <span>Dashboard</span>
+      </a>
+      <a
+        class="rounded-xl bg-[var(--mat-sys-surface-container-high)] px-4 py-3 shadow-sm md:py-5"
+        routerLink="/expenses"
+        (click)="closed.emit()"
+      >
+        <span>Expenses</span>
+      </a>
+      <a
+        class="rounded-xl bg-[var(--mat-sys-surface-container-high)] px-4 py-3 shadow-sm md:py-5"
+        routerLink="/incomes"
+        (click)="closed.emit()"
+      >
+        <span>Incomes</span>
+      </a>
+      <a
+        class="rounded-xl bg-[var(--mat-sys-surface-container-high)] px-4 py-3 shadow-sm md:py-5"
+        routerLink="/assets"
+        (click)="closed.emit()"
+      >
+        <span>Assets</span>
+      </a>
+      <a
+        class="rounded-xl bg-[var(--mat-sys-surface-container-high)] px-4 py-3 shadow-sm md:py-5"
+        routerLink="/settings"
+        (click)="closed.emit()"
+      >
+        <span>Settings</span>
+      </a>
+    </nav>
   </div>
 }
