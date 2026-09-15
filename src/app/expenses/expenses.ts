@@ -1,48 +1,43 @@
 import { AsyncPipe } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { provideNativeDateAdapter } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import dayjs from 'dayjs/esm';
-import { Observable, combineLatest, map, startWith } from 'rxjs';
-import { MatIconModule } from '@angular/material/icon';
+import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
-import { RouterLink } from '@angular/router';
 import type { Expense } from '../expense.types';
+import {
+  EMPTY_EXPENSE_FILTERS,
+  ExpenseFilters,
+  type ExpenseFiltersValue,
+} from '../expense-filters/expense-filters';
 import { ExpensesService } from '../expenses.service';
 import { Expense as ExpenseComponent } from '../expense/expense';
+import { FloatingActions, type FloatingActionNav } from '../floating-actions/floating-actions';
+import { TranslatePipe } from '../i18n/translate.pipe';
 import { createNameSearch } from '../utils/name-search';
 
 @Component({
   selector: 'squirrelli-expenses',
   imports: [
     AsyncPipe,
-    ReactiveFormsModule,
     ExpenseComponent,
-    MatIconModule,
     MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatButtonModule,
-    RouterLink,
+    ExpenseFilters,
+    FloatingActions,
+    TranslatePipe,
   ],
-  providers: [provideNativeDateAdapter()],
   templateUrl: './expenses.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'flex flex-col gap-4' },
 })
 export class Expenses {
+  protected readonly actions: readonly FloatingActionNav[] = [
+    { label: 'partners', icon: 'group', routerLink: '/expenses/partners' },
+    { label: 'categories', icon: 'category', routerLink: '/expenses/categories' },
+    { label: 'importExpenses', icon: 'upload_file', routerLink: '/expenses/import' },
+    { label: 'addExpense', icon: 'add', routerLink: '/expenses/edit' },
+  ];
   protected readonly filteredExpenses$: Observable<Expense[]>;
-  protected readonly filterForm = new FormGroup({
-    merchant: new FormControl('', { nonNullable: true }),
-    fromDate: new FormControl<Date | null>(null),
-    untilDate: new FormControl<Date | null>(null),
-    minimumAmount: new FormControl<number | null>(null),
-    maximumAmount: new FormControl<number | null>(null),
-  });
+  private readonly filtersSubject = new BehaviorSubject<ExpenseFiltersValue>(EMPTY_EXPENSE_FILTERS);
 
   constructor(private readonly expensesService: ExpensesService) {
     this.expensesService.fromDate = null;
@@ -56,7 +51,7 @@ export class Expenses {
           ),
         ),
       ),
-      this.filterForm.valueChanges.pipe(startWith(this.filterForm.getRawValue())),
+      this.filtersSubject,
     ]).pipe(
       map(([searchExpenses, filters]) => {
         const fromDate = filters.fromDate ? dayjs(filters.fromDate).startOf('day') : null;
@@ -76,13 +71,7 @@ export class Expenses {
     );
   }
 
-  protected clearFilters(): void {
-    this.filterForm.reset({
-      merchant: '',
-      fromDate: null,
-      untilDate: null,
-      minimumAmount: null,
-      maximumAmount: null,
-    });
+  protected updateFilters(filters: ExpenseFiltersValue): void {
+    this.filtersSubject.next(filters);
   }
 }

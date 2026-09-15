@@ -1,29 +1,39 @@
 <form [formGroup]="_form" class="flex flex-col gap-4" (ngSubmit)="onSubmit()">
   <mat-form-field>
-    <mat-label>Choose a date</mat-label>
-    <input matInput [formControl]="_form.controls.date" [matDatepicker]="picker" />
+    <mat-label>{{ 'chooseDate' | translate }}</mat-label>
+    <input
+      matInput
+      [formControl]="_form.controls.date"
+      [matDatepicker]="picker"
+      [readonly]="isMobile()"
+      (click)="isMobile() && picker.open()"
+    />
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
+    <mat-datepicker #picker [touchUi]="isMobile()"></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field class="w-full">
-    <mat-label>Merchant or Category</mat-label>
+    <mat-label>{{ 'merchantOrCategory' | translate }}</mat-label>
     <input
       formControlName="merchant"
       type="text"
-      placeholder="Pick one"
+      [placeholder]="'pickOne' | translate"
       matInput
       [matAutocomplete]="merchant"
     />
-    <mat-autocomplete #merchant="matAutocomplete" [displayWith]="getName">
-      <mat-optgroup label="Merchants">
+    <mat-autocomplete
+      #merchant="matAutocomplete"
+      class="merchant-autocomplete"
+      [displayWith]="getName"
+    >
+      <mat-optgroup [label]="'merchants' | translate">
         @for (merchant of filteredMerchants$ | async; track merchant.target + merchant.id) {
           @if (merchant.target === 'merchant') {
             <mat-option [value]="merchant">{{ merchant.name }}</mat-option>
           }
         }
       </mat-optgroup>
-      <mat-optgroup label="Categories">
+      <mat-optgroup [label]="'categories' | translate">
         @for (merchant of filteredMerchants$ | async; track merchant.target + merchant.id) {
           @if (merchant.target === 'category') {
             <mat-option [value]="merchant">{{ merchant.name }}</mat-option>
@@ -33,33 +43,28 @@
     </mat-autocomplete>
   </mat-form-field>
 
-  <div>
-    <mat-form-field floatLabel="always">
-      <mat-label>Amount</mat-label>
-      <input
-        formControlName="amount"
-        type="number"
-        class="example-right-align"
-        matInput
-        placeholder="0"
-      />
+  <div class="flex gap-2">
+    <mat-form-field floatLabel="always" class="min-w-0 flex-1">
+      <mat-label>{{ 'amount' | translate }}</mat-label>
+      <input formControlName="amount" type="number" matInput min="0" />
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>Currency</mat-label>
+
+    <mat-form-field class="w-28 shrink-0 sm:w-32">
+      <mat-label>{{ 'currency' | translate }}</mat-label>
       <mat-select formControlName="currency">
         @for (currency of currencies; track currency) {
-          <mat-option [value]="currency">{{ currency }}</mat-option>
+          <mat-option [value]="currency">{{ currency.toUpperCase() }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
   </div>
 
   <mat-form-field class="w-full">
-    <mat-label>Project</mat-label>
+    <mat-label>{{ 'project' | translate }}</mat-label>
     <input
       formControlName="project"
       type="text"
-      placeholder="Pick one"
+      [placeholder]="'pickOne' | translate"
       matInput
       [matAutocomplete]="project"
     />
@@ -75,5 +80,7 @@
     [amount]="_form.controls.amount.value"
   ></squirrelli-edit-expense-allocations>
 
-  <button matButton="filled" type="submit" [disabled]="_form.invalid || loading">Add</button>
+  <button matButton="filled" type="submit" [disabled]="_form.invalid || loading">
+    {{ 'add' | translate }}
+  </button>
 </form>

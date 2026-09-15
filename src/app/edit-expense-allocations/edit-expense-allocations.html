@@ -1,30 +1,35 @@
 <section [formGroup]="form" class="flex flex-col gap-4">
   <div>
-    <h2>Split this expense</h2>
+    <h2>{{ 'splitExpense' | translate }}</h2>
     <p class="text-sm text-[var(--mat-sys-on-surface-variant)]">
-      Add the part of this expense that belongs to someone else or another category.
+      {{ 'allocationDescription' | translate }}
     </p>
   </div>
 
   <div formArrayName="allocations" class="flex flex-col gap-4">
     @for (allocation of form.controls.allocations.controls; track allocation; let index = $index) {
-      <div [formGroupName]="index" class="rounded-xl border border-[var(--mat-sys-outline-variant)] p-4">
+      <div
+        [formGroupName]="index"
+        class="rounded-xl border border-[var(--mat-sys-outline-variant)] p-4"
+      >
         <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
           <div class="flex gap-2">
             <button matButton type="button" (click)="allocation.controls.mode.setValue('quick')">
-              Quick allocation
+              {{ 'quickAllocation' | translate }}
             </button>
             <button matButton type="button" (click)="allocation.controls.mode.setValue('advanced')">
-              Advanced
+              {{ 'advanced' | translate }}
             </button>
           </div>
-          <button matButton type="button" (click)="removeAllocation(index)">Remove</button>
+          <button matButton type="button" (click)="removeAllocation(index)">
+            {{ 'remove' | translate }}
+          </button>
         </div>
 
         @if (allocation.controls.mode.value === 'quick') {
           <div class="flex flex-wrap gap-3">
             <mat-form-field class="min-w-52 flex-1">
-              <mat-label>Person</mat-label>
+              <mat-label>{{ 'person' | translate }}</mat-label>
               <mat-select formControlName="partner">
                 @for (partner of partners$ | async; track partner.documentId) {
                   <mat-option [value]="partner.documentId">{{ partner.name }}</mat-option>
@@ -32,58 +37,67 @@
               </mat-select>
             </mat-form-field>
             <mat-form-field class="min-w-64 flex-1">
-              <mat-label>Arrangement</mat-label>
+              <mat-label>{{ 'arrangement' | translate }}</mat-label>
               <mat-select formControlName="countsAsPaid">
-                <mat-option [value]="true">Advance — repayment expected</mat-option>
-                <mat-option [value]="false">Gift — no repayment expected</mat-option>
+                <mat-option [value]="true">{{ 'advanceRepaymentExpected' | translate }}</mat-option>
+                <mat-option [value]="false">{{ 'giftNoRepaymentExpected' | translate }}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
         } @else {
           <div class="flex flex-wrap items-start gap-3">
             <mat-form-field class="min-w-64 flex-1">
-              <mat-label>Allocation type</mat-label>
+              <mat-label>{{ 'allocationType' | translate }}</mat-label>
               <mat-select formControlName="type">
                 @for (type of allocationTypes$ | async; track type.documentId) {
                   <mat-option [value]="type.documentId">{{ type.name }}</mat-option>
                 }
               </mat-select>
-              <mat-hint>A saved category and/or partner rule</mat-hint>
+              <mat-hint>{{ 'allocationTypeHint' | translate }}</mat-hint>
             </mat-form-field>
-            <button matButton type="button" (click)="startCreateType(index)">Create type</button>
+            <button matButton type="button" (click)="startCreateType(index)">
+              {{ 'createType' | translate }}
+            </button>
           </div>
 
           @if (creatingTypeFor === index) {
-            <div [formGroup]="newTypeForm" class="mb-4 rounded-lg bg-[var(--mat-sys-surface-container-high)] p-4">
-              <h3>Create allocation type</h3>
+            <div
+              [formGroup]="newTypeForm"
+              class="mb-4 rounded-lg bg-[var(--mat-sys-surface-container-high)] p-4"
+            >
+              <h3>{{ 'createAllocationType' | translate }}</h3>
               <div class="flex flex-wrap gap-3">
                 <mat-form-field class="min-w-52 flex-1">
-                  <mat-label>Name</mat-label>
+                  <mat-label>{{ 'name' | translate }}</mat-label>
                   <input matInput formControlName="name" />
                 </mat-form-field>
                 <mat-form-field class="min-w-52 flex-1">
-                  <mat-label>Category (optional)</mat-label>
+                  <mat-label>{{ 'optionalCategory' | translate }}</mat-label>
                   <mat-select formControlName="category">
-                    <mat-option [value]="null">None</mat-option>
+                    <mat-option [value]="null">{{ 'none' | translate }}</mat-option>
                     @for (category of categories$ | async; track category.documentId) {
                       <mat-option [value]="category.documentId">{{ category.name }}</mat-option>
                     }
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field class="min-w-52 flex-1">
-                  <mat-label>Partner (optional)</mat-label>
+                  <mat-label>{{ 'optionalPartner' | translate }}</mat-label>
                   <mat-select formControlName="partner">
-                    <mat-option [value]="null">None</mat-option>
+                    <mat-option [value]="null">{{ 'none' | translate }}</mat-option>
                     @for (partner of partners$ | async; track partner.documentId) {
                       <mat-option [value]="partner.documentId">{{ partner.name }}</mat-option>
                     }
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field class="min-w-64 flex-1">
-                  <mat-label>Arrangement</mat-label>
+                  <mat-label>{{ 'arrangement' | translate }}</mat-label>
                   <mat-select formControlName="countsAsPaid">
-                    <mat-option [value]="true">Advance — repayment expected</mat-option>
-                    <mat-option [value]="false">Gift — no repayment expected</mat-option>
+                    <mat-option [value]="true">{{
+                      'advanceRepaymentExpected' | translate
+                    }}</mat-option>
+                    <mat-option [value]="false">{{
+                      'giftNoRepaymentExpected' | translate
+                    }}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -94,9 +108,11 @@
                   [disabled]="newTypeForm.invalid || savingType"
                   (click)="createType()"
                 >
-                  Save type
+                  {{ 'saveType' | translate }}
                 </button>
-                <button matButton type="button" (click)="cancelCreateType()">Cancel</button>
+                <button matButton type="button" (click)="cancelCreateType()">
+                  {{ 'cancel' | translate }}
+                </button>
               </div>
             </div>
           }
@@ -104,10 +120,10 @@
 
         <div class="mb-3 flex gap-2">
           <button matButton type="button" (click)="setValueMode(allocation, 'rate')">
-            Percentage
+            {{ 'percentage' | translate }}
           </button>
           <button matButton type="button" (click)="setValueMode(allocation, 'amount')">
-            Exact amount
+            {{ 'exactAmount' | translate }}
           </button>
         </div>
 
@@ -120,7 +136,7 @@
           </div>
         } @else {
           <mat-form-field>
-            <mat-label>Amount</mat-label>
+            <mat-label>{{ 'amount' | translate }}</mat-label>
             <input matInput formControlName="amount" type="number" min="0" [max]="amount ?? null" />
           </mat-form-field>
         }
@@ -128,5 +144,7 @@
     }
   </div>
 
-  <button matButton type="button" (click)="addAllocation()">Add allocation</button>
+  <button matButton type="button" (click)="addAllocation()">
+    {{ 'addAllocation' | translate }}
+  </button>
 </section>

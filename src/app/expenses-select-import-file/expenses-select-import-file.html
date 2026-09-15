@@ -1,4 +1,6 @@
-<button mat-raised-button color="primary" (click)="fileInput?.click()">Upload expenses</button>
+<button mat-raised-button color="primary" (click)="fileInput?.click()">
+  {{ 'uploadExpenses' | translate }}
+</button>
 <input
   #fileInput
   type="file"

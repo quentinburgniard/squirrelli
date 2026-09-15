@@ -1,20 +1,22 @@
 <div>
-  <h1>{{ partnerId ? 'Edit partner' : 'Add partner' }}</h1>
+  <h1>{{ (partnerId ? 'editPartner' : 'addPartner') | translate }}</h1>
 </div>
 
 <form [formGroup]="form" class="flex flex-col gap-4" (ngSubmit)="onSubmit()">
   <mat-form-field>
-    <mat-label>Name</mat-label>
+    <mat-label>{{ 'name' | translate }}</mat-label>
     <input matInput formControlName="name" />
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Email</mat-label>
+    <mat-label>{{ 'email' | translate }}</mat-label>
     <input matInput formControlName="email" type="email" />
   </mat-form-field>
 
   <div class="flex gap-2">
-    <button matButton="filled" type="submit" [disabled]="form.invalid || loading">Save</button>
-    <a matButton routerLink="/partners">Cancel</a>
+    <button matButton="filled" type="submit" [disabled]="form.invalid || loading">
+      {{ 'save' | translate }}
+    </button>
+    <a matButton routerLink="/expenses/partners">{{ 'cancel' | translate }}</a>
   </div>
 </form>

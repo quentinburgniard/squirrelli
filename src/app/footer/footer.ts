@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { SettingsService } from '../settings.service';
 import { VERSION } from '../version';
@@ -6,6 +6,7 @@ import { VERSION } from '../version';
 @Component({
   selector: 'squirrelli-footer',
   imports: [MatToolbarModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './footer.html',
 })
 export class Footer {

@@ -11,6 +11,129 @@ main {
   view-transition-name: page;
 }
 
+.entity-row {
+  position: relative;
+  display: flex;
+  min-height: 76px;
+  align-items: center;
+  gap: 12px;
+  border-radius: 16px;
+  padding: 12px;
+  color: var(--mat-sys-on-surface);
+  transition: background-color 150ms ease;
+}
+
+.entity-row:hover {
+  background-color: var(--mat-sys-surface-container-high);
+}
+
+.entity-row:has(:focus-visible) {
+  outline: 2px solid var(--mat-sys-primary);
+  outline-offset: -2px;
+}
+
+.entity-link {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.entity-badge {
+  display: grid;
+  height: 46px;
+  flex: 0 0 46px;
+  place-items: center;
+  border-radius: 15px;
+  background: var(--mat-sys-secondary-container);
+  color: var(--mat-sys-on-secondary-container);
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.entity-details {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.entity-name {
+  overflow-wrap: anywhere;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.entity-meta {
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 12px;
+}
+
+.entity-value {
+  flex-shrink: 0;
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.mat-mdc-form-field .mdc-text-field--outlined {
+  border-radius: 8px;
+  background-color: var(--mat-sys-surface-container);
+}
+
+.merchant-autocomplete.mat-mdc-autocomplete-panel {
+  display: block;
+  width: 100%;
+  padding-block: 4px;
+  border-radius: 12px;
+  background: var(--mat-sys-surface-container-high);
+}
+
+.merchant-autocomplete .mat-mdc-option {
+  align-self: stretch;
+  box-sizing: border-box;
+  max-width: none;
+  flex: 0 0 100%;
+  inline-size: 100%;
+  width: 100%;
+  min-height: 48px;
+  padding-inline: 16px;
+  color: var(--mat-sys-on-surface);
+}
+
+.merchant-autocomplete .mat-mdc-optgroup {
+  display: block;
+  box-sizing: border-box;
+  inline-size: 100%;
+  width: 100%;
+}
+
+.merchant-autocomplete .mat-mdc-optgroup .mat-mdc-option {
+  padding-inline: 16px;
+}
+
+.merchant-autocomplete .mat-mdc-optgroup-label {
+  min-height: 36px;
+  padding-inline: 16px;
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.merchant-autocomplete .mat-mdc-option:hover:not(.mdc-list-item--disabled),
+.merchant-autocomplete .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) {
+  background: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+}
+
+.merchant-autocomplete
+  .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled)
+  .mdc-list-item__primary-text {
+  color: var(--mat-sys-on-primary-container);
+}
+
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
@@ -42,5 +165,119 @@ main {
   ::view-transition-old(page),
   ::view-transition-new(page) {
     animation: none;
+  }
+}
+
+.expense-trend-chart {
+  color: var(--mat-sys-on-surface);
+  pointer-events: none;
+  user-select: none;
+}
+
+.expense-trend-chart .ngx-charts text {
+  fill: var(--mat-sys-on-surface-variant);
+  font-family: Lato, sans-serif;
+  font-size: 12px;
+}
+
+.expense-trend-chart .gridline-path {
+  stroke: var(--mat-sys-outline-variant);
+  stroke-opacity: 0.25;
+}
+
+.expense-trend-chart .area-series .area {
+  fill-opacity: 0.28;
+  stroke: none;
+}
+
+.expense-trend-chart .area-series .line,
+.expense-trend-chart .line-highlight {
+  display: none;
+}
+
+.expense-trend-chart g[clip-path] > g:nth-child(2) .area {
+  display: none;
+}
+
+.expense-trend-chart g[clip-path] > g:nth-child(2) .area-series .line {
+  display: block;
+  stroke-width: 2px;
+  stroke-dasharray: 5 5;
+  opacity: 0.75;
+}
+
+.expense-trend-chart .area-series .circle {
+  stroke-width: 2px;
+}
+
+.expense-trend-chart .tooltip-anchor {
+  fill: var(--mat-sys-surface-container-highest);
+}
+
+.expense-trend-values {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.expense-trend-values li {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+  border-radius: 12px;
+  background: var(--mat-sys-surface-container-high);
+  padding: 10px 12px;
+}
+
+.expense-trend-values span {
+  overflow: hidden;
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.expense-trend-values strong {
+  color: var(--mat-sys-on-surface);
+  font-size: 14px;
+}
+
+.expense-trend-change {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.expense-trend-change.trend-up {
+  color: var(--mat-sys-error);
+}
+
+.expense-trend-change.trend-down {
+  color: var(--mat-sys-primary);
+}
+
+.expense-trend-change.trend-flat {
+  color: var(--mat-sys-on-surface-variant);
+}
+
+@media (max-width: 599px) {
+  .expense-trend-chart .ngx-charts text {
+    font-size: 10px;
+  }
+
+  .expense-trend-values li {
+    padding: 8px 10px;
+  }
+}
+
+@media (min-width: 768px) {
+  .expense-trend-values {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 }

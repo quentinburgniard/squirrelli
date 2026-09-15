@@ -1,0 +1,52 @@
+<div>
+  <h1>{{ 'lastSixMonths' | translate }}</h1>
+  <p class="text-sm text-[var(--mat-sys-on-surface-variant)]">
+    {{ 'monthlyExpenseTrend' | translate }}
+  </p>
+</div>
+
+<mat-card>
+  <mat-card-content>
+    @if (trend$ | async; as trend) {
+      <div class="expense-trend-chart relative mt-4 aspect-video w-full max-h-80">
+        <ngx-charts-area-chart
+          [results]="trend"
+          [customColors]="chartColors"
+          [legend]="false"
+          [xAxis]="true"
+          [yAxis]="!isMobile()"
+          [autoScale]="true"
+          [gradient]="true"
+          [showGridLines]="true"
+          [tooltipDisabled]="true"
+          [xAxisTickFormatting]="formatMonth"
+          [yAxisTickFormatting]="formatAxisAmount"
+        />
+      </div>
+
+      <ul class="expense-trend-values" [attr.aria-label]="'monthlyExpenseTotals' | translate">
+        @for (point of trend[0].series; track point.name) {
+          <li>
+            <span>{{ point.name }}</span>
+            <strong>{{ formatAmount(point.value) }}</strong>
+            @if (!$first && point.changePercentage !== null) {
+              <small
+                class="expense-trend-change"
+                [class.trend-up]="point.trend === 'up'"
+                [class.trend-down]="point.trend === 'down'"
+                [class.trend-flat]="point.trend === 'flat'"
+              >
+                @if (point.trend === 'up') {
+                  <span aria-hidden="true">↑</span>
+                } @else if (point.trend === 'down') {
+                  <span aria-hidden="true">↓</span>
+                }
+                {{ formatChange(point.changePercentage) }}
+              </small>
+            }
+          </li>
+        }
+      </ul>
+    }
+  </mat-card-content>
+</mat-card>

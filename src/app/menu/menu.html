@@ -5,7 +5,7 @@
     (click)="closed.emit()"
   >
     <nav
-      aria-label="Main navigation"
+      [attr.aria-label]="'mainNavigation' | translate"
       class="relative mx-auto my-20 grid w-[calc(100%_-_32px)] max-w-3xl gap-3 text-base font-semibold text-[var(--mat-sys-on-surface)] md:w-full"
       (click)="$event.stopPropagation()"
     >
@@ -14,35 +14,35 @@
         routerLink="/"
         (click)="closed.emit()"
       >
-        <span>Dashboard</span>
+        <span>{{ 'dashboard' | translate }}</span>
       </a>
       <a
         class="rounded-xl bg-[var(--mat-sys-surface-container-high)] px-4 py-3 shadow-sm md:py-5"
         routerLink="/expenses"
         (click)="closed.emit()"
       >
-        <span>Expenses</span>
+        <span>{{ 'expensesNavigation' | translate }}</span>
       </a>
       <a
         class="rounded-xl bg-[var(--mat-sys-surface-container-high)] px-4 py-3 shadow-sm md:py-5"
         routerLink="/incomes"
         (click)="closed.emit()"
       >
-        <span>Incomes</span>
+        <span>{{ 'incomesNavigation' | translate }}</span>
       </a>
       <a
         class="rounded-xl bg-[var(--mat-sys-surface-container-high)] px-4 py-3 shadow-sm md:py-5"
         routerLink="/assets"
         (click)="closed.emit()"
       >
-        <span>Assets</span>
+        <span>{{ 'assetsNavigation' | translate }}</span>
       </a>
       <a
         class="rounded-xl bg-[var(--mat-sys-surface-container-high)] px-4 py-3 shadow-sm md:py-5"
         routerLink="/settings"
         (click)="closed.emit()"
       >
-        <span>Settings</span>
+        <span>{{ 'settingsNavigation' | translate }}</span>
       </a>
     </nav>
   </div>

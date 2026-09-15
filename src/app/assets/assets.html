@@ -5,7 +5,7 @@
     class="grid grid-cols-[minmax(0,2fr)_minmax(176px,3fr)] items-center gap-2 md:grid-cols-[minmax(0,1fr)_minmax(144px,45%)] md:gap-8"
   >
     <div class="relative z-10 self-start pt-2 md:pt-4">
-      <h1 class="text-3xl md:text-4xl">Assets</h1>
+      <h1 class="text-3xl md:text-4xl">{{ 'assets' | translate }}</h1>
     </div>
 
     <img
@@ -14,45 +14,46 @@
       alt=""
       aria-hidden="true"
     />
-
-    <div class="relative z-10 col-span-2 grid gap-2 sm:flex sm:flex-wrap">
-      <a
-        class="rounded-xl bg-[var(--mat-sys-primary)] px-4 py-3 text-center font-semibold text-[var(--mat-sys-on-primary)]"
-        routerLink="/assets/edit"
-      >
-        Add asset
-      </a>
-    </div>
   </div>
 </section>
 
 <mat-card>
   <mat-card-content>
-    <table mat-table [dataSource]="assets$">
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let asset">{{ asset.name }}</td>
-      </ng-container>
+    @if (assets$ | async; as assets) {
+      <div class="mb-3 text-sm text-[var(--mat-sys-on-surface-variant)]">
+        {{ assets.length }}
+        {{ (assets.length === 1 ? 'assetSingular' : 'assetsPlural') | translate }}
+      </div>
 
-      <ng-container matColumnDef="category">
-        <th mat-header-cell *matHeaderCellDef>Category</th>
-        <td mat-cell *matCellDef="let asset">{{ asset.category?.name }}</td>
-      </ng-container>
+      <ul class="m-0 list-none p-0">
+        @for (asset of assets; track asset.documentId) {
+          <li class="entity-row">
+            <a
+              class="entity-link"
+              [routerLink]="['/assets/edit', asset.documentId]"
+              [attr.aria-label]="('editAsset' | translate) + ': ' + asset.name"
+            ></a>
+            <span class="entity-badge" aria-hidden="true">
+              {{ (asset.name || 'A').charAt(0).toUpperCase() }}
+            </span>
+            <span class="entity-details">
+              <span class="entity-name">{{ asset.name || ('unnamedAsset' | translate) }}</span>
+              <span class="entity-meta">{{
+                asset.category?.name || ('noCategory' | translate)
+              }}</span>
+            </span>
+            <span class="entity-value">{{ asset.liquidity }}</span>
+          </li>
+        }
+      </ul>
 
-      <ng-container matColumnDef="liquidity">
-        <th mat-header-cell *matHeaderCellDef>Liquidity</th>
-        <td mat-cell *matCellDef="let asset">{{ asset.liquidity }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let asset" class="text-right">
-          <a matButton [routerLink]="['/assets/edit', asset.documentId]">Edit</a>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="columns"></tr>
-      <tr mat-row *matRowDef="let row; columns: columns"></tr>
-    </table>
+      @if (assets.length === 0) {
+        <p class="py-8 text-center text-[var(--mat-sys-on-surface-variant)]">
+          {{ 'noAssetsYet' | translate }}
+        </p>
+      }
+    }
   </mat-card-content>
 </mat-card>
+
+<squirrelli-floating-actions [nav]="actions" />

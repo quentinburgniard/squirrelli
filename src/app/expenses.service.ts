@@ -74,6 +74,21 @@ export class ExpensesService {
     );
   }
 
+  getExpensesInDateRange(fromDate: Dayjs, untilDate: Dayjs): Observable<Expense[]> {
+    return this.http
+      .get<{ data: RawExpense[] }>(`${environment.apiBaseUrl}/expenses`, {
+        params: {
+          sort: 'date',
+          populate: ['merchant', 'category'],
+          'pagination[pageSize]': 500,
+          'filters[date][$gte]': this.getApiDateString(fromDate),
+          'filters[date][$lte]': this.getApiDateString(untilDate),
+        },
+        withCredentials: true,
+      })
+      .pipe(map(({ data }) => data.map((expense) => this.getExpenseFromRawExpense(expense))));
+  }
+
   set fromDate(fromDate: Dayjs | null) {
     this.fromDateSubject.next(fromDate);
   }

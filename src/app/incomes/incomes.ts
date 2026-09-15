@@ -1,25 +1,44 @@
-import { Component } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { AsyncPipe, CurrencyPipe } from '@angular/common';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import type { Income } from '../income.types';
+import { FloatingActions, type FloatingActionNav } from '../floating-actions/floating-actions';
+import { TranslatePipe } from '../i18n/translate.pipe';
+import { TranslationService } from '../i18n/translation.service';
 import { IncomesService } from '../incomes.service';
 import { formatDate } from '../utils/date.utils';
 
 @Component({
   selector: 'squirrelli-incomes',
-  imports: [MatButtonModule, MatCardModule, MatTableModule, RouterLink],
+  imports: [AsyncPipe, CurrencyPipe, MatCardModule, RouterLink, FloatingActions, TranslatePipe],
   templateUrl: './incomes.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'flex flex-col gap-4' },
 })
 export class Incomes {
-  protected readonly columns = ['date', 'amount', 'actions'];
+  private readonly translations: TranslationService;
+  protected readonly actions: readonly FloatingActionNav[] = [
+    { label: 'addIncome', icon: 'add', routerLink: '/incomes/edit' },
+  ];
   protected readonly incomes$: Observable<Income[]>;
-  protected readonly formatDate = formatDate;
 
-  constructor(incomesService: IncomesService) {
+  protected formatIncomeDate(value: Income['date']): string {
+    if (!value) return this.translations.translate('noDate');
+    const formatted = formatDate(value as string | Date);
+    const relativeDates = {
+      Today: 'today',
+      Yesterday: 'yesterday',
+      Tomorrow: 'tomorrow',
+    } as const;
+    return formatted in relativeDates
+      ? this.translations.translate(relativeDates[formatted as keyof typeof relativeDates])
+      : formatted;
+  }
+
+  constructor(incomesService: IncomesService, translations: TranslationService) {
+    this.translations = translations;
     this.incomes$ = incomesService.getIncomes();
   }
 }

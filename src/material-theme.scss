@@ -31,6 +31,27 @@ html {
       background-color: transparent,
     )
   );
+
+  @include mat.form-field-overrides(
+    (
+      outlined-container-shape: 8px,
+      outlined-outline-color: transparent,
+      outlined-hover-outline-color: transparent,
+      outlined-focus-outline-color: transparent,
+      outlined-error-outline-color: transparent,
+      outlined-error-hover-outline-color: transparent,
+      outlined-error-focus-outline-color: transparent,
+    )
+  );
+
+  @include mat.option-overrides(
+    (
+      selected-state-layer-color: var(--mat-sys-primary-container),
+      selected-state-label-text-color: var(--mat-sys-on-primary-container),
+      hover-state-layer-color: var(--mat-sys-surface-container-highest),
+      focus-state-layer-color: var(--mat-sys-surface-container-highest),
+    )
+  );
 }
 
 body {

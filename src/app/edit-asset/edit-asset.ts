@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,6 +9,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Observable, finalize } from 'rxjs';
 import type { Asset, AssetCategory, AssetInput } from '../asset.types';
 import { AssetsService } from '../assets.service';
+import { TranslatePipe } from '../i18n/translate.pipe';
 
 @Component({
   selector: 'squirrelli-edit-asset',
@@ -20,8 +21,10 @@ import { AssetsService } from '../assets.service';
     MatSelectModule,
     ReactiveFormsModule,
     RouterLink,
+    TranslatePipe,
   ],
   templateUrl: './edit-asset.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'flex flex-col gap-4' },
 })
 export class EditAsset implements OnInit {

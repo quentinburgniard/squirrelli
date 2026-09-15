@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { assetResolver } from './asset.resolver';
 import { Assets } from './assets/assets';
+import { Categories } from './categories/categories';
+import { Category } from './category/category';
 import { EditAsset } from './edit-asset/edit-asset';
 import { EditExpense } from './edit-expense/edit-expense';
 import { EditIncome } from './edit-income/edit-income';
@@ -23,6 +25,8 @@ export const routes: Routes = [
     children: [
       { path: '', component: Home },
       { path: 'expenses', component: Expenses },
+      { path: 'expenses/categories', component: Categories },
+      { path: 'expenses/categories/:id', component: Category },
       { path: 'expenses/import', component: ExpensesImport },
       { path: 'expenses/edit', component: EditExpense },
       {
@@ -44,10 +48,10 @@ export const routes: Routes = [
         component: EditAsset,
         resolve: { asset: assetResolver },
       },
-      { path: 'partners', component: Partners },
-      { path: 'partners/edit', component: EditPartner },
+      { path: 'expenses/partners', component: Partners },
+      { path: 'expenses/partners/edit', component: EditPartner },
       {
-        path: 'partners/edit/:id',
+        path: 'expenses/partners/edit/:id',
         component: EditPartner,
         resolve: { partner: partnerResolver },
       },

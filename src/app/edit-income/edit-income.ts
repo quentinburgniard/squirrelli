@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,6 +11,7 @@ import dayjs from 'dayjs/esm';
 import { finalize } from 'rxjs';
 import type { Income } from '../income.types';
 import { IncomesService } from '../incomes.service';
+import { TranslatePipe } from '../i18n/translate.pipe';
 import { API_DATE_FORMAT } from '../utils/date.utils';
 
 @Component({
@@ -23,9 +24,11 @@ import { API_DATE_FORMAT } from '../utils/date.utils';
     MatSelectModule,
     ReactiveFormsModule,
     RouterLink,
+    TranslatePipe,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './edit-income.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'flex flex-col gap-4' },
 })
 export class EditIncome implements OnInit {

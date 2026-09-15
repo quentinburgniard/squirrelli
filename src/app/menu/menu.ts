@@ -1,10 +1,12 @@
-import { Component, Input, output } from '@angular/core';
+import { Component, Input, output, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '../i18n/translate.pipe';
 
 @Component({
   selector: 'squirrelli-menu',
-  imports: [RouterLink],
+  imports: [RouterLink, TranslatePipe],
   templateUrl: './menu.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: `
     .menu-panel {
       top: var(--mat-toolbar-standard-height, 64px);

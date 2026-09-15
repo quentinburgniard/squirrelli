@@ -1,6 +1,12 @@
 import { AsyncPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, Input, forwardRef } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  forwardRef,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -22,6 +28,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { BehaviorSubject, Observable, map, shareReplay, switchMap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import type { MerchantCategory } from '../merchant-category.types';
+import { TranslatePipe } from '../i18n/translate.pipe';
 import type {
   ExpenseAllocationType,
   ExpenseAllocationValue,
@@ -49,6 +56,7 @@ type AllocationRow = FormGroup<{
     MatSelectModule,
     MatSliderModule,
     ReactiveFormsModule,
+    TranslatePipe,
   ],
   providers: [
     {
@@ -62,6 +70,7 @@ type AllocationRow = FormGroup<{
       multi: true,
     },
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './edit-expense-allocations.html',
 })
 export class EditExpenseAllocations implements ControlValueAccessor, Validator {

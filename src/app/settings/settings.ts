@@ -1,15 +1,18 @@
 import { JsonPipe } from '@angular/common';
-import { Component, effect } from '@angular/core';
+import { Component, effect, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { RouterLink } from '@angular/router';
 import { SettingsService } from '../settings.service';
-import { Partners } from '../partners/partners';
+import { TranslatePipe } from '../i18n/translate.pipe';
+import { TranslationService } from '../i18n/translation.service';
 
 type ConfigurationFormValue = {
-  language: 'English' | 'Francais';
+  language: 'English' | 'Francais' | 'Portuguese';
   baseCurrency: 'EUR' | 'CHF';
   monthlyResetDay: number | null;
   emergencyFund: number | null;
@@ -19,19 +22,26 @@ type ConfigurationFormValue = {
   selector: 'squirrelli-settings',
   imports: [
     JsonPipe,
+    MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     ReactiveFormsModule,
-    Partners,
+    RouterLink,
+    TranslatePipe,
   ],
   templateUrl: './settings.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'block' },
 })
 export class Settings {
   protected readonly settings;
-  protected readonly languages: ConfigurationFormValue['language'][] = ['English', 'Francais'];
+  protected readonly languages = [
+    { value: 'English', label: 'english' },
+    { value: 'Francais', label: 'french' },
+    { value: 'Portuguese', label: 'portuguese' },
+  ] as const;
   protected readonly currencies: ConfigurationFormValue['baseCurrency'][] = ['EUR', 'CHF'];
   protected readonly resetDays = Array.from({ length: 31 }, (_, index) => index + 1);
   protected readonly form: FormGroup<{
@@ -43,7 +53,10 @@ export class Settings {
     }>;
   }>;
 
-  constructor(settingsService: SettingsService) {
+  constructor(
+    settingsService: SettingsService,
+    private readonly translationService: TranslationService,
+  ) {
     this.settings = settingsService.settings;
     const value = this.toFormValue(this.settings());
     this.form = new FormGroup({
@@ -65,6 +78,10 @@ export class Settings {
     });
   }
 
+  protected selectLanguage(language: ConfigurationFormValue['language']): void {
+    this.translationService.select(language);
+  }
+
   private toFormValue(settings: ReturnType<SettingsService['settings']>): ConfigurationFormValue {
     const configuration: Record<string, unknown> =
       settings?.configuration !== null &&
@@ -78,7 +95,7 @@ export class Settings {
     const emergencyFund = configuration['emergencyFund'];
 
     return {
-      language: language === 'Francais' ? 'Francais' : 'English',
+      language: language === 'Francais' || language === 'Portuguese' ? language : 'English',
       baseCurrency: baseCurrency === 'CHF' ? 'CHF' : 'EUR',
       monthlyResetDay: typeof monthlyResetDay === 'number' ? monthlyResetDay : null,
       emergencyFund: typeof emergencyFund === 'number' ? emergencyFund : null,

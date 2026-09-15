@@ -10,7 +10,10 @@ describe('Expense', () => {
   it('links to the expense document and updates the badge when its input changes', async () => {
     await TestBed.configureTestingModule({
       imports: [Expense],
-      providers: [provideRouter([]), { provide: SettingsService, useValue: { settings: signal(null) } }],
+      providers: [
+        provideRouter([]),
+        { provide: SettingsService, useValue: { settings: signal(null) } },
+      ],
     }).compileComponents();
     const fixture = TestBed.createComponent(Expense);
     fixture.componentRef.setInput('expense', {

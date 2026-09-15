@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -6,11 +6,20 @@ import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
 import { PartnersService } from '../partners.service';
+import { TranslatePipe } from '../i18n/translate.pipe';
 
 @Component({
   selector: 'squirrelli-edit-partner',
-  imports: [MatButtonModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, RouterLink],
+  imports: [
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    RouterLink,
+    TranslatePipe,
+  ],
   templateUrl: './edit-partner.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'flex flex-col gap-4' },
 })
 export class EditPartner implements OnInit {
@@ -54,6 +63,6 @@ export class EditPartner implements OnInit {
 
     request
       .pipe(finalize(() => (this.loading = false)))
-      .subscribe(() => this.router.navigate(['/settings']));
+      .subscribe(() => this.router.navigate(['/expenses/partners']));
   }
 }

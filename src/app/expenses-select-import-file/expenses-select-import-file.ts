@@ -1,11 +1,14 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import * as XLSX from 'xlsx';
+import { TranslatePipe } from '../i18n/translate.pipe';
+import { TranslationService } from '../i18n/translation.service';
 
 @Component({
   selector: 'squirrelli-expenses-select-import-file',
-  imports: [MatButtonModule, MatSnackBarModule],
+  imports: [MatButtonModule, MatSnackBarModule, TranslatePipe],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './expenses-select-import-file.html',
 })
 export class ExpensesSelectImportFile {
@@ -15,7 +18,10 @@ export class ExpensesSelectImportFile {
     columnNames: string[];
   }>();
 
-  constructor(private readonly snackBar: MatSnackBar) {}
+  constructor(
+    private readonly snackBar: MatSnackBar,
+    private readonly translations: TranslationService,
+  ) {}
 
   protected onFileSelected(element: HTMLInputElement): void {
     const file = element.files?.[0];
@@ -34,7 +40,7 @@ export class ExpensesSelectImportFile {
         }
         const worksheet = workbook.Sheets[sheetName];
         if (!worksheet) {
-          this.showError('Unable to read the first sheet.');
+          this.showError(this.translations.translate('unableToReadFirstSheet'));
           return;
         }
         const rows = XLSX.utils.sheet_to_json(worksheet, { header: 1, raw: true }) as Array<
@@ -46,22 +52,22 @@ export class ExpensesSelectImportFile {
           .filter((value) => value.length > 0);
 
         if (columnNames.length === 0) {
-          this.showError('No header row detected.');
+          this.showError(this.translations.translate('noHeaderRowDetected'));
           return;
         }
 
         this.parsed.emit({ fileName: file.name, columnNames });
       } catch (error) {
-        this.showError('Failed to parse the file.');
+        this.showError(this.translations.translate('failedToParseFile'));
       }
     };
-    reader.onerror = () => this.showError('Failed to read the file.');
+    reader.onerror = () => this.showError(this.translations.translate('failedToReadFile'));
     reader.readAsArrayBuffer(file);
     element.value = '';
   }
 
   private showError(message: string): void {
-    this.snackBar.open(message, 'Dismiss', {
+    this.snackBar.open(message, this.translations.translate('dismiss'), {
       duration: 4000,
       horizontalPosition: 'right',
       verticalPosition: 'top',

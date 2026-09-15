@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -19,8 +21,8 @@ import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-
 import { MatSelectModule } from '@angular/material/select';
+
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {
   MAT_DATE_FORMATS,
@@ -30,6 +32,7 @@ import {
 import { environment } from '../../environments/environment';
 import { MatButtonModule } from '@angular/material/button';
 import { EditExpenseAllocations } from '../edit-expense-allocations/edit-expense-allocations';
+import { TranslatePipe } from '../i18n/translate.pipe';
 import type { ExpenseAllocationValue, RawExpense } from '../expense.types';
 
 const EURO_DATE_FORMATS = {
@@ -56,15 +59,23 @@ const EURO_DATE_FORMATS = {
     MatDatepickerModule,
     MatButtonModule,
     EditExpenseAllocations,
+    TranslatePipe,
   ],
   providers: [
     provideNativeDateAdapter(),
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: MAT_DATE_FORMATS, useValue: EURO_DATE_FORMATS },
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './edit-expense.html',
 })
 export class EditExpense implements OnInit {
+  protected readonly isMobile = toSignal(
+    inject(BreakpointObserver)
+      .observe('(max-width: 599px)')
+      .pipe(map(({ matches }) => matches)),
+    { initialValue: false },
+  );
   currencies = ['eur', 'chf'] as const;
   merchants$: Observable<Array<{ target: 'merchant' | 'category'; id: number; name: string }>>;
   filteredMerchants$: Observable<any>;
@@ -135,7 +146,9 @@ export class EditExpense implements OnInit {
       .get<{ data: any }>(`${environment.apiBaseUrl}/expense-projects`, { withCredentials: true })
       .pipe(map(({ data }) => data));
     this.filteredMerchants$ = combineLatest([
-      this.merchants$.pipe(map((merchants) => createNameSearch(merchants, (merchant) => merchant.name))),
+      this.merchants$.pipe(
+        map((merchants) => createNameSearch(merchants, (merchant) => merchant.name)),
+      ),
       this._form.controls.merchant.valueChanges.pipe(startWith(this._form.controls.merchant.value)),
     ]).pipe(
       map(([searchMerchants, value]) => searchMerchants(typeof value === 'string' ? value : '')),

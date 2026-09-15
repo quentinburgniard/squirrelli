@@ -1,10 +1,11 @@
 import { JsonPipe } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { ExpensesSelectImportFile } from '../expenses-select-import-file/expenses-select-import-file';
+import { TranslatePipe } from '../i18n/translate.pipe';
 
 @Component({
   selector: 'squirrelli-expenses-import',
@@ -15,8 +16,10 @@ import { ExpensesSelectImportFile } from '../expenses-select-import-file/expense
     MatInputModule,
     ReactiveFormsModule,
     ExpensesSelectImportFile,
+    TranslatePipe,
   ],
   templateUrl: './expenses-import.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'flex flex-col gap-4' },
 })
 export class ExpensesImport {

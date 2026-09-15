@@ -1,33 +1,35 @@
 <mat-stepper [linear]="isLinear" #stepper>
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
-      <ng-template matStepLabel>Select file</ng-template>
+      <ng-template matStepLabel>{{ 'selectFile' | translate }}</ng-template>
       <squirrelli-expenses-select-import-file (parsed)="onFileParsed($event)" />
     </form>
   </mat-step>
-  <mat-step [stepControl]="secondFormGroup" label="Map columns">
+  <mat-step [stepControl]="secondFormGroup" [label]="'mapColumns' | translate">
     <form [formGroup]="secondFormGroup">
       {{ columnNames | json }}
       <mat-form-field>
-        <mat-label>Address</mat-label>
+        <mat-label>{{ 'address' | translate }}</mat-label>
         <input
           matInput
           formControlName="secondCtrl"
-          placeholder="Ex. 1 Main St, New York, NY"
+          [placeholder]="'addressExample' | translate"
           required
         />
       </mat-form-field>
       <div>
-        <button matButton matStepperPrevious>Back</button>
-        <button matButton matStepperNext>Next</button>
+        <button matButton matStepperPrevious>{{ 'back' | translate }}</button>
+        <button matButton matStepperNext>{{ 'next' | translate }}</button>
       </div>
     </form>
   </mat-step>
-  <mat-step label="Review">
-    <p class="text-sm text-[var(--mat-sys-on-surface-variant)]">Review the parsed data before importing.</p>
+  <mat-step [label]="'review' | translate">
+    <p class="text-sm text-[var(--mat-sys-on-surface-variant)]">
+      {{ 'reviewImportDescription' | translate }}
+    </p>
     <div>
-      <button matButton matStepperPrevious>Back</button>
-      <button matButton (click)="stepper.reset()">Reset</button>
+      <button matButton matStepperPrevious>{{ 'back' | translate }}</button>
+      <button matButton (click)="stepper.reset()">{{ 'reset' | translate }}</button>
     </div>
   </mat-step>
 </mat-stepper>

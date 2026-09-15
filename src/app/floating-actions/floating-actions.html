@@ -1,0 +1,45 @@
+<nav
+  class="fixed right-5 bottom-5 z-40 flex flex-col items-end gap-3 md:right-8 md:bottom-8"
+  [attr.aria-label]="'pageActions' | translate"
+>
+  <div
+    class="flex flex-col items-end gap-3 transition-[opacity,transform] duration-150 md:hidden"
+    [class.pointer-events-none]="!open()"
+    [class.translate-y-2]="!open()"
+    [class.opacity-0]="!open()"
+  >
+    @for (item of nav(); track item.routerLink) {
+      <a
+        class="flex min-h-12 items-center gap-3 rounded-2xl bg-[var(--mat-sys-primary-container)] px-4 font-semibold text-[var(--mat-sys-on-primary-container)] shadow-lg"
+        [routerLink]="item.routerLink"
+        [attr.tabindex]="open() ? null : -1"
+        (click)="open.set(false)"
+      >
+        <mat-icon aria-hidden="true">{{ item.icon }}</mat-icon>
+        <span>{{ item.label | translate }}</span>
+      </a>
+    }
+  </div>
+
+  <button
+    type="button"
+    class="grid size-14 place-items-center rounded-2xl border-0 bg-[var(--mat-sys-primary)] text-[var(--mat-sys-on-primary)] shadow-lg md:hidden"
+    [attr.aria-label]="(open() ? 'closeActions' : 'moreActions') | translate"
+    [attr.aria-expanded]="open()"
+    (click)="open.update((value) => !value)"
+  >
+    <mat-icon aria-hidden="true">{{ open() ? 'close' : 'add' }}</mat-icon>
+  </button>
+
+  <div class="hidden flex-col items-end gap-3 md:flex">
+    @for (item of nav(); track item.routerLink) {
+      <a
+        class="flex min-h-14 items-center gap-3 rounded-2xl bg-[var(--mat-sys-primary-container)] px-5 font-semibold text-[var(--mat-sys-on-primary-container)] shadow-lg"
+        [routerLink]="item.routerLink"
+      >
+        <mat-icon aria-hidden="true">{{ item.icon }}</mat-icon>
+        <span>{{ item.label | translate }}</span>
+      </a>
+    }
+  </div>
+</nav>

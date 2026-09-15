@@ -13,7 +13,7 @@
   <button
     type="button"
     matIconButton
-    aria-label="Toggle menu"
+    [attr.aria-label]="'toggleMenu' | translate"
     (click)="_menuOpen.update((open) => !open)"
   >
     <mat-icon>{{ _menuOpen() ? 'menu_open' : 'menu' }}</mat-icon>

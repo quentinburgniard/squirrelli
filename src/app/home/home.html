@@ -1,20 +1,10 @@
 <div class="flex flex-col gap-4">
   <div>
-    <h1>Upcoming expenses</h1>
-    <p class="text-sm text-[var(--mat-sys-on-surface-variant)]">Until {{ untilDateLabel$ | async }}</p>
+    <h1>{{ 'upcomingExpenses' | translate }}</h1>
+    <p class="text-sm text-[var(--mat-sys-on-surface-variant)]">
+      {{ 'untilDate' | translate: { date: (untilDateLabel$ | async) || '' } }}
+    </p>
   </div>
-
-  <mat-card>
-    <mat-card-content class="flex items-end justify-between gap-4">
-      <div>
-        <p class="text-xs uppercase tracking-[2.4px] text-[var(--mat-sys-on-surface-variant)]">Total</p>
-        <p class="text-4xl font-black tracking-tight">
-          {{ total$ | async | currency: 'EUR' : 'symbol' : '1.0-0' }}
-        </p>
-      </div>
-      <p class="text-xs text-[var(--mat-sys-on-surface-variant)]">This month</p>
-    </mat-card-content>
-  </mat-card>
 
   <mat-card>
     <mat-card-content>
@@ -25,4 +15,8 @@
       </ul>
     </mat-card-content>
   </mat-card>
+
+  <squirrelli-last-months />
+
+  <squirrelli-last-weeks />
 </div>
