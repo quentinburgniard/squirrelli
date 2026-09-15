@@ -1,0 +1,32 @@
+<div class="expense-row">
+<a
+  class="expense-link"
+  [routerLink]="['/expenses/edit', expense().documentId]"
+  [attr.aria-label]="'Edit expense: ' + name() + ', ' + date()"
+></a>
+  <span class="expense-badge" [style.background-color]="'var(--mat-sys-' + badgeRole() + '-container)'"
+    [style.color]="'var(--mat-sys-on-' + badgeRole() + '-container)'" aria-hidden="true">
+    {{ initial() }}
+  </span>
+  <span class="expense-details">
+    <span class="expense-name">{{ name() }}</span>
+    <span class="expense-date">{{ date() }}</span>
+  </span>
+  <span class="expense-amounts">
+    @if (expense().consolidatedPaidAmount != null) {
+      <span class="expense-amount">{{ expense().consolidatedPaidAmount | currency: consolidatedCurrency() : 'symbol' : undefined : 'fr-CH' }}</span>
+    } @else {
+      <button
+        type="button"
+        class="expense-pending"
+        aria-label="The consolidated amount will be available soon"
+        matTooltip="The consolidated amount will be available soon"
+        #pendingTooltip="matTooltip"
+        (click)="pendingTooltip.show()"
+      >
+        <mat-icon aria-hidden="true">schedule</mat-icon>
+      </button>
+    }
+    <span class="expense-original-amount">{{ expense().amount | currency: currency() : 'symbol' : undefined : 'fr-CH' }}</span>
+  </span>
+</div>

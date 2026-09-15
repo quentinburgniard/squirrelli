@@ -1,16 +1,15 @@
 import { AsyncPipe, CurrencyPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { MatTableModule } from '@angular/material/table';
 import { map, Observable } from 'rxjs';
 import dayjs from 'dayjs/esm';
 import type { Expense } from '../expense.types';
 import { ExpensesService } from '../expenses.service';
-import { formatDate } from '../utils/date.utils';
+import { Expense as ExpenseComponent } from '../expense/expense';
 
 @Component({
   selector: 'squirrelli-home',
-  imports: [MatCardModule, MatTableModule, AsyncPipe, CurrencyPipe],
+  imports: [MatCardModule, ExpenseComponent, AsyncPipe, CurrencyPipe],
   templateUrl: './home.html',
   host: { class: 'block' },
 })
@@ -18,8 +17,6 @@ export class Home {
   protected readonly expenses$: Observable<Expense[]>;
   protected readonly total$: Observable<number>;
   protected readonly untilDateLabel$: Observable<string>;
-  protected readonly columns: string[] = ['date', 'merchant', 'amount'];
-  protected readonly formatDate = formatDate;
 
   constructor(private readonly expensesService: ExpensesService) {
     this.expensesService.fromDate = dayjs().startOf('month');

@@ -6,24 +6,21 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatTableModule } from '@angular/material/table';
 import dayjs from 'dayjs/esm';
 import { Observable, combineLatest, map, startWith } from 'rxjs';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 import type { Expense } from '../expense.types';
 import { ExpensesService } from '../expenses.service';
-import { formatDate } from '../utils/date.utils';
+import { Expense as ExpenseComponent } from '../expense/expense';
 
 @Component({
   selector: 'squirrelli-expenses',
   imports: [
     AsyncPipe,
     ReactiveFormsModule,
-    MatTableModule,
-    NgxChartsModule,
+    ExpenseComponent,
     MatIconModule,
     MatCardModule,
     MatFormFieldModule,
@@ -38,8 +35,6 @@ import { formatDate } from '../utils/date.utils';
 })
 export class Expenses {
   protected readonly filteredExpenses$: Observable<Expense[]>;
-  protected readonly columns: string[] = ['date', 'merchant', 'amount'];
-  protected readonly formatDate = formatDate;
   protected readonly filterForm = new FormGroup({
     merchant: new FormControl('', { nonNullable: true }),
     fromDate: new FormControl<Date | null>(null),

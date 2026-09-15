@@ -18,24 +18,11 @@
 
   <mat-card>
     <mat-card-content>
-      <table mat-table [dataSource]="expenses$">
-        <tr mat-header-row *matHeaderRowDef="columns"></tr>
-        <tr mat-row *matRowDef="let row; columns: columns"></tr>
-        <ng-container matColumnDef="date">
-          <th mat-header-cell *matHeaderCellDef>Date</th>
-          <td mat-cell *matCellDef="let element">{{ formatDate(element.date) }}</td>
-        </ng-container>
-        <ng-container matColumnDef="merchant">
-          <th mat-header-cell *matHeaderCellDef>Merchant</th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.merchant?.name ?? element.category?.name }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="amount">
-          <th mat-header-cell *matHeaderCellDef>Amount</th>
-          <td mat-cell *matCellDef="let element">{{ element.amount }} €</td>
-        </ng-container>
-      </table>
+      <ul class="m-0 list-none p-0">
+        @for (expense of expenses$ | async; track expense.documentId) {
+          <li><squirrelli-expense [expense]="expense" /></li>
+        }
+      </ul>
     </mat-card-content>
   </mat-card>
 </div>

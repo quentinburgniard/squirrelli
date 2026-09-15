@@ -1,20 +1,3 @@
-<!-- <ngx-charts-line-chart
-  [view]="view"
-  [scheme]="colorScheme"
-  [legend]="legend"
-  [showXAxisLabel]="showXAxisLabel"
-  [showYAxisLabel]="showYAxisLabel"
-  [xAxis]="xAxis"
-  [yAxis]="yAxis"
-  [xAxisLabel]="xAxisLabel"
-  [yAxisLabel]="yAxisLabel"
-  [timeline]="timeline"
-  [results]="multi"
-  (select)="onSelect($event)"
-  (activate)="onActivate($event)"
-  (deactivate)="onDeactivate($event)"
->
-</ngx-charts-line-chart> -->
 <section
   class="relative overflow-hidden rounded-3xl bg-[var(--mat-sys-surface-container)] px-5 py-5 md:px-8 md:py-7"
 >
@@ -92,33 +75,11 @@
         <button matButton type="button" (click)="clearFilters()">Clear filters</button>
       </div>
 
-      <div class="overflow-x-auto">
-        <table mat-table [dataSource]="expenses" class="w-full">
-          <tr mat-header-row *matHeaderRowDef="columns"></tr>
-          <tr mat-row *matRowDef="let row; columns: columns"></tr>
-          <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef>Date</th>
-            <td mat-cell *matCellDef="let expense">
-              {{ formatDate(expense.date) }}
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="merchant">
-            <th mat-header-cell *matHeaderCellDef>Merchant</th>
-            <td mat-cell *matCellDef="let expense">
-              {{ expense.merchant?.name ?? expense.category?.name }}
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="amount">
-            <th mat-header-cell *matHeaderCellDef>Amount</th>
-            <td mat-cell *matCellDef="let expense">{{ expense.amount }} €</td>
-          </ng-container>
-          <!-- <ng-container matColumnDef="amount">
-        <button matIconButton aria-label="Example icon button with a vertical three dot icon">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-      </ng-container> -->
-        </table>
-      </div>
+      <ul class="m-0 list-none p-0">
+        @for (expense of expenses; track expense.documentId) {
+          <li><squirrelli-expense [expense]="expense" /></li>
+        }
+      </ul>
 
       @if (expenses.length === 0) {
         <p class="py-8 text-center text-[var(--mat-sys-on-surface-variant)]">
