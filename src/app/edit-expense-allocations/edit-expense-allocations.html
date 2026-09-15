@@ -1,14 +1,14 @@
 <section [formGroup]="form" class="flex flex-col gap-4">
   <div>
     <h2>Split this expense</h2>
-    <p class="text-sm text-slate-600">
+    <p class="text-sm text-[var(--mat-sys-on-surface-variant)]">
       Add the part of this expense that belongs to someone else or another category.
     </p>
   </div>
 
   <div formArrayName="allocations" class="flex flex-col gap-4">
     @for (allocation of form.controls.allocations.controls; track allocation; let index = $index) {
-      <div [formGroupName]="index" class="rounded-xl border border-slate-200 p-4">
+      <div [formGroupName]="index" class="rounded-xl border border-[var(--mat-sys-outline-variant)] p-4">
         <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
           <div class="flex gap-2">
             <button matButton type="button" (click)="allocation.controls.mode.setValue('quick')">
@@ -54,7 +54,7 @@
           </div>
 
           @if (creatingTypeFor === index) {
-            <div [formGroup]="newTypeForm" class="mb-4 rounded-lg bg-slate-50 p-4">
+            <div [formGroup]="newTypeForm" class="mb-4 rounded-lg bg-[var(--mat-sys-surface-container-high)] p-4">
               <h3>Create allocation type</h3>
               <div class="flex flex-wrap gap-3">
                 <mat-form-field class="min-w-52 flex-1">

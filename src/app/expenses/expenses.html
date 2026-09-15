@@ -16,7 +16,7 @@
 >
 </ngx-charts-line-chart> -->
 <section
-  class="relative overflow-hidden rounded-3xl bg-[--mat-sys-surface-container] px-5 py-5 md:px-8 md:py-7"
+  class="relative overflow-hidden rounded-3xl bg-[var(--mat-sys-surface-container)] px-5 py-5 md:px-8 md:py-7"
 >
   <div
     class="grid grid-cols-[minmax(0,2fr)_minmax(176px,3fr)] items-center gap-2 md:grid-cols-[minmax(0,1fr)_minmax(144px,45%)] md:gap-8"
@@ -34,13 +34,13 @@
 
     <div class="relative z-10 col-span-2 grid gap-2 sm:flex sm:flex-wrap">
       <a
-        class="rounded-xl bg-[--mat-sys-surface-container-high] px-4 py-3 text-center font-semibold"
+        class="rounded-xl bg-[var(--mat-sys-surface-container-high)] px-4 py-3 text-center font-semibold"
         routerLink="/expenses/import"
       >
         Import expenses
       </a>
       <a
-        class="rounded-xl bg-[--mat-sys-primary] px-4 py-3 text-center font-semibold text-[--mat-sys-on-primary]"
+        class="rounded-xl bg-[var(--mat-sys-primary)] px-4 py-3 text-center font-semibold text-[var(--mat-sys-on-primary)]"
         routerLink="/expenses/edit"
       >
         Add expense manually
@@ -86,7 +86,7 @@
 
     @if (filteredExpenses$ | async; as expenses) {
       <div class="mb-3 flex items-center justify-between gap-3">
-        <span class="text-sm text-[--mat-sys-on-surface-variant]">
+        <span class="text-sm text-[var(--mat-sys-on-surface-variant)]">
           {{ expenses.length }} {{ expenses.length === 1 ? 'expense' : 'expenses' }}
         </span>
         <button matButton type="button" (click)="clearFilters()">Clear filters</button>
@@ -121,7 +121,7 @@
       </div>
 
       @if (expenses.length === 0) {
-        <p class="py-8 text-center text-[--mat-sys-on-surface-variant]">
+        <p class="py-8 text-center text-[var(--mat-sys-on-surface-variant)]">
           No expenses match these filters.
         </p>
       }
