@@ -1,48 +1,59 @@
 @if (open) {
   <div
-    class="menu-panel fixed inset-0 z-50 overflow-x-hidden overflow-y-auto backdrop-blur-sm"
+    class="menu-panel fixed inset-x-0 bottom-0 z-50 overflow-x-hidden overflow-y-auto p-3 sm:p-4"
     animate.leave="menu-leave"
     (click)="closed.emit()"
   >
     <nav
       [attr.aria-label]="'mainNavigation' | translate"
-      class="relative mx-auto my-20 grid w-[calc(100%_-_32px)] max-w-3xl gap-3 text-base font-semibold text-[var(--mat-sys-on-surface)] md:w-full"
+      class="relative mx-auto grid w-full max-w-xl gap-1 text-base text-[var(--mat-sys-on-surface)] sm:mt-2"
       (click)="$event.stopPropagation()"
     >
       <a
-        class="rounded-xl bg-[var(--mat-sys-surface-container-high)] px-4 py-3 shadow-sm md:py-5"
+        class="menu-link"
         routerLink="/"
+        routerLinkActive="menu-link-active"
+        [routerLinkActiveOptions]="{ exact: true }"
         (click)="closed.emit()"
       >
-        <span>{{ 'dashboard' | translate }}</span>
+        <span class="menu-link-icon"><svg solarWidget5BoldDuotone [size]="22"></svg></span>
+        <span class="flex-1">{{ 'dashboard' | translate }}</span>
       </a>
-      <a
-        class="rounded-xl bg-[var(--mat-sys-surface-container-high)] px-4 py-3 shadow-sm md:py-5"
-        routerLink="/expenses"
-        (click)="closed.emit()"
+      <squirrelli-submenu
+        label="expensesNavigation"
+        [items]="expenseItems"
+        [open]="openSubmenu() === 'expenses'"
+        (toggled)="toggleSubmenu('expenses')"
+        (selected)="closed.emit()"
       >
-        <span>{{ 'expensesNavigation' | translate }}</span>
-      </a>
-      <a
-        class="rounded-xl bg-[var(--mat-sys-surface-container-high)] px-4 py-3 shadow-sm md:py-5"
-        routerLink="/incomes"
-        (click)="closed.emit()"
+        <svg submenuIcon solarBillListBoldDuotone [size]="22"></svg>
+      </squirrelli-submenu>
+      <squirrelli-submenu
+        label="incomesNavigation"
+        [items]="incomeItems"
+        [open]="openSubmenu() === 'incomes'"
+        (toggled)="toggleSubmenu('incomes')"
+        (selected)="closed.emit()"
       >
-        <span>{{ 'incomesNavigation' | translate }}</span>
-      </a>
-      <a
-        class="rounded-xl bg-[var(--mat-sys-surface-container-high)] px-4 py-3 shadow-sm md:py-5"
-        routerLink="/assets"
-        (click)="closed.emit()"
+        <svg submenuIcon solarBanknote2BoldDuotone [size]="22"></svg>
+      </squirrelli-submenu>
+      <squirrelli-submenu
+        label="assetsNavigation"
+        [items]="assetItems"
+        [open]="openSubmenu() === 'assets'"
+        (toggled)="toggleSubmenu('assets')"
+        (selected)="closed.emit()"
       >
-        <span>{{ 'assetsNavigation' | translate }}</span>
-      </a>
+        <svg submenuIcon solarWalletMoneyBoldDuotone [size]="22"></svg>
+      </squirrelli-submenu>
       <a
-        class="rounded-xl bg-[var(--mat-sys-surface-container-high)] px-4 py-3 shadow-sm md:py-5"
+        class="menu-link"
         routerLink="/settings"
+        routerLinkActive="menu-link-active"
         (click)="closed.emit()"
       >
-        <span>{{ 'settingsNavigation' | translate }}</span>
+        <span class="menu-link-icon"><svg solarSettingsBoldDuotone [size]="22"></svg></span>
+        <span class="flex-1">{{ 'settingsNavigation' | translate }}</span>
       </a>
     </nav>
   </div>

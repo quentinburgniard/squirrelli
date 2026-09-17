@@ -1,14 +1,20 @@
 import { Component, Input, signal, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '../i18n/translate.pipe';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { SolarCloseLinear, SolarHamburgerMenuLinear } from '@solar-icons/angular';
 import { Menu } from '../menu/menu';
 
 @Component({
   selector: 'squirrelli-header',
-  imports: [MatButtonModule, MatIconModule, MatToolbarModule, RouterLink, Menu, TranslatePipe],
+  imports: [
+    MatToolbarModule,
+    Menu,
+    RouterLink,
+    SolarCloseLinear,
+    SolarHamburgerMenuLinear,
+    TranslatePipe,
+  ],
   changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './header.html',
 })

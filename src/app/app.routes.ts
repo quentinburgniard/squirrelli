@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { assetResolver } from './asset.resolver';
 import { Assets } from './assets/assets';
+import { AssetCategories } from './asset-categories/asset-categories';
 import { Categories } from './categories/categories';
 import { Category } from './category/category';
 import { EditAsset } from './edit-asset/edit-asset';
@@ -13,7 +14,9 @@ import { expenseResolver } from './expense.resolver';
 import { Home } from './home/home';
 import { incomeResolver } from './income.resolver';
 import { Incomes } from './incomes/incomes';
+import { IncomeSources } from './income-sources/income-sources';
 import { Partners } from './partners/partners';
+import { Projects } from './projects/projects';
 import { partnerResolver } from './partner.resolver';
 import { settingsResolver } from './settings.resolver';
 import { Settings } from './settings/settings';
@@ -35,6 +38,7 @@ export const routes: Routes = [
         resolve: { expense: expenseResolver },
       },
       { path: 'incomes', component: Incomes },
+      { path: 'incomes/sources', component: IncomeSources },
       { path: 'incomes/edit', component: EditIncome },
       {
         path: 'incomes/edit/:id',
@@ -42,6 +46,7 @@ export const routes: Routes = [
         resolve: { income: incomeResolver },
       },
       { path: 'assets', component: Assets },
+      { path: 'assets/categories', component: AssetCategories },
       { path: 'assets/edit', component: EditAsset },
       {
         path: 'assets/edit/:id',
@@ -49,6 +54,7 @@ export const routes: Routes = [
         resolve: { asset: assetResolver },
       },
       { path: 'expenses/partners', component: Partners },
+      { path: 'expenses/projects', component: Projects },
       { path: 'expenses/partners/edit', component: EditPartner },
       {
         path: 'expenses/partners/edit/:id',

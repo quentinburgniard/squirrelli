@@ -11,12 +11,16 @@
   </a>
   <span class="flex-1"></span>
   <button
+    class="menu-toggle-button"
     type="button"
-    matIconButton
     [attr.aria-label]="'toggleMenu' | translate"
     (click)="_menuOpen.update((open) => !open)"
   >
-    <mat-icon>{{ _menuOpen() ? 'menu_open' : 'menu' }}</mat-icon>
+    @if (_menuOpen()) {
+      <svg class="menu-toggle-icon" solarCloseLinear [size]="24"></svg>
+    } @else {
+      <svg class="menu-toggle-icon" solarHamburgerMenuLinear [size]="24"></svg>
+    }
   </button>
 </mat-toolbar>
 <squirrelli-menu [open]="_menuOpen()" (closed)="_menuOpen.set(false)" />

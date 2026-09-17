@@ -1,0 +1,29 @@
+<div>
+  <h1>{{ 'incomeSources' | translate }}</h1>
+  <p class="text-sm text-[var(--mat-sys-on-surface-variant)]">
+    {{ 'incomeSourcesDescription' | translate }}
+  </p>
+</div>
+
+<mat-card>
+  <mat-card-content>
+    @if (sources$ | async; as sources) {
+      @if (sources.length) {
+        <ul class="m-0 list-none p-0">
+          @for (source of sources; track source.documentId) {
+            <li class="entity-row">
+              <span class="entity-badge" aria-hidden="true">
+                {{ source.name.charAt(0).toUpperCase() }}
+              </span>
+              <span class="entity-name">{{ source.name }}</span>
+            </li>
+          }
+        </ul>
+      } @else {
+        <p class="text-[var(--mat-sys-on-surface-variant)]">
+          {{ 'noIncomeSourcesYet' | translate }}
+        </p>
+      }
+    }
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,37 @@
+<button
+  class="menu-link w-full border-0 bg-transparent text-left font-[inherit] text-[inherit]"
+  type="button"
+  [attr.aria-expanded]="open()"
+  (click)="toggled.emit()"
+>
+  <span class="menu-link-icon"><ng-content select="[submenuIcon]" /></span>
+  <span class="flex-1">{{ label() | translate }}</span>
+  <svg
+    class="submenu-chevron"
+    [class.submenu-chevron-open]="open()"
+    solarAltArrowDownBold
+    [size]="20"
+  ></svg>
+</button>
+
+@if (open()) {
+  <div class="submenu-items grid gap-0.5" animate.enter="submenu-enter">
+    @for (item of items(); track item.label) {
+      @if (item.routerLink) {
+        <a
+          class="submenu-link"
+          [routerLink]="item.routerLink"
+          routerLinkActive="submenu-link-active"
+          [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
+          (click)="selected.emit()"
+        >
+          {{ item.label | translate }}
+        </a>
+      } @else {
+        <span class="submenu-link submenu-link-disabled" aria-disabled="true">
+          {{ item.label | translate }}
+        </span>
+      }
+    }
+  </div>
+}

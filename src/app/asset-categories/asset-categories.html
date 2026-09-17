@@ -1,0 +1,29 @@
+<div>
+  <h1>{{ 'assetCategories' | translate }}</h1>
+  <p class="text-sm text-[var(--mat-sys-on-surface-variant)]">
+    {{ 'assetCategoriesDescription' | translate }}
+  </p>
+</div>
+
+<mat-card>
+  <mat-card-content>
+    @if (categories$ | async; as categories) {
+      @if (categories.length) {
+        <ul class="m-0 list-none p-0">
+          @for (category of categories; track category.documentId) {
+            <li class="entity-row">
+              <span class="entity-badge" aria-hidden="true">
+                {{ (category.name || 'A').charAt(0).toUpperCase() }}
+              </span>
+              <span class="entity-name">{{ category.name || ('unnamedAsset' | translate) }}</span>
+            </li>
+          }
+        </ul>
+      } @else {
+        <p class="text-[var(--mat-sys-on-surface-variant)]">
+          {{ 'noAssetCategoriesYet' | translate }}
+        </p>
+      }
+    }
+  </mat-card-content>
+</mat-card>

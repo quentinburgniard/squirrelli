@@ -1,0 +1,25 @@
+<div>
+  <h1>{{ 'projects' | translate }}</h1>
+  <p class="text-sm text-[var(--mat-sys-on-surface-variant)]">
+    {{ 'projectsDescription' | translate }}
+  </p>
+</div>
+
+<mat-card>
+  <mat-card-content>
+    @if (projects$ | async; as projects) {
+      @if (projects.length) {
+        <ul class="m-0 list-none p-0">
+          @for (project of projects; track project.documentId) {
+            <li class="entity-row">
+              <span class="entity-badge">{{ project.name.charAt(0).toUpperCase() }}</span>
+              <span class="entity-name">{{ project.name }}</span>
+            </li>
+          }
+        </ul>
+      } @else {
+        <p class="text-[var(--mat-sys-on-surface-variant)]">{{ 'noProjectsYet' | translate }}</p>
+      }
+    }
+  </mat-card-content>
+</mat-card>

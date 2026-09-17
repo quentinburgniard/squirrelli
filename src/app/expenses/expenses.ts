@@ -31,8 +31,6 @@ import { createNameSearch } from '../utils/name-search';
 })
 export class Expenses {
   protected readonly actions: readonly FloatingActionNav[] = [
-    { label: 'partners', icon: 'group', routerLink: '/expenses/partners' },
-    { label: 'categories', icon: 'category', routerLink: '/expenses/categories' },
     { label: 'importExpenses', icon: 'upload_file', routerLink: '/expenses/import' },
     { label: 'addExpense', icon: 'add', routerLink: '/expenses/edit' },
   ];
