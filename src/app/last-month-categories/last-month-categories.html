@@ -1,0 +1,39 @@
+<div>
+  <h1>{{ 'lastMonth' | translate }}</h1>
+  <p class="text-sm text-[var(--mat-sys-on-surface-variant)]">
+    {{ 'expensesByCategory' | translate }}
+  </p>
+</div>
+
+<mat-card>
+  <mat-card-content>
+    @if (categories$ | async; as categories) {
+      @if (categories.length) {
+        <div class="category-chart-layout">
+          <div class="category-donut" [style.background]="gradient(categories)">
+            <div class="category-donut-center">
+              <strong>{{ formatAmount(total(categories)) }}</strong>
+              <span>{{ 'total' | translate }}</span>
+            </div>
+          </div>
+
+          <ul class="category-chart-legend">
+            @for (category of categories; track category.name) {
+              <li>
+                <span class="category-swatch" [style.background]="category.color"></span>
+                <span class="category-label">
+                  {{ category.other ? ('other' | translate) : category.name }}
+                </span>
+                <strong>{{ formatAmount(category.value) }}</strong>
+              </li>
+            }
+          </ul>
+        </div>
+      } @else {
+        <p class="py-8 text-center text-[var(--mat-sys-on-surface-variant)]">
+          {{ 'noExpensesLastMonth' | translate }}
+        </p>
+      }
+    }
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,28 @@
+<svg
+  class="trend-chart-svg"
+  viewBox="0 0 600 260"
+  aria-hidden="true"
+>
+  @for (line of gridLines(); track line.y) {
+    <line class="trend-grid-line" x1="16" [attr.y1]="line.y" x2="584" [attr.y2]="line.y" />
+  }
+
+  <path class="trend-area" [attr.d]="areaPath()" [attr.fill]="color()" />
+  <path class="trend-data-line" [attr.d]="linePath()" [attr.stroke]="color()" />
+  <path class="trend-projection-line" [attr.d]="trendPath()" />
+
+  @for (point of positionedPoints(); track point.name) {
+    <image
+      class="trend-point-image"
+      [attr.x]="point.x - 9"
+      [attr.y]="point.y - 9"
+      width="18"
+      height="18"
+      href="https://files.digitalleman.com/cej08q7029s7el22akbmbdwf.png"
+      preserveAspectRatio="xMidYMid meet"
+    />
+    <text class="trend-x-label" [attr.x]="point.x" y="250" text-anchor="middle">
+      {{ formatLabel()(point.name) }}
+    </text>
+  }
+</svg>

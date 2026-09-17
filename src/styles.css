@@ -7,8 +7,189 @@
   }
 }
 
+squirrelli-root {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
 main {
+  flex: 1 0 auto;
   view-transition-name: page;
+}
+
+squirrelli-footer {
+  display: block;
+  flex: 0 0 auto;
+}
+
+body:has(.menu-panel) {
+  overflow: hidden;
+}
+
+.menu-panel {
+  overscroll-behavior: contain;
+}
+
+.menu-toggle-button {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  place-items: center;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  color: white;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menu-toggle-button:hover,
+.menu-toggle-button:active {
+  background: transparent;
+}
+
+.menu-toggle-button:focus-visible {
+  outline: 2px solid white;
+  outline-offset: -6px;
+}
+
+.menu-toggle-icon {
+  color: white;
+}
+
+.menu-link {
+  display: flex;
+  min-height: 58px;
+  align-items: center;
+  gap: 14px;
+  border-radius: 20px;
+  padding: 8px 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menu-link:hover {
+  color: var(--mat-sys-primary);
+}
+
+.menu-link:active {
+  transform: scale(0.985);
+}
+
+.menu-link:focus-visible {
+  outline: 2px solid var(--mat-sys-primary);
+  outline-offset: -2px;
+}
+
+.menu-link-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  place-items: center;
+  border-radius: 14px;
+  color: var(--mat-sys-on-surface-variant);
+  transition: inherit;
+}
+
+.menu-link-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.menu-link-active {
+  color: var(--mat-sys-primary);
+}
+
+.menu-link-active .menu-link-icon {
+  color: var(--mat-sys-primary);
+}
+
+.submenu-chevron {
+  flex: 0 0 auto;
+  color: white;
+  transition: transform 180ms ease;
+}
+
+.submenu-chevron-open {
+  transform: rotate(180deg);
+}
+
+.submenu-items {
+  margin: 0 12px 4px 33px;
+  padding-left: 28px;
+  border-left: 1px solid color-mix(in srgb, var(--mat-sys-on-surface) 24%, transparent);
+  overflow: hidden;
+}
+
+.submenu-link {
+  display: flex;
+  min-height: 42px;
+  align-items: center;
+  border-radius: 14px;
+  padding: 8px 12px;
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.submenu-link:hover,
+.submenu-link-active {
+  color: var(--mat-sys-primary);
+}
+
+.submenu-link-disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.submenu-link-disabled:hover {
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.submenu-link:active {
+  transform: scale(0.985);
+}
+
+.submenu-link:focus-visible {
+  outline: 2px solid var(--mat-sys-primary);
+  outline-offset: -2px;
+}
+
+@keyframes submenu-reveal {
+  from {
+    transform: translateY(-6px);
+    opacity: 0;
+  }
+}
+
+.submenu-enter {
+  animation: submenu-reveal 180ms ease-out;
+}
+
+@media (min-width: 600px) {
+  .menu-link {
+    min-height: 64px;
+    padding-inline: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .submenu-chevron,
+  .submenu-enter {
+    animation: none;
+    transition: none;
+  }
 }
 
 .entity-row {
@@ -174,44 +355,45 @@ main {
   user-select: none;
 }
 
-.expense-trend-chart .ngx-charts text {
+.expense-trend-chart text {
   fill: var(--mat-sys-on-surface-variant);
   font-family: Lato, sans-serif;
   font-size: 12px;
 }
 
-.expense-trend-chart .gridline-path {
-  stroke: var(--mat-sys-outline-variant);
-  stroke-opacity: 0.25;
-}
-
-.expense-trend-chart .area-series .area {
-  fill-opacity: 0.28;
-  stroke: none;
-}
-
-.expense-trend-chart .area-series .line,
-.expense-trend-chart .line-highlight {
-  display: none;
-}
-
-.expense-trend-chart g[clip-path] > g:nth-child(2) .area {
-  display: none;
-}
-
-.expense-trend-chart g[clip-path] > g:nth-child(2) .area-series .line {
+.trend-chart-svg {
   display: block;
-  stroke-width: 2px;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.trend-grid-line {
+  stroke: color-mix(in srgb, var(--mat-sys-on-surface) 30%, transparent);
+}
+
+.trend-area {
+  opacity: 0.24;
+}
+
+.trend-data-line {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.5;
+}
+
+.trend-projection-line {
+  fill: none;
+  stroke: var(--mat-sys-on-surface-variant);
   stroke-dasharray: 5 5;
+  stroke-linecap: round;
+  stroke-width: 2;
   opacity: 0.75;
 }
 
-.expense-trend-chart .area-series .circle {
-  stroke-width: 2px;
-}
-
-.expense-trend-chart .tooltip-anchor {
-  fill: var(--mat-sys-surface-container-highest);
+.trend-point-image {
+  filter: drop-shadow(0 1px 2px color-mix(in srgb, var(--mat-sys-scrim) 45%, transparent));
 }
 
 .expense-trend-values {
@@ -221,6 +403,176 @@ main {
   margin: 16px 0 0;
   padding: 0;
   list-style: none;
+}
+
+.monthly-bars {
+  display: grid;
+  gap: 14px;
+  padding-block: 8px;
+}
+
+.monthly-bar-row {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  gap: 6px 12px;
+}
+
+.monthly-bar-label {
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.monthly-bar-track {
+  height: 14px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--mat-sys-surface-container-highest);
+}
+
+.monthly-bar-fill {
+  display: block;
+  min-width: 2px;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--mat-sys-primary), var(--mat-sys-tertiary));
+}
+
+.monthly-bar-fill-last {
+  background: var(--mat-sys-tertiary);
+}
+
+.monthly-bar-value {
+  grid-column: 2;
+  color: var(--mat-sys-on-surface);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.monthly-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 22px 0 0;
+}
+
+.monthly-stats div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+  border-radius: 14px;
+  background: var(--mat-sys-surface-container-high);
+  padding: 10px 12px;
+}
+
+.monthly-stats dt {
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 12px;
+}
+
+.monthly-stats dd {
+  margin: 0;
+  overflow: hidden;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (min-width: 600px) {
+  .monthly-bar-row {
+    grid-template-columns: 74px minmax(0, 1fr) 100px;
+    gap: 14px;
+  }
+
+  .monthly-bar-value {
+    grid-column: auto;
+    text-align: right;
+  }
+
+  .monthly-stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.category-chart-layout {
+  display: grid;
+  align-items: center;
+  gap: 24px;
+}
+
+.category-donut {
+  display: grid;
+  width: min(220px, 70vw);
+  aspect-ratio: 1;
+  place-self: center;
+  place-items: center;
+  border-radius: 50%;
+  transform: rotate(-90deg);
+}
+
+.category-donut-center {
+  display: flex;
+  width: 58%;
+  aspect-ratio: 1;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 50%;
+  background: var(--mat-sys-surface-container);
+  transform: rotate(90deg);
+}
+
+.category-donut-center strong {
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+.category-donut-center span {
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 12px;
+}
+
+.category-chart-legend {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.category-chart-legend li {
+  display: grid;
+  grid-template-columns: 10px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  min-height: 38px;
+}
+
+.category-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.category-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.category-chart-legend strong {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 600px) {
+  .category-chart-layout {
+    grid-template-columns: minmax(220px, 0.8fr) minmax(0, 1.2fr);
+  }
 }
 
 .expense-trend-values li {
@@ -267,7 +619,7 @@ main {
 }
 
 @media (max-width: 599px) {
-  .expense-trend-chart .ngx-charts text {
+  .expense-trend-chart text {
     font-size: 10px;
   }
 

@@ -8,18 +8,11 @@
 <mat-card>
   <mat-card-content>
     @if (trend$ | async; as trend) {
-      <div class="expense-trend-chart relative mt-4 aspect-video w-full max-h-80">
-        <ngx-charts-area-chart
-          [results]="trend"
-          [customColors]="chartColors"
-          [legend]="false"
-          [xAxis]="true"
-          [yAxis]="!isMobile()"
-          [autoScale]="true"
-          [gradient]="true"
-          [showGridLines]="true"
-          [tooltipDisabled]="true"
-          [yAxisTickFormatting]="formatAxisAmount"
+      <div class="expense-trend-chart relative mt-4 aspect-[30/13] w-full max-h-80">
+        <squirrelli-trend-chart
+          [points]="trend[0].series"
+          [trend]="trend[1].series"
+          color="var(--mat-sys-tertiary)"
         />
       </div>
 

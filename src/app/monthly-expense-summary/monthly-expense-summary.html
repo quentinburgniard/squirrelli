@@ -1,0 +1,35 @@
+<div>
+  <h1>{{ 'monthlyOverview' | translate }}</h1>
+  <p class="text-sm text-[var(--mat-sys-on-surface-variant)]">
+    {{ 'lastSixCompleteMonths' | translate }}
+  </p>
+</div>
+
+<mat-card>
+  <mat-card-content>
+    @if (months$ | async; as months) {
+      <div class="monthly-bars" [attr.aria-label]="'monthlyExpenseTotals' | translate">
+        @for (bar of summary(months); track bar.label) {
+          <div class="monthly-bar-row">
+            <span class="monthly-bar-label">{{ bar.label | translate }}</span>
+            <div
+              class="monthly-bar-track"
+              role="meter"
+              [attr.aria-label]="bar.label | translate"
+              [attr.aria-valuenow]="bar.value"
+              aria-valuemin="0"
+              [attr.aria-valuemax]="maximum(months)"
+            >
+              <span
+                class="monthly-bar-fill"
+                [class.monthly-bar-fill-last]="bar.lastMonth"
+                [style.width.%]="barWidth(bar.value, maximum(months))"
+              ></span>
+            </div>
+            <strong class="monthly-bar-value">{{ formatAmount(bar.value) }}</strong>
+          </div>
+        }
+      </div>
+    }
+  </mat-card-content>
+</mat-card>

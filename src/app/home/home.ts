@@ -7,14 +7,25 @@ import type { Expense } from '../expense.types';
 import { ExpensesService } from '../expenses.service';
 import { Expense as ExpenseComponent } from '../expense/expense';
 import { LastMonths } from '../last-months/last-months';
+import { LastMonthCategories } from '../last-month-categories/last-month-categories';
 import { LastWeeks } from '../last-weeks/last-weeks';
+import { MonthlyExpenseSummary } from '../monthly-expense-summary/monthly-expense-summary';
 import { SettingsService } from '../settings.service';
 import { TranslatePipe } from '../i18n/translate.pipe';
 import { getNextResetDate } from '../utils/reset-date.utils';
 
 @Component({
   selector: 'squirrelli-home',
-  imports: [MatCardModule, ExpenseComponent, LastMonths, LastWeeks, AsyncPipe, TranslatePipe],
+  imports: [
+    MatCardModule,
+    ExpenseComponent,
+    LastMonthCategories,
+    LastMonths,
+    LastWeeks,
+    MonthlyExpenseSummary,
+    AsyncPipe,
+    TranslatePipe,
+  ],
   templateUrl: './home.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'block' },

@@ -22,7 +22,6 @@
   "private": true,
   "packageManager": "npm@11.6.2",
   "dependencies": {
-    "@angular/animations": "^22.1.6",
     "@angular/cdk": "^22.1.6",
     "@angular/common": "^22.1.6",
     "@angular/compiler": "^22.1.6",
@@ -30,9 +29,8 @@
     "@angular/forms": "^22.1.6",
     "@angular/material": "^22.1.6",
     "@angular/platform-browser": "^22.1.6",
-    "@angular/platform-browser-dynamic": "^22.1.6",
     "@angular/router": "^22.1.6",
-    "@swimlane/ngx-charts": "^25.0.2",
+    "@solar-icons/angular": "^2.2.0",
     "dayjs": "^1.11.12",
     "fuse.js": "^7.5.0",
     "lodash-es": "^4.17.22",

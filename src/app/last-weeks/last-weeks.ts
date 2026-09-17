@@ -1,14 +1,12 @@
 import { AsyncPipe } from '@angular/common';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { MatCardModule } from '@angular/material/card';
 import { TranslatePipe } from '../i18n/translate.pipe';
-import { AreaChartModule } from '@swimlane/ngx-charts';
 import dayjs, { type Dayjs } from 'dayjs/esm';
 import { map, type Observable } from 'rxjs';
 import { ExpensesService } from '../expenses.service';
 import { SettingsService } from '../settings.service';
+import { TrendChart } from '../trend-chart/trend-chart';
 import { createLinearTrend } from '../utils/trend.utils';
 
 interface ExpenseTrend {
@@ -27,7 +25,7 @@ const WEEK_COUNT = 6;
 
 @Component({
   selector: 'squirrelli-last-weeks',
-  imports: [AsyncPipe, AreaChartModule, MatCardModule, TranslatePipe],
+  imports: [AsyncPipe, MatCardModule, TranslatePipe, TrendChart],
   templateUrl: './last-weeks.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'flex flex-col gap-4' },
@@ -35,18 +33,11 @@ const WEEK_COUNT = 6;
 export class LastWeeks {
   protected readonly trend$: Observable<ExpenseTrend[]>;
   protected readonly formatAmount: (value: number) => string;
-  protected readonly formatAxisAmount: (value: number) => string;
   protected readonly formatChange = (value: number): string => `${Math.abs(value).toFixed(0)}%`;
-  protected readonly isMobile;
-  protected readonly chartColors = [
-    { name: 'Expenses', value: 'var(--mat-sys-tertiary)' },
-    { name: 'Trend', value: 'var(--mat-sys-on-surface-variant)' },
-  ];
 
   constructor(
     expensesService: ExpensesService,
     settingsService: SettingsService,
-    breakpointObserver: BreakpointObserver,
   ) {
     const currentWeek = this.startOfWeek(dayjs());
     const fromDate = currentWeek.subtract(WEEK_COUNT - 1, 'week');
@@ -59,16 +50,6 @@ export class LastWeeks {
         currency,
         maximumFractionDigits: 0,
       }).format(value);
-    this.formatAxisAmount = (value) =>
-      new Intl.NumberFormat('fr-CH', {
-        notation: 'compact',
-        maximumFractionDigits: 1,
-      }).format(value);
-    this.isMobile = toSignal(
-      breakpointObserver.observe('(max-width: 599px)').pipe(map(({ matches }) => matches)),
-      { initialValue: false },
-    );
-
     this.trend$ = expensesService.getExpensesInDateRange(fromDate, untilDate).pipe(
       map((expenses) => {
         const totals = new Map<string, number>();

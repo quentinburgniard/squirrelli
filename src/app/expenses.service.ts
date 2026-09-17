@@ -79,7 +79,8 @@ export class ExpensesService {
       .get<{ data: RawExpense[] }>(`${environment.apiBaseUrl}/expenses`, {
         params: {
           sort: 'date',
-          populate: ['merchant', 'category'],
+          'populate[merchant][populate]': 'category',
+          'populate[category]': 'true',
           'pagination[pageSize]': 500,
           'filters[date][$gte]': this.getApiDateString(fromDate),
           'filters[date][$lte]': this.getApiDateString(untilDate),
