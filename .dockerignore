@@ -1,7 +1,12 @@
 .angular/
+.git/
 .github/
 .vscode/
+dist/
+coverage/
 node_modules/
+out-tsc/
+**/*.spec.ts
 .editorconfig
 .gitignore
 Dockerfile
