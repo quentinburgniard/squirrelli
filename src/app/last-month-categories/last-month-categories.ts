@@ -5,8 +5,7 @@ import dayjs from 'dayjs/esm';
 import { map, type Observable } from 'rxjs';
 import { ExpensesService } from '../expenses.service';
 import { Empty } from '../empty/empty';
-import { TranslatePipe } from '../i18n/translate.pipe';
-import { TranslationService } from '../i18n/translation.service';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { SettingsService } from '../settings.service';
 
 interface CategorySlice {
@@ -34,7 +33,7 @@ export class LastMonthCategories {
   constructor(
     expensesService: ExpensesService,
     settingsService: SettingsService,
-    translations: TranslationService,
+    translations: TranslateService,
   ) {
     const lastMonth = dayjs().subtract(1, 'month');
     const configuration = settingsService.settings()?.configuration;
@@ -62,7 +61,7 @@ export class LastMonthCategories {
             const name =
               expense.category?.name ||
               expense.merchant?.category?.name ||
-              translations.translate('noCategory');
+              translations.instant('noCategory');
             totals.set(name, (totals.get(name) ?? 0) + Number(expense.amount ?? 0));
           }
 
@@ -72,7 +71,7 @@ export class LastMonthCategories {
           const visible = sorted.slice(0, 6);
           const otherValue = sorted.slice(6).reduce((total, item) => total + item.value, 0);
           if (otherValue > 0) {
-            visible.push({ name: translations.translate('other'), value: otherValue, other: true });
+            visible.push({ name: translations.instant('other'), value: otherValue, other: true });
           }
 
           const total = visible.reduce((sum, item) => sum + item.value, 0);

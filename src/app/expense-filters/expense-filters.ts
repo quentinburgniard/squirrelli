@@ -15,7 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { startWith } from 'rxjs';
-import { TranslatePipe } from '../i18n/translate.pipe';
+import { TranslatePipe } from '@ngx-translate/core';
 
 export interface ExpenseFiltersValue {
   merchant: string;

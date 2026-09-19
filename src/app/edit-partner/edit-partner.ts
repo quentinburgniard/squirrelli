@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
 import { PartnersService } from '../partners.service';
-import { TranslatePipe } from '../i18n/translate.pipe';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'squirrelli-edit-partner',

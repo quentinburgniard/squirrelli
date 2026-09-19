@@ -8,12 +8,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { RouterLink } from '@angular/router';
 import { SettingsService } from '../settings.service';
-import { TranslatePipe } from '../i18n/translate.pipe';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ImageUrl } from '../images';
-import { TranslationService } from '../i18n/translation.service';
+import { resolveLanguage } from '../i18n/language';
 
 type ConfigurationFormValue = {
-  language: 'English' | 'Francais' | 'Portuguese';
+  language: 'English' | 'Francais' | 'Portuguese' | 'Spanish' | 'German' | 'Italian';
   baseCurrency: 'EUR' | 'CHF';
   monthlyResetDay: number | null;
   emergencyFund: number | null;
@@ -43,6 +43,9 @@ export class Settings {
     { value: 'English', label: 'english' },
     { value: 'Francais', label: 'french' },
     { value: 'Portuguese', label: 'portuguese' },
+    { value: 'Spanish', label: 'spanish' },
+    { value: 'German', label: 'german' },
+    { value: 'Italian', label: 'italian' },
   ] as const;
   protected readonly currencies: ConfigurationFormValue['baseCurrency'][] = ['EUR', 'CHF'];
   protected readonly resetDays = Array.from({ length: 31 }, (_, index) => index + 1);
@@ -57,7 +60,7 @@ export class Settings {
 
   constructor(
     settingsService: SettingsService,
-    private readonly translationService: TranslationService,
+    private readonly translationService: TranslateService,
   ) {
     this.settings = settingsService.settings;
     const value = this.toFormValue(this.settings());
@@ -81,7 +84,7 @@ export class Settings {
   }
 
   protected selectLanguage(language: ConfigurationFormValue['language']): void {
-    this.translationService.select(language);
+    this.translationService.use(resolveLanguage(language));
   }
 
   private toFormValue(settings: ReturnType<SettingsService['settings']>): ConfigurationFormValue {
@@ -97,7 +100,14 @@ export class Settings {
     const emergencyFund = configuration['emergencyFund'];
 
     return {
-      language: language === 'Francais' || language === 'Portuguese' ? language : 'English',
+      language:
+        language === 'Francais' ||
+        language === 'Portuguese' ||
+        language === 'Spanish' ||
+        language === 'German' ||
+        language === 'Italian'
+          ? language
+          : 'English',
       baseCurrency: baseCurrency === 'CHF' ? 'CHF' : 'EUR',
       monthlyResetDay: typeof monthlyResetDay === 'number' ? monthlyResetDay : null,
       emergencyFund: typeof emergencyFund === 'number' ? emergencyFund : null,

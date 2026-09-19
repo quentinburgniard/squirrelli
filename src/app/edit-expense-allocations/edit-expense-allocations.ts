@@ -28,7 +28,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { BehaviorSubject, Observable, map, shareReplay, switchMap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import type { MerchantCategory } from '../merchant-category.types';
-import { TranslatePipe } from '../i18n/translate.pipe';
+import { TranslatePipe } from '@ngx-translate/core';
 import type {
   ExpenseAllocationType,
   ExpenseAllocationValue,

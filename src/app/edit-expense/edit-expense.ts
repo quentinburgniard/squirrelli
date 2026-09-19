@@ -32,7 +32,7 @@ import {
 import { environment } from '../../environments/environment';
 import { MatButtonModule } from '@angular/material/button';
 import { EditExpenseAllocations } from '../edit-expense-allocations/edit-expense-allocations';
-import { TranslatePipe } from '../i18n/translate.pipe';
+import { TranslatePipe } from '@ngx-translate/core';
 import type { ExpenseAllocationValue, RawExpense } from '../expense.types';
 
 const EURO_DATE_FORMATS = {

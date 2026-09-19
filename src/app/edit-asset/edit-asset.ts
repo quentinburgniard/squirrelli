@@ -9,7 +9,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Observable, finalize } from 'rxjs';
 import type { Asset, AssetCategory, AssetInput } from '../asset.types';
 import { AssetsService } from '../assets.service';
-import { TranslatePipe } from '../i18n/translate.pipe';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'squirrelli-edit-asset',

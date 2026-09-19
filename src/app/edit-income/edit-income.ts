@@ -11,7 +11,7 @@ import dayjs from 'dayjs/esm';
 import { finalize } from 'rxjs';
 import type { Income } from '../income.types';
 import { IncomesService } from '../incomes.service';
-import { TranslatePipe } from '../i18n/translate.pipe';
+import { TranslatePipe } from '@ngx-translate/core';
 import { API_DATE_FORMAT } from '../utils/date.utils';
 
 @Component({

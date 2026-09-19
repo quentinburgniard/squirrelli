@@ -4,8 +4,8 @@ import { MatCardModule } from '@angular/material/card';
 import dayjs from 'dayjs/esm';
 import { map, type Observable } from 'rxjs';
 import { ExpensesService } from '../expenses.service';
-import { TranslatePipe } from '../i18n/translate.pipe';
-import type { TranslationKey } from '../i18n/translations';
+import { TranslatePipe } from '@ngx-translate/core';
+import type { TranslationKey } from '../i18n/translation-key';
 import { SettingsService } from '../settings.service';
 
 interface MonthlyExpense {

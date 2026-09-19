@@ -5,7 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { map } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Empty } from '../empty/empty';
-import { TranslatePipe } from '../i18n/translate.pipe';
+import { TranslatePipe } from '@ngx-translate/core';
 
 interface ExpenseProject {
   documentId: string;

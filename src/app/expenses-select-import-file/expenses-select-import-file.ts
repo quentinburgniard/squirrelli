@@ -2,8 +2,7 @@ import { Component, EventEmitter, Output, ViewChild, ChangeDetectionStrategy } f
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import * as XLSX from 'xlsx';
-import { TranslatePipe } from '../i18n/translate.pipe';
-import { TranslationService } from '../i18n/translation.service';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'squirrelli-expenses-select-import-file',
@@ -20,7 +19,7 @@ export class ExpensesSelectImportFile {
 
   constructor(
     private readonly snackBar: MatSnackBar,
-    private readonly translations: TranslationService,
+    private readonly translations: TranslateService,
   ) {}
 
   protected onFileSelected(element: HTMLInputElement): void {
@@ -40,7 +39,7 @@ export class ExpensesSelectImportFile {
         }
         const worksheet = workbook.Sheets[sheetName];
         if (!worksheet) {
-          this.showError(this.translations.translate('unableToReadFirstSheet'));
+          this.showError(this.translations.instant('unableToReadFirstSheet'));
           return;
         }
         const rows = XLSX.utils.sheet_to_json(worksheet, { header: 1, raw: true }) as Array<
@@ -52,22 +51,22 @@ export class ExpensesSelectImportFile {
           .filter((value) => value.length > 0);
 
         if (columnNames.length === 0) {
-          this.showError(this.translations.translate('noHeaderRowDetected'));
+          this.showError(this.translations.instant('noHeaderRowDetected'));
           return;
         }
 
         this.parsed.emit({ fileName: file.name, columnNames });
       } catch (error) {
-        this.showError(this.translations.translate('failedToParseFile'));
+        this.showError(this.translations.instant('failedToParseFile'));
       }
     };
-    reader.onerror = () => this.showError(this.translations.translate('failedToReadFile'));
+    reader.onerror = () => this.showError(this.translations.instant('failedToReadFile'));
     reader.readAsArrayBuffer(file);
     element.value = '';
   }
 
   private showError(message: string): void {
-    this.snackBar.open(message, this.translations.translate('dismiss'), {
+    this.snackBar.open(message, this.translations.instant('dismiss'), {
       duration: 4000,
       horizontalPosition: 'right',
       verticalPosition: 'top',

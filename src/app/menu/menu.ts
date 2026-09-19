@@ -7,7 +7,7 @@ import {
   SolarWalletMoneyBoldDuotone,
   SolarWidget5BoldDuotone,
 } from '@solar-icons/angular';
-import { TranslatePipe } from '../i18n/translate.pipe';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Submenu, type SubmenuItem } from '../submenu/submenu';
 
 @Component({

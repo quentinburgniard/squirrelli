@@ -7,7 +7,7 @@ import type { Asset } from '../asset.types';
 import { AssetsService } from '../assets.service';
 import { FloatingActions, type FloatingActionNav } from '../floating-actions/floating-actions';
 import { Empty } from '../empty/empty';
-import { TranslatePipe } from '../i18n/translate.pipe';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ImageUrl } from '../images';
 
 @Component({

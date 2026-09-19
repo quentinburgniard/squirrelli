@@ -11,7 +11,7 @@ import { LastMonthCategories } from '../last-month-categories/last-month-categor
 import { LastWeeks } from '../last-weeks/last-weeks';
 import { MonthlyExpenseSummary } from '../monthly-expense-summary/monthly-expense-summary';
 import { SettingsService } from '../settings.service';
-import { TranslatePipe } from '../i18n/translate.pipe';
+import { TranslatePipe } from '@ngx-translate/core';
 import { getNextResetDate } from '../utils/reset-date.utils';
 
 @Component({

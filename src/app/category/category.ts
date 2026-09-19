@@ -8,7 +8,7 @@ import { Observable, distinctUntilChanged, map, switchMap } from 'rxjs';
 import type { MerchantCategoryWithRelations } from '../merchant-category.types';
 import { MerchantCategoriesService } from '../merchant-categories.service';
 import { Empty } from '../empty/empty';
-import { TranslatePipe } from '../i18n/translate.pipe';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'squirrelli-category',

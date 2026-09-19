@@ -8,7 +8,7 @@ import { AsyncPipe } from '@angular/common';
 import type { ExpensePartner } from '../expense.types';
 import { PartnersService } from '../partners.service';
 import { Empty } from '../empty/empty';
-import { TranslatePipe } from '../i18n/translate.pipe';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'squirrelli-partners',

@@ -1,8 +1,8 @@
 import { Component, input, ChangeDetectionStrategy, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import { TranslatePipe } from '../i18n/translate.pipe';
-import type { TranslationKey } from '../i18n/translations';
+import { TranslatePipe } from '@ngx-translate/core';
+import type { TranslationKey } from '../i18n/translation-key';
 
 export interface FloatingActionNav {
   label: TranslationKey;

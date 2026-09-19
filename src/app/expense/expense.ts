@@ -6,8 +6,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 import type { Expense as ExpenseModel } from '../expense.types';
 import { SettingsService } from '../settings.service';
-import { TranslatePipe } from '../i18n/translate.pipe';
-import { TranslationService } from '../i18n/translation.service';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 registerLocaleData(localeFrCH);
 
@@ -23,7 +22,7 @@ const BADGE_ROLES = ['primary', 'secondary', 'tertiary'] as const;
 export class Expense {
   readonly expense = input.required<ExpenseModel>();
   private readonly settingsService = inject(SettingsService);
-  private readonly translations = inject(TranslationService);
+  private readonly translations = inject(TranslateService);
   protected readonly consolidatedCurrency = computed(() => {
     const configuration = this.settingsService.settings()?.configuration;
     return configuration &&
@@ -34,12 +33,14 @@ export class Expense {
       : 'EUR';
   });
 
-  protected readonly name = computed(
-    () =>
+  protected readonly name = computed(() => {
+    this.translations.currentLang();
+    return (
       this.expense().merchant?.name?.trim() ||
       this.expense().category?.name?.trim() ||
-      this.translations.translate('unknownExpense'),
-  );
+      (this.translations.instant('unknownExpense') as string)
+    );
+  });
   protected readonly initial = computed(() => Array.from(this.name())[0].toLocaleUpperCase());
   protected readonly badgeRole = computed(() => {
     const hash = Array.from(this.name().toLocaleLowerCase()).reduce(
@@ -50,7 +51,10 @@ export class Expense {
   });
   protected readonly currency = computed(() => this.expense().currency?.toUpperCase() || 'EUR');
   protected readonly date = computed(() => {
+    this.translations.currentLang();
     const date = this.expense().date;
-    return date?.isValid() ? date.format('MMM D, YYYY') : this.translations.translate('noDate');
+    return date?.isValid()
+      ? date.format('MMM D, YYYY')
+      : (this.translations.instant('noDate') as string);
   });
 }

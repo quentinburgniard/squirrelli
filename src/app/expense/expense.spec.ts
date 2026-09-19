@@ -2,7 +2,9 @@ import { signal } from '@angular/core';
 import { SettingsService } from '../settings.service';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import dayjs from 'dayjs/esm';
+import english from '../../../public/i18n/en.json';
 import type { Expense as ExpenseModel } from '../expense.types';
 import { Expense } from './expense';
 
@@ -12,9 +14,11 @@ describe('Expense', () => {
       imports: [Expense],
       providers: [
         provideRouter([]),
+        provideTranslateService({ lang: 'en' }),
         { provide: SettingsService, useValue: { settings: signal(null) } },
       ],
     }).compileComponents();
+    TestBed.inject(TranslateService).setTranslation('en', english);
     const fixture = TestBed.createComponent(Expense);
     fixture.componentRef.setInput('expense', {
       documentId: 'expense-one',

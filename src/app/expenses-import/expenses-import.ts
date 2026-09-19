@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { ExpensesSelectImportFile } from '../expenses-select-import-file/expenses-select-import-file';
-import { TranslatePipe } from '../i18n/translate.pipe';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'squirrelli-expenses-import',

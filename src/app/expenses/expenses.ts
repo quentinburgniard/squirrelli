@@ -13,7 +13,7 @@ import { ExpensesService } from '../expenses.service';
 import { Expense as ExpenseComponent } from '../expense/expense';
 import { FloatingActions, type FloatingActionNav } from '../floating-actions/floating-actions';
 import { Empty } from '../empty/empty';
-import { TranslatePipe } from '../i18n/translate.pipe';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ImageUrl } from '../images';
 import { createNameSearch } from '../utils/name-search';
 

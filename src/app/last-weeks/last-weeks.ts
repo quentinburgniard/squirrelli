@@ -1,7 +1,7 @@
 import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { TranslatePipe } from '../i18n/translate.pipe';
+import { TranslatePipe } from '@ngx-translate/core';
 import dayjs, { type Dayjs } from 'dayjs/esm';
 import { map, type Observable } from 'rxjs';
 import { ExpensesService } from '../expenses.service';
@@ -35,10 +35,7 @@ export class LastWeeks {
   protected readonly formatAmount: (value: number) => string;
   protected readonly formatChange = (value: number): string => `${Math.abs(value).toFixed(0)}%`;
 
-  constructor(
-    expensesService: ExpensesService,
-    settingsService: SettingsService,
-  ) {
+  constructor(expensesService: ExpensesService, settingsService: SettingsService) {
     const currentWeek = this.startOfWeek(dayjs());
     const fromDate = currentWeek.subtract(WEEK_COUNT - 1, 'week');
     const untilDate = currentWeek.add(6, 'day').endOf('day');

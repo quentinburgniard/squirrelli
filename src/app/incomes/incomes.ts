@@ -6,9 +6,8 @@ import { Observable } from 'rxjs';
 import type { Income } from '../income.types';
 import { FloatingActions, type FloatingActionNav } from '../floating-actions/floating-actions';
 import { Empty } from '../empty/empty';
-import { TranslatePipe } from '../i18n/translate.pipe';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ImageUrl } from '../images';
-import { TranslationService } from '../i18n/translation.service';
 import { IncomesService } from '../incomes.service';
 import { formatDate } from '../utils/date.utils';
 
@@ -29,14 +28,14 @@ import { formatDate } from '../utils/date.utils';
 })
 export class Incomes {
   protected readonly imageUrl = ImageUrl.Incomes;
-  private readonly translations: TranslationService;
+  private readonly translations: TranslateService;
   protected readonly actions: readonly FloatingActionNav[] = [
     { label: 'addIncome', icon: 'add', routerLink: '/incomes/edit' },
   ];
   protected readonly incomes$: Observable<Income[]>;
 
   protected formatIncomeDate(value: Income['date']): string {
-    if (!value) return this.translations.translate('noDate');
+    if (!value) return this.translations.instant('noDate');
     const formatted = formatDate(value as string | Date);
     const relativeDates = {
       Today: 'today',
@@ -44,11 +43,11 @@ export class Incomes {
       Tomorrow: 'tomorrow',
     } as const;
     return formatted in relativeDates
-      ? this.translations.translate(relativeDates[formatted as keyof typeof relativeDates])
+      ? this.translations.instant(relativeDates[formatted as keyof typeof relativeDates])
       : formatted;
   }
 
-  constructor(incomesService: IncomesService, translations: TranslationService) {
+  constructor(incomesService: IncomesService, translations: TranslateService) {
     this.translations = translations;
     this.incomes$ = incomesService.getIncomes();
   }

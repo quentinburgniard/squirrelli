@@ -1,6 +1,6 @@
 import { Component, Input, signal, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { TranslatePipe } from '../i18n/translate.pipe';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { SolarCloseLinear, SolarHamburgerMenuLinear } from '@solar-icons/angular';
 import { Menu } from '../menu/menu';
