@@ -30,9 +30,7 @@
           </ul>
         </div>
       } @else {
-        <p class="py-8 text-center text-[var(--mat-sys-on-surface-variant)]">
-          {{ 'noExpensesLastMonth' | translate }}
-        </p>
+        <squirrelli-empty message="noExpensesLastMonth" />
       }
     }
   </mat-card-content>

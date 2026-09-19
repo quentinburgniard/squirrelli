@@ -12,12 +12,15 @@ import {
 import { ExpensesService } from '../expenses.service';
 import { Expense as ExpenseComponent } from '../expense/expense';
 import { FloatingActions, type FloatingActionNav } from '../floating-actions/floating-actions';
+import { Empty } from '../empty/empty';
 import { TranslatePipe } from '../i18n/translate.pipe';
+import { ImageUrl } from '../images';
 import { createNameSearch } from '../utils/name-search';
 
 @Component({
   selector: 'squirrelli-expenses',
   imports: [
+    Empty,
     AsyncPipe,
     ExpenseComponent,
     MatCardModule,
@@ -30,6 +33,7 @@ import { createNameSearch } from '../utils/name-search';
   host: { class: 'flex flex-col gap-4' },
 })
 export class Expenses {
+  protected readonly imageUrl = ImageUrl.Expenses;
   protected readonly actions: readonly FloatingActionNav[] = [
     { label: 'importExpenses', icon: 'upload_file', routerLink: '/expenses/import' },
     { label: 'addExpense', icon: 'add', routerLink: '/expenses/edit' },

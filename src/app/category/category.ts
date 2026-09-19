@@ -7,11 +7,20 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Observable, distinctUntilChanged, map, switchMap } from 'rxjs';
 import type { MerchantCategoryWithRelations } from '../merchant-category.types';
 import { MerchantCategoriesService } from '../merchant-categories.service';
+import { Empty } from '../empty/empty';
 import { TranslatePipe } from '../i18n/translate.pipe';
 
 @Component({
   selector: 'squirrelli-category',
-  imports: [AsyncPipe, MatButtonModule, MatCardModule, MatIconModule, RouterLink, TranslatePipe],
+  imports: [
+    Empty,
+    AsyncPipe,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    RouterLink,
+    TranslatePipe,
+  ],
   templateUrl: './category.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'flex flex-col gap-4' },

@@ -5,28 +5,33 @@
 
 <mat-card>
   <mat-card-content>
-    <table mat-table [dataSource]="partners$">
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>{{ 'name' | translate }}</th>
-        <td mat-cell *matCellDef="let partner">{{ partner.name }}</td>
-      </ng-container>
+    @if (partners$ | async; as partners) {
+      <table mat-table [dataSource]="partners">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>{{ 'name' | translate }}</th>
+          <td mat-cell *matCellDef="let partner">{{ partner.name }}</td>
+        </ng-container>
 
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef>{{ 'email' | translate }}</th>
-        <td mat-cell *matCellDef="let partner">{{ partner.email }}</td>
-      </ng-container>
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>{{ 'email' | translate }}</th>
+          <td mat-cell *matCellDef="let partner">{{ partner.email }}</td>
+        </ng-container>
 
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let partner" class="text-right">
-          <a matButton [routerLink]="['/expenses/partners/edit', partner.documentId]">{{
-            'edit' | translate
-          }}</a>
-        </td>
-      </ng-container>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let partner" class="text-right">
+            <a matButton [routerLink]="['/expenses/partners/edit', partner.documentId]">{{
+              'edit' | translate
+            }}</a>
+          </td>
+        </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="columns"></tr>
-      <tr mat-row *matRowDef="let row; columns: columns"></tr>
-    </table>
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns"></tr>
+      </table>
+      @if (partners.length === 0) {
+        <squirrelli-empty message="noPartnersYet" />
+      }
+    }
   </mat-card-content>
 </mat-card>

@@ -20,9 +20,7 @@
             </a>
           </li>
         } @empty {
-          <li class="py-8 text-center text-[var(--mat-sys-on-surface-variant)]">
-            {{ 'noCategoriesFound' | translate }}
-          </li>
+          <li><squirrelli-empty message="noCategoriesFound" /></li>
         }
       </ul>
     }

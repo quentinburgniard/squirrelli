@@ -4,6 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import dayjs from 'dayjs/esm';
 import { map, type Observable } from 'rxjs';
 import { ExpensesService } from '../expenses.service';
+import { Empty } from '../empty/empty';
 import { TranslatePipe } from '../i18n/translate.pipe';
 import { TranslationService } from '../i18n/translation.service';
 import { SettingsService } from '../settings.service';
@@ -21,7 +22,7 @@ const COLORS = ['#8b5cf6', '#06b6d4', '#f59e0b', '#ec4899', '#22c55e', '#3b82f6'
 
 @Component({
   selector: 'squirrelli-last-month-categories',
-  imports: [AsyncPipe, MatCardModule, TranslatePipe],
+  imports: [Empty, AsyncPipe, MatCardModule, TranslatePipe],
   templateUrl: './last-month-categories.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'flex flex-col gap-4' },

@@ -10,7 +10,7 @@
 
     <img
       class="h-44 w-full scale-110 object-contain object-center md:h-48 md:max-w-sm md:justify-self-end"
-      src="/expenses.png"
+      [src]="imageUrl"
       alt=""
       aria-hidden="true"
     />
@@ -35,9 +35,7 @@
       </ul>
 
       @if (expenses.length === 0) {
-        <p class="py-8 text-center text-[var(--mat-sys-on-surface-variant)]">
-          {{ 'noExpensesMatchFilters' | translate }}
-        </p>
+        <squirrelli-empty message="noExpensesMatchFilters" />
       }
     }
   </mat-card-content>

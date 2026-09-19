@@ -9,6 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { RouterLink } from '@angular/router';
 import { SettingsService } from '../settings.service';
 import { TranslatePipe } from '../i18n/translate.pipe';
+import { ImageUrl } from '../images';
 import { TranslationService } from '../i18n/translation.service';
 
 type ConfigurationFormValue = {
@@ -36,6 +37,7 @@ type ConfigurationFormValue = {
   host: { class: 'block' },
 })
 export class Settings {
+  protected readonly imageUrl = ImageUrl.Settings;
   protected readonly settings;
   protected readonly languages = [
     { value: 'English', label: 'english' },

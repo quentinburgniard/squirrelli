@@ -4,6 +4,7 @@ import { TranslatePipe } from '../i18n/translate.pipe';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { SolarCloseLinear, SolarHamburgerMenuLinear } from '@solar-icons/angular';
 import { Menu } from '../menu/menu';
+import { ImageUrl } from '../images';
 
 @Component({
   selector: 'squirrelli-header',
@@ -19,6 +20,7 @@ import { Menu } from '../menu/menu';
   templateUrl: './header.html',
 })
 export class Header {
+  protected readonly logoUrl = ImageUrl.Logo;
   @Input() title = '';
 
   protected _menuOpen = signal(false);

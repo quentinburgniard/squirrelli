@@ -4,6 +4,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { map } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { Empty } from '../empty/empty';
 import { TranslatePipe } from '../i18n/translate.pipe';
 
 interface ExpenseProject {
@@ -13,7 +14,7 @@ interface ExpenseProject {
 
 @Component({
   selector: 'squirrelli-projects',
-  imports: [AsyncPipe, MatCardModule, TranslatePipe],
+  imports: [Empty, AsyncPipe, MatCardModule, TranslatePipe],
   templateUrl: './projects.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'flex flex-col gap-4' },

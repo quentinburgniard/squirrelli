@@ -5,19 +5,30 @@ import { RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import type { Income } from '../income.types';
 import { FloatingActions, type FloatingActionNav } from '../floating-actions/floating-actions';
+import { Empty } from '../empty/empty';
 import { TranslatePipe } from '../i18n/translate.pipe';
+import { ImageUrl } from '../images';
 import { TranslationService } from '../i18n/translation.service';
 import { IncomesService } from '../incomes.service';
 import { formatDate } from '../utils/date.utils';
 
 @Component({
   selector: 'squirrelli-incomes',
-  imports: [AsyncPipe, CurrencyPipe, MatCardModule, RouterLink, FloatingActions, TranslatePipe],
+  imports: [
+    Empty,
+    AsyncPipe,
+    CurrencyPipe,
+    MatCardModule,
+    RouterLink,
+    FloatingActions,
+    TranslatePipe,
+  ],
   templateUrl: './incomes.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'flex flex-col gap-4' },
 })
 export class Incomes {
+  protected readonly imageUrl = ImageUrl.Incomes;
   private readonly translations: TranslationService;
   protected readonly actions: readonly FloatingActionNav[] = [
     { label: 'addIncome', icon: 'add', routerLink: '/incomes/edit' },

@@ -6,11 +6,12 @@ import { RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import type { MerchantCategory } from '../merchant-category.types';
 import { MerchantCategoriesService } from '../merchant-categories.service';
+import { Empty } from '../empty/empty';
 import { TranslatePipe } from '../i18n/translate.pipe';
 
 @Component({
   selector: 'squirrelli-categories',
-  imports: [AsyncPipe, MatCardModule, MatIconModule, RouterLink, TranslatePipe],
+  imports: [Empty, AsyncPipe, MatCardModule, MatIconModule, RouterLink, TranslatePipe],
   templateUrl: './categories.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'flex flex-col gap-4' },

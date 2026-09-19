@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ImageUrl } from '../images';
 
 export interface ChartPoint {
   name: string;
@@ -26,6 +27,7 @@ const PLOT_HEIGHT = HEIGHT - TOP - BOTTOM;
   host: { class: 'block size-full' },
 })
 export class TrendChart {
+  protected readonly logoUrl = ImageUrl.Logo;
   readonly points = input.required<readonly ChartPoint[]>();
   readonly trend = input.required<readonly ChartPoint[]>();
   readonly color = input.required<string>();

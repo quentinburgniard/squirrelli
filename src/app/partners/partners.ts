@@ -4,13 +4,23 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 import type { ExpensePartner } from '../expense.types';
 import { PartnersService } from '../partners.service';
+import { Empty } from '../empty/empty';
 import { TranslatePipe } from '../i18n/translate.pipe';
 
 @Component({
   selector: 'squirrelli-partners',
-  imports: [MatButtonModule, MatCardModule, MatTableModule, RouterLink, TranslatePipe],
+  imports: [
+    Empty,
+    AsyncPipe,
+    MatButtonModule,
+    MatCardModule,
+    MatTableModule,
+    RouterLink,
+    TranslatePipe,
+  ],
   templateUrl: './partners.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'flex flex-col gap-4' },

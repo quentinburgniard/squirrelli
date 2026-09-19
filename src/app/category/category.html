@@ -35,9 +35,7 @@
             </a>
           </li>
         } @empty {
-          <li class="py-8 text-center text-[var(--mat-sys-on-surface-variant)]">
-            {{ 'categoryHasNoChildren' | translate }}
-          </li>
+          <li><squirrelli-empty message="categoryHasNoChildren" /></li>
         }
       </ul>
     </mat-card-content>
