@@ -623,6 +623,12 @@ body:has(.menu-panel) {
     font-size: 10px;
   }
 
+  .trend-point-image {
+    transform: scale(2);
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
   .expense-trend-values li {
     padding: 8px 10px;
   }
