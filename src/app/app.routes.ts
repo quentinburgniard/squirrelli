@@ -1,25 +1,10 @@
 import { Routes } from '@angular/router';
 import { assetResolver } from './asset.resolver';
-import { Assets } from './assets/assets';
-import { AssetCategories } from './asset-categories/asset-categories';
-import { Categories } from './categories/categories';
-import { Category } from './category/category';
-import { EditAsset } from './edit-asset/edit-asset';
-import { EditExpense } from './edit-expense/edit-expense';
-import { EditIncome } from './edit-income/edit-income';
-import { EditPartner } from './edit-partner/edit-partner';
-import { ExpensesImport } from './expenses-import/expenses-import';
-import { Expenses } from './expenses/expenses';
 import { expenseResolver } from './expense.resolver';
 import { Home } from './home/home';
 import { incomeResolver } from './income.resolver';
-import { Incomes } from './incomes/incomes';
-import { IncomeSources } from './income-sources/income-sources';
-import { Partners } from './partners/partners';
-import { Projects } from './projects/projects';
 import { partnerResolver } from './partner.resolver';
 import { settingsResolver } from './settings.resolver';
-import { Settings } from './settings/settings';
 
 export const routes: Routes = [
   {
@@ -27,45 +12,107 @@ export const routes: Routes = [
     resolve: { settings: settingsResolver },
     children: [
       { path: '', component: Home, data: { title: 'dashboard' } },
-      { path: 'expenses', component: Expenses, data: { title: 'expenses' } },
-      { path: 'expenses/categories', component: Categories, data: { title: 'expenseCategories' } },
-      { path: 'expenses/categories/:id', component: Category, data: { title: 'category' } },
-      { path: 'expenses/import', component: ExpensesImport, data: { title: 'importExpenses' } },
-      { path: 'expenses/edit', component: EditExpense, data: { title: 'addExpense' } },
+      {
+        path: 'expenses',
+        loadComponent: () => import('./expenses/expenses').then((m) => m.Expenses),
+        data: { title: 'expenses' },
+      },
+      {
+        path: 'expenses/categories',
+        loadComponent: () => import('./categories/categories').then((m) => m.Categories),
+        data: { title: 'expenseCategories' },
+      },
+      {
+        path: 'expenses/categories/:id',
+        loadComponent: () => import('./category/category').then((m) => m.Category),
+        data: { title: 'category' },
+      },
+      {
+        path: 'expenses/import',
+        loadComponent: () =>
+          import('./expenses-import/expenses-import').then((m) => m.ExpensesImport),
+        data: { title: 'importExpenses' },
+      },
+      {
+        path: 'expenses/edit',
+        loadComponent: () => import('./edit-expense/edit-expense').then((m) => m.EditExpense),
+        data: { title: 'addExpense' },
+      },
       {
         path: 'expenses/edit/:id',
-        component: EditExpense,
+        loadComponent: () => import('./edit-expense/edit-expense').then((m) => m.EditExpense),
         data: { title: 'editExpense' },
         resolve: { expense: expenseResolver },
       },
-      { path: 'incomes', component: Incomes, data: { title: 'incomes' } },
-      { path: 'incomes/sources', component: IncomeSources, data: { title: 'incomeSources' } },
-      { path: 'incomes/edit', component: EditIncome, data: { title: 'addIncome' } },
+      {
+        path: 'incomes',
+        loadComponent: () => import('./incomes/incomes').then((m) => m.Incomes),
+        data: { title: 'incomes' },
+      },
+      {
+        path: 'incomes/sources',
+        loadComponent: () => import('./income-sources/income-sources').then((m) => m.IncomeSources),
+        data: { title: 'incomeSources' },
+      },
+      {
+        path: 'incomes/edit',
+        loadComponent: () => import('./edit-income/edit-income').then((m) => m.EditIncome),
+        data: { title: 'addIncome' },
+      },
       {
         path: 'incomes/edit/:id',
-        component: EditIncome,
+        loadComponent: () => import('./edit-income/edit-income').then((m) => m.EditIncome),
         data: { title: 'editIncome' },
         resolve: { income: incomeResolver },
       },
-      { path: 'assets', component: Assets, data: { title: 'assets' } },
-      { path: 'assets/categories', component: AssetCategories, data: { title: 'assetCategories' } },
-      { path: 'assets/edit', component: EditAsset, data: { title: 'addAsset' } },
+      {
+        path: 'assets',
+        loadComponent: () => import('./assets/assets').then((m) => m.Assets),
+        data: { title: 'assets' },
+      },
+      {
+        path: 'assets/categories',
+        loadComponent: () =>
+          import('./asset-categories/asset-categories').then((m) => m.AssetCategories),
+        data: { title: 'assetCategories' },
+      },
+      {
+        path: 'assets/edit',
+        loadComponent: () => import('./edit-asset/edit-asset').then((m) => m.EditAsset),
+        data: { title: 'addAsset' },
+      },
       {
         path: 'assets/edit/:id',
-        component: EditAsset,
+        loadComponent: () => import('./edit-asset/edit-asset').then((m) => m.EditAsset),
         data: { title: 'editAsset' },
         resolve: { asset: assetResolver },
       },
-      { path: 'expenses/partners', component: Partners, data: { title: 'partners' } },
-      { path: 'expenses/projects', component: Projects, data: { title: 'projects' } },
-      { path: 'expenses/partners/edit', component: EditPartner, data: { title: 'addPartner' } },
+      {
+        path: 'expenses/partners',
+        loadComponent: () => import('./partners/partners').then((m) => m.Partners),
+        data: { title: 'partners' },
+      },
+      {
+        path: 'expenses/projects',
+        loadComponent: () => import('./projects/projects').then((m) => m.Projects),
+        data: { title: 'projects' },
+      },
+      {
+        path: 'expenses/partners/edit',
+        loadComponent: () => import('./edit-partner/edit-partner').then((m) => m.EditPartner),
+        data: { title: 'addPartner' },
+      },
       {
         path: 'expenses/partners/edit/:id',
-        component: EditPartner,
+        loadComponent: () => import('./edit-partner/edit-partner').then((m) => m.EditPartner),
         data: { title: 'editPartner' },
         resolve: { partner: partnerResolver },
       },
-      { path: 'settings', component: Settings, data: { title: 'settings' } },
+      {
+        path: 'settings',
+        loadComponent: () => import('./settings/settings').then((m) => m.Settings),
+        data: { title: 'settings' },
+      },
     ],
   },
 ];
