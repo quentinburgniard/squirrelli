@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import type { TranslationKey } from '../i18n/translation-key';
+import type { TranslationKey } from '../utils/translation.utils';
 import { ImageUrl } from '../images';
 
 @Component({

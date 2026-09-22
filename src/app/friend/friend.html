@@ -1,0 +1,24 @@
+<div>
+  <a matButton routerLink="/expenses/friends">
+    <mat-icon aria-hidden="true">arrow_back</mat-icon>
+    {{ 'friends' | translate }}
+  </a>
+  <h1 class="mt-3">{{ friend.name }}</h1>
+</div>
+
+<mat-card>
+  <mat-card-content>
+    <dl class="m-0 grid gap-2">
+      <dt class="text-sm text-[var(--mat-sys-on-surface-variant)]">
+        {{ 'email' | translate }}
+      </dt>
+      <dd class="m-0">
+        <a class="font-semibold text-[var(--mat-sys-primary)]" [href]="'mailto:' + friend.email">
+          {{ friend.email }}
+        </a>
+      </dd>
+    </dl>
+  </mat-card-content>
+</mat-card>
+
+<squirrelli-floating-actions [nav]="actions" />

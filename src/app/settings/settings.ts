@@ -10,7 +10,7 @@ import { RouterLink } from '@angular/router';
 import { SettingsService } from '../settings.service';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ImageUrl } from '../images';
-import { resolveLanguage } from '../i18n/language';
+import { resolveLanguage } from '../utils/translation.utils';
 
 type ConfigurationFormValue = {
   language: 'English' | 'Francais' | 'Portuguese' | 'Spanish' | 'German' | 'Italian';

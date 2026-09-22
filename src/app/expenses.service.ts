@@ -148,6 +148,10 @@ export class ExpensesService {
 
   private getExpenseFromRawExpense(expense: RawExpense): Expense {
     const date = this.getDateFromRawDate(expense.date);
-    return { ...expense, date };
+    const allocations = expense.allocations?.map(({ partner, ...allocation }) => ({
+      ...allocation,
+      friend: partner,
+    }));
+    return { ...expense, date, allocations };
   }
 }

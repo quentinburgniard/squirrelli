@@ -5,11 +5,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
-import { PartnersService } from '../partners.service';
+import { FriendsService } from '../friends.service';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'squirrelli-edit-partner',
+  selector: 'squirrelli-edit-friend',
   imports: [
     MatButtonModule,
     MatFormFieldModule,
@@ -18,11 +18,11 @@ import { TranslatePipe } from '@ngx-translate/core';
     RouterLink,
     TranslatePipe,
   ],
-  templateUrl: './edit-partner.html',
+  templateUrl: './edit-friend.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'flex flex-col gap-4' },
 })
-export class EditPartner implements OnInit {
+export class EditFriend implements OnInit {
   protected readonly form = new FormGroup({
     name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     email: new FormControl('', {
@@ -31,19 +31,19 @@ export class EditPartner implements OnInit {
     }),
   });
   protected loading = false;
-  protected partnerId: string | null = null;
+  protected friendId: string | null = null;
 
   constructor(
-    private readonly partnersService: PartnersService,
+    private readonly friendsService: FriendsService,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
   ) {}
 
   ngOnInit(): void {
-    this.partnerId = this.route.snapshot.paramMap.get('id');
-    const partner = this.route.snapshot.data['partner'];
-    if (partner) {
-      this.form.patchValue({ name: partner.name, email: partner.email ?? '' });
+    this.friendId = this.route.snapshot.paramMap.get('id');
+    const friend = this.route.snapshot.data['friend'];
+    if (friend) {
+      this.form.patchValue({ name: friend.name, email: friend.email ?? '' });
     }
   }
 
@@ -57,12 +57,12 @@ export class EditPartner implements OnInit {
       name: this.form.controls.name.value.trim(),
       email: this.form.controls.email.value.trim(),
     };
-    const request = this.partnerId
-      ? this.partnersService.updatePartner(this.partnerId, value)
-      : this.partnersService.createPartner(value);
+    const request = this.friendId
+      ? this.friendsService.updateFriend(this.friendId, value)
+      : this.friendsService.createFriend(value);
 
     request
       .pipe(finalize(() => (this.loading = false)))
-      .subscribe(() => this.router.navigate(['/expenses/partners']));
+      .subscribe(() => this.router.navigate(['/expenses/friends']));
   }
 }

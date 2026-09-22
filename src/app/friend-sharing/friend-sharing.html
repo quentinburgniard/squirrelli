@@ -1,0 +1,115 @@
+<article class="sharing-sheet">
+  <header class="brand">
+    <img class="brand-mark" [src]="logoUrl" alt="" aria-hidden="true" />
+    <span>squirrelli</span>
+    <span class="private-label">Private summary</span>
+  </header>
+
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">A friendly money reminder</p>
+      <h1>Hi {{ friend.name }},</h1>
+      <p class="introduction">
+        I’m Squirrelli, {{ ownerName }}’s money buddy.
+        <strong>{{ ownerName }} is waiting for money from you.</strong>
+        Here’s a clear summary of the shared expenses that are still open.
+      </p>
+    </div>
+
+    <img
+      class="friend-image"
+      [src]="imageUrl"
+      alt="Squirrelli dressed as Robin Hood"
+      loading="eager"
+      decoding="sync"
+      fetchpriority="high"
+    />
+  </section>
+
+  <section class="balance" aria-label="Outstanding balance">
+    <div>
+      <p class="balance-label">Still to settle</p>
+      <p class="balance-note">Your share of the open expenses</p>
+    </div>
+    <p class="balance-amount">{{ total | currency: 'CHF' : 'symbol' : '1.2-2' }}</p>
+    <p class="screen-summary">
+      {{ expenses.length }} open shared expenses
+    </p>
+  </section>
+
+  <section class="screen-expenses" aria-labelledby="quick-recap-title">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Open expenses</p>
+        <h2 id="quick-recap-title">Quick recap</h2>
+      </div>
+      <span>Latest {{ quickExpenses.length }}</span>
+    </div>
+
+    <ul>
+      @for (expense of quickExpenses; track expense.description) {
+        <li>
+          <span class="expense-badge" aria-hidden="true">{{
+            expense.description.charAt(0)
+          }}</span>
+          <span class="expense-details">
+            <strong>{{ expense.description }}</strong>
+            <span>{{ expense.date }}</span>
+          </span>
+          <strong class="expense-amount">{{
+            expense.share | currency: 'CHF' : 'symbol' : '1.2-2'
+          }}</strong>
+        </li>
+      }
+    </ul>
+    <p class="more-expenses">+ {{ expenses.length - quickExpenses.length }} more in the PDF</p>
+  </section>
+
+  <section class="print-expenses">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Full breakdown</p>
+        <h2>Shared expense details</h2>
+      </div>
+      <span>{{ expenses.length }} items</span>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Expense</th>
+          <th scope="col">Date</th>
+          <th scope="col">Your share</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (expense of expenses; track expense.description) {
+          <tr>
+            <td>{{ expense.description }}</td>
+            <td>{{ expense.date }}</td>
+            <td>{{ expense.share | currency: 'CHF' : 'symbol' : '1.2-2' }}</td>
+          </tr>
+        }
+      </tbody>
+      <tfoot>
+        <tr>
+          <th scope="row" colspan="2">Total still to settle</th>
+          <td>{{ total | currency: 'CHF' : 'symbol' : '1.2-2' }}</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <p class="settlement-note">
+      Please settle this balance directly with {{ ownerName }}. Squirrelli keeps the record clear
+      but does not process this payment.
+    </p>
+  </section>
+
+  <footer class="call-to-action">
+    <div>
+      <p class="cta-title">Shared money, without awkward reminders.</p>
+      <p>Join Squirrelli to track, split, and settle expenses with the people you trust.</p>
+    </div>
+    <a href="/">Meet Squirrelli</a>
+  </footer>
+</article>

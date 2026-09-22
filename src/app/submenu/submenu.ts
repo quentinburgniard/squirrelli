@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { SolarAltArrowDownBold } from '@solar-icons/angular';
 import { TranslatePipe } from '@ngx-translate/core';
-import type { TranslationKey } from '../i18n/translation-key';
+import type { TranslationKey } from '../utils/translation.utils';
 
 export interface SubmenuItem {
   label: TranslationKey;

@@ -76,7 +76,7 @@ export class Menu {
   protected readonly expenseItems: readonly SubmenuItem[] = [
     { label: 'allExpenses', routerLink: '/expenses', exact: true },
     { label: 'merchantsAndCategories', routerLink: '/expenses/categories' },
-    { label: 'partners', routerLink: '/expenses/partners' },
+    { label: 'friends', routerLink: '/expenses/friends' },
     { label: 'projects', routerLink: '/expenses/projects' },
   ];
   protected readonly incomeItems: readonly SubmenuItem[] = [

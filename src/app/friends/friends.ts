@@ -5,13 +5,13 @@ import { MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
-import type { ExpensePartner } from '../expense.types';
-import { PartnersService } from '../partners.service';
+import type { ExpenseFriend } from '../expense.types';
+import { FriendsService } from '../friends.service';
 import { Empty } from '../empty/empty';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'squirrelli-partners',
+  selector: 'squirrelli-friends',
   imports: [
     Empty,
     AsyncPipe,
@@ -21,15 +21,15 @@ import { TranslatePipe } from '@ngx-translate/core';
     RouterLink,
     TranslatePipe,
   ],
-  templateUrl: './partners.html',
+  templateUrl: './friends.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'flex flex-col gap-4' },
 })
-export class Partners {
-  protected readonly columns = ['name', 'email', 'actions'];
-  protected readonly partners$: Observable<ExpensePartner[]>;
+export class Friends {
+  protected readonly columns = ['name', 'email'];
+  protected readonly friends$: Observable<ExpenseFriend[]>;
 
-  constructor(partnersService: PartnersService) {
-    this.partners$ = partnersService.getPartners();
+  constructor(friendsService: FriendsService) {
+    this.friends$ = friendsService.getFriends();
   }
 }

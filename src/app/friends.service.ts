@@ -2,15 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from '../environments/environment';
-import type { ExpensePartner, ExpensePartnerInput } from './expense.types';
+import type { ExpenseFriend, ExpenseFriendInput } from './expense.types';
 
 @Injectable({ providedIn: 'root' })
-export class PartnersService {
+export class FriendsService {
   constructor(private readonly http: HttpClient) {}
 
-  getPartners(): Observable<ExpensePartner[]> {
+  getFriends(): Observable<ExpenseFriend[]> {
     return this.http
-      .get<{ data: ExpensePartner[] }>(`${environment.apiBaseUrl}/expense-partners`, {
+      .get<{ data: ExpenseFriend[] }>(`${environment.apiBaseUrl}/expense-partners`, {
         params: {
           sort: 'name',
           'pagination[page]': 1,
@@ -21,29 +21,29 @@ export class PartnersService {
       .pipe(map(({ data }) => data));
   }
 
-  getPartner(id: string): Observable<ExpensePartner> {
+  getFriend(id: string): Observable<ExpenseFriend> {
     return this.http
-      .get<{ data: ExpensePartner }>(`${environment.apiBaseUrl}/expense-partners/${id}`, {
+      .get<{ data: ExpenseFriend }>(`${environment.apiBaseUrl}/expense-partners/${id}`, {
         withCredentials: true,
       })
       .pipe(map(({ data }) => data));
   }
 
-  createPartner(partner: ExpensePartnerInput): Observable<ExpensePartner> {
+  createFriend(friend: ExpenseFriendInput): Observable<ExpenseFriend> {
     return this.http
       .post<{
-        data: ExpensePartner;
-      }>(`${environment.apiBaseUrl}/expense-partners`, { data: partner }, { withCredentials: true })
+        data: ExpenseFriend;
+      }>(`${environment.apiBaseUrl}/expense-partners`, { data: friend }, { withCredentials: true })
       .pipe(map(({ data }) => data));
   }
 
-  updatePartner(id: string, partner: ExpensePartnerInput): Observable<ExpensePartner> {
+  updateFriend(id: string, friend: ExpenseFriendInput): Observable<ExpenseFriend> {
     return this.http
       .put<{
-        data: ExpensePartner;
+        data: ExpenseFriend;
       }>(
         `${environment.apiBaseUrl}/expense-partners/${id}`,
-        { data: partner },
+        { data: friend },
         { withCredentials: true },
       )
       .pipe(map(({ data }) => data));

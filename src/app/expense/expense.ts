@@ -16,7 +16,7 @@ const BADGE_ROLES = ['primary', 'secondary', 'tertiary'] as const;
   selector: 'squirrelli-expense',
   imports: [CurrencyPipe, RouterLink, MatIconModule, MatTooltipModule, TranslatePipe],
   templateUrl: './expense.html',
-  styleUrl: './expense.css',
+  styleUrl: './expense.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Expense {

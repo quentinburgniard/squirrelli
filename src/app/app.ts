@@ -22,12 +22,28 @@ import { Footer } from './footer/footer';
 })
 export class App {
   protected readonly appName = 'Squirrelli';
+  protected readonly showShell: Signal<boolean>;
   private readonly title: Signal<string>;
 
   constructor() {
     const router = inject(Router);
     const activatedRoute = inject(ActivatedRoute);
     const translateService = inject(TranslateService);
+
+    this.showShell = toSignal(
+      router.events.pipe(
+        filter((event) => event instanceof NavigationEnd),
+        startWith(undefined),
+        map(() => {
+          let route = activatedRoute.snapshot;
+          while (route.firstChild) route = route.firstChild;
+          return route.data['hideShell'] !== true;
+        }),
+      ),
+      {
+        initialValue: !globalThis.location.pathname.startsWith('/sharing/'),
+      },
+    );
 
     const translationKey: Signal<string | undefined> = toSignal(
       router.events.pipe(

@@ -30,9 +30,9 @@
           <div class="flex flex-wrap gap-3">
             <mat-form-field class="min-w-52 flex-1">
               <mat-label>{{ 'person' | translate }}</mat-label>
-              <mat-select formControlName="partner">
-                @for (partner of partners$ | async; track partner.documentId) {
-                  <mat-option [value]="partner.documentId">{{ partner.name }}</mat-option>
+              <mat-select formControlName="friend">
+                @for (friend of friends$ | async; track friend.documentId) {
+                  <mat-option [value]="friend.documentId">{{ friend.name }}</mat-option>
                 }
               </mat-select>
             </mat-form-field>
@@ -81,11 +81,11 @@
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field class="min-w-52 flex-1">
-                  <mat-label>{{ 'optionalPartner' | translate }}</mat-label>
-                  <mat-select formControlName="partner">
+                  <mat-label>{{ 'optionalFriend' | translate }}</mat-label>
+                  <mat-select formControlName="friend">
                     <mat-option [value]="null">{{ 'none' | translate }}</mat-option>
-                    @for (partner of partners$ | async; track partner.documentId) {
-                      <mat-option [value]="partner.documentId">{{ partner.name }}</mat-option>
+                    @for (friend of friends$ | async; track friend.documentId) {
+                      <mat-option [value]="friend.documentId">{{ friend.name }}</mat-option>
                     }
                   </mat-select>
                 </mat-form-field>

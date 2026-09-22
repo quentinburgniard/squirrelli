@@ -3,7 +3,7 @@ import { ResolveFn } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { map, switchMap } from 'rxjs';
 import { SettingsService, type Configuration } from './settings.service';
-import { resolveLanguage } from './i18n/language';
+import { resolveLanguage } from './utils/translation.utils';
 
 export const settingsResolver: ResolveFn<Configuration | null> = () => {
   const settingsService = inject(SettingsService);

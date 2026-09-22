@@ -1,5 +1,6 @@
+@use 'tailwindcss';
+@use './app/friend-sharing/friend-sharing';
 @config "../tailwind.config.js";
-@import 'tailwindcss';
 
 @layer base {
   h1 {
@@ -20,6 +21,20 @@ main {
 squirrelli-footer {
   display: block;
   flex: 0 0 auto;
+}
+
+body:has(squirrelli-friend-sharing) {
+  max-width: none;
+  padding: 0;
+}
+
+squirrelli-app:has(squirrelli-friend-sharing) {
+  gap: 0;
+  padding: 0;
+}
+
+main:has(squirrelli-friend-sharing) {
+  overflow: visible;
 }
 
 body:has(.menu-panel) {

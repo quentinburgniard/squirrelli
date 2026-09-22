@@ -1,5 +1,9 @@
-<squirrelli-header [title]="appName" />
+@if (showShell()) {
+  <squirrelli-header [title]="appName" />
+}
 <main class="relative overflow-x-clip">
   <router-outlet class="hidden" />
 </main>
-<squirrelli-footer />
+@if (showShell()) {
+  <squirrelli-footer />
+}

@@ -1,3 +1,5 @@
+export type TranslationKey = keyof typeof import('../../../public/i18n/en.json');
+
 export type SupportedLanguage = 'en' | 'fr' | 'pt' | 'es' | 'de' | 'it';
 
 export function resolveLanguage(value: unknown): SupportedLanguage {

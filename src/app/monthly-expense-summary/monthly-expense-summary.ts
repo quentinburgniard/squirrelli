@@ -5,7 +5,7 @@ import dayjs from 'dayjs/esm';
 import { map, type Observable } from 'rxjs';
 import { ExpensesService } from '../expenses.service';
 import { TranslatePipe } from '@ngx-translate/core';
-import type { TranslationKey } from '../i18n/translation-key';
+import type { TranslationKey } from '../utils/translation.utils';
 import { SettingsService } from '../settings.service';
 
 interface MonthlyExpense {

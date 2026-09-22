@@ -32,7 +32,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import type {
   ExpenseAllocationType,
   ExpenseAllocationValue,
-  ExpensePartner,
+  ExpenseFriend,
 } from '../expense.types';
 
 type AllocationRow = FormGroup<{
@@ -40,7 +40,7 @@ type AllocationRow = FormGroup<{
   mode: FormControl<'quick' | 'advanced'>;
   valueMode: FormControl<'amount' | 'rate'>;
   type: FormControl<string | null>;
-  partner: FormControl<string | null>;
+  friend: FormControl<string | null>;
   countsAsPaid: FormControl<boolean | null>;
   amount: FormControl<number | null>;
   rate: FormControl<number>;
@@ -80,10 +80,10 @@ export class EditExpenseAllocations implements ControlValueAccessor, Validator {
   readonly newTypeForm = new FormGroup({
     name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     category: new FormControl<string | null>(null),
-    partner: new FormControl<string | null>(null),
+    friend: new FormControl<string | null>(null),
     countsAsPaid: new FormControl(true, { nonNullable: true }),
   });
-  readonly partners$: Observable<ExpensePartner[]>;
+  readonly friends$: Observable<ExpenseFriend[]>;
   readonly categories$: Observable<MerchantCategory[]>;
   readonly allocationTypes$: Observable<ExpenseAllocationType[]>;
   creatingTypeFor: number | null = null;
@@ -98,7 +98,7 @@ export class EditExpenseAllocations implements ControlValueAccessor, Validator {
     private readonly http: HttpClient,
     private readonly changeDetectorRef: ChangeDetectorRef,
   ) {
-    this.partners$ = this.getCollection<ExpensePartner>('expense-partners');
+    this.friends$ = this.getCollection<ExpenseFriend>('expense-partners');
     this.categories$ = this.getCollection<MerchantCategory>('merchant-categories');
     this.allocationTypes$ = this.reloadTypes.pipe(
       switchMap(() => this.getCollection<ExpenseAllocationType>('expense-allocation-types')),
@@ -138,7 +138,7 @@ export class EditExpenseAllocations implements ControlValueAccessor, Validator {
     const invalid = this.form.controls.allocations.controls.some((row) => {
       const hasTarget =
         row.controls.mode.value === 'quick'
-          ? row.controls.partner.value !== null && row.controls.countsAsPaid.value !== null
+          ? row.controls.friend.value !== null && row.controls.countsAsPaid.value !== null
           : row.controls.type.value !== null;
       const hasValue =
         row.controls.valueMode.value === 'amount'
@@ -165,7 +165,7 @@ export class EditExpenseAllocations implements ControlValueAccessor, Validator {
 
   startCreateType(index: number): void {
     this.creatingTypeFor = index;
-    this.newTypeForm.reset({ name: '', category: null, partner: null, countsAsPaid: true });
+    this.newTypeForm.reset({ name: '', category: null, friend: null, countsAsPaid: true });
   }
 
   cancelCreateType(): void {
@@ -183,7 +183,7 @@ export class EditExpenseAllocations implements ControlValueAccessor, Validator {
           data: {
             name: value.name.trim(),
             category: value.category,
-            partner: value.partner,
+            partner: value.friend,
             countsAsPaid: value.countsAsPaid,
           },
         },
@@ -230,7 +230,7 @@ export class EditExpenseAllocations implements ControlValueAccessor, Validator {
         { nonNullable: true },
       ),
       type: new FormControl(value?.type ?? null),
-      partner: new FormControl(value?.partner ?? null),
+      friend: new FormControl(value?.friend ?? null),
       countsAsPaid: new FormControl(value?.countsAsPaid ?? true),
       amount: new FormControl(value?.amount ?? null),
       rate: new FormControl(this.toSliderValue(value?.rate ?? 0), { nonNullable: true }),
@@ -243,7 +243,7 @@ export class EditExpenseAllocations implements ControlValueAccessor, Validator {
       mode: 'quick' | 'advanced';
       valueMode: 'amount' | 'rate';
       type: string | null;
-      partner: string | null;
+      friend: string | null;
       countsAsPaid: boolean | null;
       amount: number | null;
       rate: number;
@@ -251,10 +251,10 @@ export class EditExpenseAllocations implements ControlValueAccessor, Validator {
   ): ExpenseAllocationValue {
     const target =
       allocation.mode === 'advanced'
-        ? { type: allocation.type!, partner: null, countsAsPaid: null }
+        ? { type: allocation.type!, friend: null, countsAsPaid: null }
         : {
             type: null,
-            partner: allocation.partner!,
+            friend: allocation.friend!,
             countsAsPaid: allocation.countsAsPaid!,
           };
     const quantity =

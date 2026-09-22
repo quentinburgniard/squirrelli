@@ -1,12 +1,20 @@
 import { Routes } from '@angular/router';
 import { assetResolver } from './asset.resolver';
 import { expenseResolver } from './expense.resolver';
+import { friendSharingResolver } from './friend-sharing/friend-sharing.resolver';
 import { Home } from './home/home';
 import { incomeResolver } from './income.resolver';
-import { partnerResolver } from './partner.resolver';
+import { friendResolver } from './friend.resolver';
 import { settingsResolver } from './settings.resolver';
 
 export const routes: Routes = [
+  {
+    path: 'sharing/friends/:id',
+    loadComponent: () =>
+      import('./friend-sharing/friend-sharing').then((module) => module.FriendSharing),
+    data: { title: 'friends', hideShell: true },
+    resolve: { sharing: friendSharingResolver },
+  },
   {
     path: '',
     resolve: { settings: settingsResolver },
@@ -88,9 +96,9 @@ export const routes: Routes = [
         resolve: { asset: assetResolver },
       },
       {
-        path: 'expenses/partners',
-        loadComponent: () => import('./partners/partners').then((m) => m.Partners),
-        data: { title: 'partners' },
+        path: 'expenses/friends',
+        loadComponent: () => import('./friends/friends').then((m) => m.Friends),
+        data: { title: 'friends' },
       },
       {
         path: 'expenses/projects',
@@ -98,15 +106,21 @@ export const routes: Routes = [
         data: { title: 'projects' },
       },
       {
-        path: 'expenses/partners/edit',
-        loadComponent: () => import('./edit-partner/edit-partner').then((m) => m.EditPartner),
-        data: { title: 'addPartner' },
+        path: 'expenses/friends/edit',
+        loadComponent: () => import('./edit-friend/edit-friend').then((m) => m.EditFriend),
+        data: { title: 'addFriend' },
       },
       {
-        path: 'expenses/partners/edit/:id',
-        loadComponent: () => import('./edit-partner/edit-partner').then((m) => m.EditPartner),
-        data: { title: 'editPartner' },
-        resolve: { partner: partnerResolver },
+        path: 'expenses/friends/:id',
+        loadComponent: () => import('./friend/friend').then((m) => m.Friend),
+        data: { title: 'friends' },
+        resolve: { friend: friendResolver },
+      },
+      {
+        path: 'expenses/friends/edit/:id',
+        loadComponent: () => import('./edit-friend/edit-friend').then((m) => m.EditFriend),
+        data: { title: 'editFriend' },
+        resolve: { friend: friendResolver },
       },
       {
         path: 'settings',

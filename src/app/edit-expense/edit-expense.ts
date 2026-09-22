@@ -178,7 +178,7 @@ export class EditExpense implements OnInit {
         allocations: (expense.allocations ?? []).map((allocation: any) => ({
           documentId: allocation.documentId,
           type: this.getRelationDocumentId(allocation.type),
-          partner: this.getRelationDocumentId(allocation.partner),
+          friend: this.getRelationDocumentId(allocation.friend),
           countsAsPaid: allocation.countsAsPaid ?? null,
           amount: allocation.amount == null ? null : Number(allocation.amount),
           rate: allocation.rate == null ? null : Number(allocation.rate),
@@ -273,7 +273,7 @@ export class EditExpense implements OnInit {
       const data = {
         expense: expenseId,
         type: allocation.type,
-        partner: allocation.partner,
+        partner: allocation.friend,
         countsAsPaid: allocation.countsAsPaid,
         amount: allocation.amount,
         rate: allocation.rate,

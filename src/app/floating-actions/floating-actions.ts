@@ -2,12 +2,13 @@ import { Component, input, ChangeDetectionStrategy, signal } from '@angular/core
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import type { TranslationKey } from '../i18n/translation-key';
+import type { TranslationKey } from '../utils/translation.utils';
 
 export interface FloatingActionNav {
   label: TranslationKey;
   icon: string;
   routerLink: string;
+  target?: '_blank';
 }
 
 @Component({

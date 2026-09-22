@@ -1,5 +1,5 @@
 <div>
-  <h1>{{ (partnerId ? 'editPartner' : 'addPartner') | translate }}</h1>
+  <h1>{{ (friendId ? 'editFriend' : 'addFriend') | translate }}</h1>
 </div>
 
 <form [formGroup]="form" class="flex flex-col gap-4" (ngSubmit)="onSubmit()">
@@ -17,6 +17,6 @@
     <button matButton="filled" type="submit" [disabled]="form.invalid || loading">
       {{ 'save' | translate }}
     </button>
-    <a matButton routerLink="/expenses/partners">{{ 'cancel' | translate }}</a>
+    <a matButton routerLink="/expenses/friends">{{ 'cancel' | translate }}</a>
   </div>
 </form>

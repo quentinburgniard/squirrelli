@@ -9,11 +9,12 @@ export type RawExpense = Modules.EntityService.Result<'api::expense.expense'> & 
   allocations?: RawExpenseAllocation[];
 };
 
-export type Expense = Omit<RawExpense, 'date'> & {
+export type Expense = Omit<RawExpense, 'date' | 'allocations'> & {
   date?: Dayjs;
+  allocations?: ExpenseAllocation[];
 };
 
-export type ExpensePartner = Modules.EntityService.Result<'api::expense-partner.expense-partner'>;
+export type ExpenseFriend = Modules.EntityService.Result<'api::expense-partner.expense-partner'>;
 
 export type ExpenseAllocationType =
   Modules.EntityService.Result<'api::expense-allocation-type.expense-allocation-type'>;
@@ -21,18 +22,22 @@ export type ExpenseAllocationType =
 export type RawExpenseAllocation =
   Modules.EntityService.Result<'api::expense-allocation.expense-allocation'> & {
     type?: ExpenseAllocationType | null;
-    partner?: ExpensePartner | null;
+    partner?: ExpenseFriend | null;
   };
+
+export type ExpenseAllocation = Omit<RawExpenseAllocation, 'partner'> & {
+  friend?: ExpenseFriend | null;
+};
 
 type ExpenseAllocationTarget =
   | {
       type: null;
-      partner: string;
+      friend: string;
       countsAsPaid: boolean;
     }
   | {
       type: string;
-      partner: null;
+      friend: null;
       countsAsPaid: null;
     };
 
@@ -51,7 +56,7 @@ export type ExpenseAllocationValue = {
 } & ExpenseAllocationTarget &
   ExpenseAllocationQuantity;
 
-export type ExpensePartnerInput = Omit<
+export type ExpenseFriendInput = Omit<
   Modules.EntityService.Params.Data.Input<'api::expense-partner.expense-partner'>,
   'user'
 >;
