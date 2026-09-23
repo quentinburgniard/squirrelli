@@ -5,7 +5,6 @@ import { friendSharingResolver } from './friend-sharing/friend-sharing.resolver'
 import { Home } from './home/home';
 import { incomeResolver } from './income.resolver';
 import { friendResolver } from './friend.resolver';
-import { settingsResolver } from './settings.resolver';
 
 export const routes: Routes = [
   {
@@ -17,7 +16,6 @@ export const routes: Routes = [
   },
   {
     path: '',
-    resolve: { settings: settingsResolver },
     children: [
       { path: '', component: Home, data: { title: 'dashboard' } },
       {
