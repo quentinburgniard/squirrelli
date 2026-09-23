@@ -13,7 +13,7 @@ registerLocaleData(localeFrCH);
 const BADGE_ROLES = ['primary', 'secondary', 'tertiary'] as const;
 
 @Component({
-  selector: 'squirrelli-expense',
+  selector: 'nutio-expense',
   imports: [CurrencyPipe, RouterLink, MatIconModule, MatTooltipModule, TranslatePipe],
   templateUrl: './expense.html',
   styleUrl: './expense.scss',

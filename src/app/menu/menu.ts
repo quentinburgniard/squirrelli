@@ -11,7 +11,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { Submenu, type SubmenuItem } from '../submenu/submenu';
 
 @Component({
-  selector: 'squirrelli-menu',
+  selector: 'nutio-menu',
   imports: [
     RouterLink,
     RouterLinkActive,

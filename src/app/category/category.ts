@@ -11,7 +11,7 @@ import { Empty } from '../empty/empty';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'squirrelli-category',
+  selector: 'nutio-category',
   imports: [
     Empty,
     AsyncPipe,

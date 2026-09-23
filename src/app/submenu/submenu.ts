@@ -11,7 +11,7 @@ export interface SubmenuItem {
 }
 
 @Component({
-  selector: 'squirrelli-submenu',
+  selector: 'nutio-submenu',
   imports: [RouterLink, RouterLinkActive, SolarAltArrowDownBold, TranslatePipe],
   templateUrl: './submenu.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

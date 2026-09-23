@@ -22,7 +22,7 @@ interface ExpenseTrend {
 const MONTH_COUNT = 6;
 
 @Component({
-  selector: 'squirrelli-last-months',
+  selector: 'nutio-last-months',
   imports: [AsyncPipe, MatCardModule, TranslatePipe, TrendChart],
   templateUrl: './last-months.html',
   changeDetection: ChangeDetectionStrategy.Eager,

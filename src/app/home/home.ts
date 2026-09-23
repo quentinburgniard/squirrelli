@@ -15,7 +15,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { getNextResetDate } from '../utils/reset-date.utils';
 
 @Component({
-  selector: 'squirrelli-home',
+  selector: 'nutio-home',
   imports: [
     MatCardModule,
     ExpenseComponent,

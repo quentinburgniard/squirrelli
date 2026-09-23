@@ -48,7 +48,7 @@ const EURO_DATE_FORMATS = {
 };
 
 @Component({
-  selector: 'squirrelli-edit-expense',
+  selector: 'nutio-edit-expense',
   imports: [
     CommonModule,
     ReactiveFormsModule,

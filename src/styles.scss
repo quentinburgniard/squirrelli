@@ -8,7 +8,7 @@
   }
 }
 
-squirrelli-app {
+nutio-app {
   min-height: 100vh;
   min-height: 100dvh;
 }
@@ -18,22 +18,22 @@ main {
   view-transition-name: page;
 }
 
-squirrelli-footer {
+nutio-footer {
   display: block;
   flex: 0 0 auto;
 }
 
-body:has(squirrelli-friend-sharing) {
+body:has(nutio-friend-sharing) {
   max-width: none;
   padding: 0;
 }
 
-squirrelli-app:has(squirrelli-friend-sharing) {
+nutio-app:has(nutio-friend-sharing) {
   gap: 0;
   padding: 0;
 }
 
-main:has(squirrelli-friend-sharing) {
+main:has(nutio-friend-sharing) {
   overflow: visible;
 }
 

@@ -2,7 +2,7 @@
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>{{ 'selectFile' | translate }}</ng-template>
-      <squirrelli-expenses-select-import-file (parsed)="onFileParsed($event)" />
+      <nutio-expenses-select-import-file (parsed)="onFileParsed($event)" />
     </form>
   </mat-step>
   <mat-step [stepControl]="secondFormGroup" [label]="'mapColumns' | translate">

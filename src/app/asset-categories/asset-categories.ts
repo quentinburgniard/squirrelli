@@ -6,7 +6,7 @@ import { Empty } from '../empty/empty';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'squirrelli-asset-categories',
+  selector: 'nutio-asset-categories',
   imports: [Empty, AsyncPipe, MatCardModule, TranslatePipe],
   templateUrl: './asset-categories.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

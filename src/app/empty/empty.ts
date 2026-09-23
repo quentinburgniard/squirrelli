@@ -4,7 +4,7 @@ import type { TranslationKey } from '../utils/translation.utils';
 import { ImageUrl } from '../images';
 
 @Component({
-  selector: 'squirrelli-empty',
+  selector: 'nutio-empty',
   imports: [TranslatePipe],
   templateUrl: './empty.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

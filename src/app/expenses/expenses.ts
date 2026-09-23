@@ -18,7 +18,7 @@ import { ImageUrl } from '../images';
 import { createNameSearch } from '../utils/name-search';
 
 @Component({
-  selector: 'squirrelli-expenses',
+  selector: 'nutio-expenses',
   imports: [
     Empty,
     AsyncPipe,

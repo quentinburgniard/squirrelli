@@ -4,7 +4,7 @@ import { SettingsService } from '../settings.service';
 import { VERSION } from '../version';
 
 @Component({
-  selector: 'squirrelli-footer',
+  selector: 'nutio-footer',
   imports: [MatToolbarModule],
   changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './footer.html',

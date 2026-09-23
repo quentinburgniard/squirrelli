@@ -6,8 +6,8 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: quentinburgniard/squirrelli
-  CACHE_IMAGE: ghcr.io/quentinburgniard/squirrelli-build-cache
+  IMAGE_NAME: quentinburgniard/nutio
+  CACHE_IMAGE: ghcr.io/quentinburgniard/nutio-build-cache
 
 jobs:
   docker-build-push:

@@ -9,7 +9,7 @@ import { FriendsService } from '../friends.service';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'squirrelli-edit-friend',
+  selector: 'nutio-edit-friend',
   imports: [
     MatButtonModule,
     MatFormFieldModule,

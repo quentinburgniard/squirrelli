@@ -11,7 +11,7 @@ interface SharedExpenseExample {
 }
 
 @Component({
-  selector: 'squirrelli-friend-sharing',
+  selector: 'nutio-friend-sharing',
   imports: [CurrencyPipe],
   templateUrl: './friend-sharing.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

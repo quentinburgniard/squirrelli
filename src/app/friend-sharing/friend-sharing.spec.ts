@@ -36,6 +36,6 @@ describe('FriendSharing', () => {
     expect(element.querySelector('.balance-amount')?.textContent).toContain('CHF');
     expect(element.querySelectorAll('.screen-expenses li')).toHaveLength(3);
     expect(element.querySelectorAll('tbody tr')).toHaveLength(7);
-    expect(element.querySelector('.call-to-action')?.textContent).toContain('Join Squirrelli');
+    expect(element.querySelector('.call-to-action')?.textContent).toContain('Join Nutio');
   });
 });

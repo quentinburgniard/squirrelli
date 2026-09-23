@@ -20,7 +20,7 @@ interface CategorySlice {
 const COLORS = ['#8b5cf6', '#06b6d4', '#f59e0b', '#ec4899', '#22c55e', '#3b82f6', '#64748b'];
 
 @Component({
-  selector: 'squirrelli-last-month-categories',
+  selector: 'nutio-last-month-categories',
   imports: [Empty, AsyncPipe, MatCardModule, TranslatePipe],
   templateUrl: './last-month-categories.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -7,7 +7,7 @@ import { Menu } from '../menu/menu';
 import { ImageUrl } from '../images';
 
 @Component({
-  selector: 'squirrelli-header',
+  selector: 'nutio-header',
   imports: [
     MatToolbarModule,
     Menu,

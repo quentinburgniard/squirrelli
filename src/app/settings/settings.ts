@@ -20,7 +20,7 @@ type ConfigurationFormValue = {
 };
 
 @Component({
-  selector: 'squirrelli-settings',
+  selector: 'nutio-settings',
   imports: [
     JsonPipe,
     MatButtonModule,

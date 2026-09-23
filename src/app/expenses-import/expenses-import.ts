@@ -8,7 +8,7 @@ import { ExpensesSelectImportFile } from '../expenses-select-import-file/expense
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'squirrelli-expenses-import',
+  selector: 'nutio-expenses-import',
   imports: [
     JsonPipe,
     MatStepperModule,

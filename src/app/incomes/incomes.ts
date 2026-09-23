@@ -12,7 +12,7 @@ import { IncomesService } from '../incomes.service';
 import { formatDate } from '../utils/date.utils';
 
 @Component({
-  selector: 'squirrelli-incomes',
+  selector: 'nutio-incomes',
   imports: [
     Empty,
     AsyncPipe,

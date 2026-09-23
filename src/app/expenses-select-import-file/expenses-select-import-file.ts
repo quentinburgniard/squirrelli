@@ -5,7 +5,7 @@ import * as XLSX from 'xlsx';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'squirrelli-expenses-select-import-file',
+  selector: 'nutio-expenses-select-import-file',
   imports: [MatButtonModule, MatSnackBarModule, TranslatePipe],
   changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './expenses-select-import-file.html',

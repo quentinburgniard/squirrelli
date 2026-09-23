@@ -21,7 +21,7 @@ interface SummaryBar {
 const MONTH_COUNT = 6;
 
 @Component({
-  selector: 'squirrelli-monthly-expense-summary',
+  selector: 'nutio-monthly-expense-summary',
   imports: [AsyncPipe, MatCardModule, TranslatePipe],
   templateUrl: './monthly-expense-summary.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

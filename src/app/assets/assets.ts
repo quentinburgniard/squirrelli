@@ -11,7 +11,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { ImageUrl } from '../images';
 
 @Component({
-  selector: 'squirrelli-assets',
+  selector: 'nutio-assets',
   imports: [Empty, AsyncPipe, MatCardModule, RouterLink, FloatingActions, TranslatePipe],
   templateUrl: './assets.html',
   changeDetection: ChangeDetectionStrategy.Eager,

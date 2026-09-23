@@ -10,17 +10,17 @@
     <mat-card-content>
       <ul class="m-0 list-none p-0">
         @for (expense of expenses$ | async; track expense.documentId) {
-          <li><squirrelli-expense [expense]="expense" /></li>
+          <li><nutio-expense [expense]="expense" /></li>
         }
       </ul>
     </mat-card-content>
   </mat-card>
 
-  <squirrelli-last-month-categories />
+  <nutio-last-month-categories />
 
-  <squirrelli-last-months />
+  <nutio-last-months />
 
-  <squirrelli-monthly-expense-summary />
+  <nutio-monthly-expense-summary />
 
-  <squirrelli-last-weeks />
+  <nutio-last-weeks />
 </div>

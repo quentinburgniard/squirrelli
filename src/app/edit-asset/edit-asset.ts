@@ -12,7 +12,7 @@ import { AssetsService } from '../assets.service';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'squirrelli-edit-asset',
+  selector: 'nutio-edit-asset',
   imports: [
     AsyncPipe,
     MatButtonModule,

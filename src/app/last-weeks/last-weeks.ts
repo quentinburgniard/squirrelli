@@ -24,7 +24,7 @@ interface TrendPoint {
 const WEEK_COUNT = 6;
 
 @Component({
-  selector: 'squirrelli-last-weeks',
+  selector: 'nutio-last-weeks',
   imports: [AsyncPipe, MatCardModule, TranslatePipe, TrendChart],
   templateUrl: './last-weeks.html',
   changeDetection: ChangeDetectionStrategy.Eager,

@@ -11,7 +11,7 @@ import {
 } from '../floating-actions/floating-actions';
 
 @Component({
-  selector: 'squirrelli-friend',
+  selector: 'nutio-friend',
   imports: [
     FloatingActions,
     MatButtonModule,

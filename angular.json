@@ -7,12 +7,12 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "squirrelli": {
+    "nutio": {
       "projectType": "application",
       "schematics": {},
       "root": "",
       "sourceRoot": "src",
-      "prefix": "squirrelli",
+      "prefix": "nutio",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
@@ -66,10 +66,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "squirrelli:build:production"
+              "buildTarget": "nutio:build:production"
             },
             "development": {
-              "buildTarget": "squirrelli:build:development",
+              "buildTarget": "nutio:build:development",
               "proxyConfig": "proxy.conf.json"
             }
           },

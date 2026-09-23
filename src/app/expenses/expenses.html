@@ -18,7 +18,7 @@
 </section>
 <mat-card>
   <mat-card-content>
-    <squirrelli-expense-filters (filtersChange)="updateFilters($event)" />
+    <nutio-expense-filters (filtersChange)="updateFilters($event)" />
 
     @if (filteredExpenses$ | async; as expenses) {
       <div class="mt-2 mb-3 flex items-center justify-between gap-3">
@@ -30,15 +30,15 @@
 
       <ul class="m-0 list-none p-0">
         @for (expense of expenses; track expense.documentId) {
-          <li><squirrelli-expense [expense]="expense" /></li>
+          <li><nutio-expense [expense]="expense" /></li>
         }
       </ul>
 
       @if (expenses.length === 0) {
-        <squirrelli-empty message="noExpensesMatchFilters" />
+        <nutio-empty message="noExpensesMatchFilters" />
       }
     }
   </mat-card-content>
 </mat-card>
 
-<squirrelli-floating-actions [nav]="actions" />
+<nutio-floating-actions [nav]="actions" />

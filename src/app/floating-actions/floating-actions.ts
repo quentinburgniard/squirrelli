@@ -12,7 +12,7 @@ export interface FloatingActionNav {
 }
 
 @Component({
-  selector: 'squirrelli-floating-actions',
+  selector: 'nutio-floating-actions',
   imports: [MatIconModule, RouterLink, TranslatePipe],
   changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './floating-actions.html',

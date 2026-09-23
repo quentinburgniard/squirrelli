@@ -21,7 +21,7 @@ const PLOT_WIDTH = WIDTH - LEFT - RIGHT;
 const PLOT_HEIGHT = HEIGHT - TOP - BOTTOM;
 
 @Component({
-  selector: 'squirrelli-trend-chart',
+  selector: 'nutio-trend-chart',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './trend-chart.html',
   host: { class: 'block size-full' },

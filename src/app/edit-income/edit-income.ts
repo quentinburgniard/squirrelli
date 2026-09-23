@@ -15,7 +15,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { API_DATE_FORMAT } from '../utils/date.utils';
 
 @Component({
-  selector: 'squirrelli-edit-income',
+  selector: 'nutio-edit-income',
   imports: [
     MatButtonModule,
     MatDatepickerModule,

@@ -9,7 +9,7 @@
   <mat-card-content>
     @if (trend$ | async; as trend) {
       <div class="expense-trend-chart relative mt-4 aspect-[30/13] w-full max-h-80">
-        <squirrelli-trend-chart
+        <nutio-trend-chart
           [points]="trend[0].series"
           [trend]="trend[1].series"
           color="var(--mat-sys-tertiary)"

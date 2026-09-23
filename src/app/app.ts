@@ -15,13 +15,13 @@ import { Header } from './header/header';
 import { Footer } from './footer/footer';
 
 @Component({
-  selector: 'squirrelli-app',
+  selector: 'nutio-app',
   imports: [RouterOutlet, MatToolbarModule, Header, Footer],
   changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './app.html',
 })
 export class App {
-  protected readonly appName = 'Squirrelli';
+  protected readonly appName = 'Nutio';
   protected readonly showShell: Signal<boolean>;
   private readonly title: Signal<string>;
 

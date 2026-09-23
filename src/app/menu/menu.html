@@ -19,7 +19,7 @@
         <span class="menu-link-icon"><svg solarWidget5BoldDuotone [size]="22"></svg></span>
         <span class="flex-1">{{ 'dashboard' | translate }}</span>
       </a>
-      <squirrelli-submenu
+      <nutio-submenu
         label="expensesNavigation"
         [items]="expenseItems"
         [open]="openSubmenu() === 'expenses'"
@@ -27,8 +27,8 @@
         (selected)="closed.emit()"
       >
         <svg submenuIcon solarBillListBoldDuotone [size]="22"></svg>
-      </squirrelli-submenu>
-      <squirrelli-submenu
+      </nutio-submenu>
+      <nutio-submenu
         label="incomesNavigation"
         [items]="incomeItems"
         [open]="openSubmenu() === 'incomes'"
@@ -36,8 +36,8 @@
         (selected)="closed.emit()"
       >
         <svg submenuIcon solarBanknote2BoldDuotone [size]="22"></svg>
-      </squirrelli-submenu>
-      <squirrelli-submenu
+      </nutio-submenu>
+      <nutio-submenu
         label="assetsNavigation"
         [items]="assetItems"
         [open]="openSubmenu() === 'assets'"
@@ -45,7 +45,7 @@
         (selected)="closed.emit()"
       >
         <svg submenuIcon solarWalletMoneyBoldDuotone [size]="22"></svg>
-      </squirrelli-submenu>
+      </nutio-submenu>
       <a
         class="menu-link"
         routerLink="/settings"

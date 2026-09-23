@@ -75,10 +75,10 @@
     </mat-autocomplete>
   </mat-form-field>
 
-  <squirrelli-edit-expense-allocations
+  <nutio-edit-expense-allocations
     formControlName="allocations"
     [amount]="_form.controls.amount.value"
-  ></squirrelli-edit-expense-allocations>
+  ></nutio-edit-expense-allocations>
 
   <button matButton="filled" type="submit" [disabled]="_form.invalid || loading">
     {{ 'add' | translate }}

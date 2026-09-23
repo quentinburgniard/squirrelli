@@ -13,7 +13,7 @@ interface ExpenseProject {
 }
 
 @Component({
-  selector: 'squirrelli-projects',
+  selector: 'nutio-projects',
   imports: [Empty, AsyncPipe, MatCardModule, TranslatePipe],
   templateUrl: './projects.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -34,7 +34,7 @@ export const EMPTY_EXPENSE_FILTERS: ExpenseFiltersValue = {
 };
 
 @Component({
-  selector: 'squirrelli-expense-filters',
+  selector: 'nutio-expense-filters',
   imports: [
     MatButtonModule,
     MatDatepickerModule,

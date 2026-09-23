@@ -10,7 +10,7 @@ import { Empty } from '../empty/empty';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'squirrelli-categories',
+  selector: 'nutio-categories',
   imports: [Empty, AsyncPipe, MatCardModule, MatIconModule, RouterLink, TranslatePipe],
   templateUrl: './categories.html',
   changeDetection: ChangeDetectionStrategy.Eager,

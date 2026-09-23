@@ -11,5 +11,5 @@ RUN echo "export const VERSION = '${VERSION}';" > src/app/version.ts
 RUN pnpm run build --configuration production
 FROM nginx:1
 WORKDIR /usr/share/nginx/html
-COPY --from=build /usr/src/app/dist/squirrelli/browser ./
+COPY --from=build /usr/src/app/dist/nutio/browser ./
 COPY nginx.conf /etc/nginx/nginx.conf

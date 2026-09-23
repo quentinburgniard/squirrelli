@@ -13,7 +13,7 @@ interface IncomeSource {
 }
 
 @Component({
-  selector: 'squirrelli-income-sources',
+  selector: 'nutio-income-sources',
   imports: [Empty, AsyncPipe, MatCardModule, TranslatePipe],
   templateUrl: './income-sources.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

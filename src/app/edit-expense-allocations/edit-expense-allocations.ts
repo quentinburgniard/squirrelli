@@ -47,7 +47,7 @@ type AllocationRow = FormGroup<{
 }>;
 
 @Component({
-  selector: 'squirrelli-edit-expense-allocations',
+  selector: 'nutio-edit-expense-allocations',
   imports: [
     AsyncPipe,
     MatButtonModule,
